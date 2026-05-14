@@ -1,0 +1,24 @@
+{ FILE: admin_utils\trace_pool\Parameters.py
+  { FUNCTION: admin_utils.trace_pool.Parameters.ParameterSpec.validate ( ( return ) ) ( ( return ) ) ( ( ( return ) ) ) ( ( return ) ) ( ( ( return ) ) ) ( return ) }
+  { FUNCTION: admin_utils.trace_pool.Parameters.Parameters.__init__ set set ( ( <<data>>.named_parameters ( TypeError type ( raise ) ) ) ) }
+  { FUNCTION: admin_utils.trace_pool.Parameters.Parameters.__getitem__ ( <<key>>.split ( ( return ) ) ) ( KeyError ( raise ) ) ( return ) }
+  { FUNCTION: admin_utils.trace_pool.Parameters.Parameters.__len__ len ( return ) }
+  { FUNCTION: admin_utils.trace_pool.Parameters.Parameters.__setitem__ ( ( kinopulse.utils.ConfigError ( raise ) ) ( kinopulse.utils.ConfigError ( raise ) ) ( ( kinopulse.utils.ConfigError ( raise ) ) ) ( kinopulse.utils.ConfigError ( raise ) ) ( ( kinopulse.utils.ConfigError ( raise ) ) ) ) }
+  { FUNCTION: admin_utils.trace_pool.Parameters.Parameters.__contains__ ( <<key>>.split ( ( return ) ) ) ( return ) }
+  { FUNCTION: admin_utils.trace_pool.Parameters.Parameters.get ( return ) ( return ) }
+  { FUNCTION: admin_utils.trace_pool.Parameters.Parameters.data ( return ) }
+  { FUNCTION: admin_utils.trace_pool.Parameters.Parameters.trainable ( return ) }
+  { FUNCTION: admin_utils.trace_pool.Parameters.Parameters.fixed set self.<<trainable>>.keys ( return ) }
+  { FUNCTION: admin_utils.trace_pool.Parameters.Parameters.all self.<<_data>>.copy ( return ) }
+  { FUNCTION: admin_utils.trace_pool.Parameters.Parameters.to_dict [ ( <<value>>.detach ) ] ( return ) }
+  { FUNCTION: admin_utils.trace_pool.Parameters.Parameters.validate [ kinopulse.utils.errors.InvalidStateError str ( raise ) ] ( return ) }
+  { FUNCTION: admin_utils.trace_pool.Parameters.Parameters.flatten [ <list>.append <<param>>.flatten ] torch.cat ( return ) }
+  { FUNCTION: admin_utils.trace_pool.Parameters.Parameters.from_dict [ ( torch.tensor ) ] cls ( return ) }
+  { FUNCTION: admin_utils.trace_pool.Parameters.Parameters.keys self.<<_data>>.keys ( return ) }
+  { FUNCTION: admin_utils.trace_pool.Parameters.Parameters.values self.<<_data>>.values ( return ) }
+  { FUNCTION: admin_utils.trace_pool.Parameters.Parameters.items self.<<_data>>.items ( return ) }
+  { FUNCTION: admin_utils.trace_pool.Parameters.Parameters.update ( self.<<_data>>.update ( self.<<_data>>.update TypeError type ( raise ) ) ) }
+  { FUNCTION: admin_utils.trace_pool.Parameters.Parameters.clone isinstance <<v>>.clone self.<<_data>>.items admin_utils.trace_pool.Parameters.Parameters self.<<_trainable_names>>.copy ( return ) }
+  { FUNCTION: admin_utils.trace_pool.Parameters.Parameters.to [ ( <<value>>.to ) ] admin_utils.trace_pool.Parameters.Parameters self.<<_trainable_names>>.copy ( return ) }
+  { FUNCTION: admin_utils.trace_pool.Parameters.Parameters.device set [ ( <set>.add ) ] ( ( return ) ( <set>.pop ( return ) next iter ( return ) ) ) }
+}

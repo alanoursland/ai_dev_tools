@@ -1,0 +1,9 @@
+{ FILE: admin_utils\trace_pool\manifold.py
+  { FUNCTION: admin_utils.trace_pool.manifold.Manifold.__post_init__ ( ValueError ( raise ) ) ( ValueError ( raise ) ) ( ( ValueError ( raise ) ) ( ValueError ( raise ) ) ) }
+  { FUNCTION: admin_utils.trace_pool.manifold.Manifold.coordinates self.<<metadata>>.get ( sympy.symbols ( tuple ) ) ( return ) }
+  { FUNCTION: admin_utils.trace_pool.manifold.Manifold.euclidean cls ( return ) }
+  { FUNCTION: admin_utils.trace_pool.manifold.Manifold.sphere cls ( return ) }
+  { FUNCTION: admin_utils.trace_pool.manifold.Manifold.embedded len ( ValueError len ( raise ) ) cls ( return ) }
+  { FUNCTION: admin_utils.trace_pool.manifold.Manifold.tangent_space ( return ) }
+  { FUNCTION: admin_utils.trace_pool.manifold.Manifold.__repr__ ( return ) }
+}

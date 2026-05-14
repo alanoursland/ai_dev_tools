@@ -1,0 +1,6 @@
+{ FILE: admin_utils\trace_pool\differential.py
+  { FUNCTION: admin_utils.trace_pool.differential.divergence ( ValueError len len ( raise ) ) sum sympy.diff zip ( sympy.simplify ) ( return ) }
+  { FUNCTION: admin_utils.trace_pool.differential.curl ( ValueError len len ( raise ) ) sympy.diff sympy.diff sympy.diff sympy.diff sympy.diff sympy.diff ( sympy.simplify ) ( return ) }
+  { FUNCTION: admin_utils.trace_pool.differential.gradient sympy.diff ( sympy.simplify ) ( return ) }
+  { FUNCTION: admin_utils.trace_pool.differential.laplacian sum sympy.diff ( sympy.simplify ) ( return ) }
+}

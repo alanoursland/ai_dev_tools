@@ -1,0 +1,3 @@
+{ FILE: admin_utils\library_structure.py
+  { FUNCTION: admin_utils.library_structure.get_definitions [ [ ( os.path.join os.path.relpath open ast.parse <<f>>.read [ ( isinstance [ ( ( <list>.append ) ) ] <list>.append ( ( <list>.append ) ) ) ] ( <list>.append <list>.extend ) ( continue ) ) ] ] ( return ) }
+}

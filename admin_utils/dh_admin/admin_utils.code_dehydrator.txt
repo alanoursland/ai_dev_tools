@@ -1,0 +1,29 @@
+{ FILE: admin_utils\code_dehydrator.py
+  { FUNCTION: admin_utils.code_dehydrator.parse_module <<file_path>>.read_text print ( return ) ast.parse str print ( return ) ( return ) }
+  { FUNCTION: admin_utils.code_dehydrator.find_ast_node <<target>>.split len [ ( ( return ) ) ] ( [ ( [ ( ( return ) ) ] ) ] ) ( return ) }
+  { FUNCTION: admin_utils.code_dehydrator.get_test_function_node ( [ ( ( return ) ) ] ( return ) ) [ ( [ ( ( return ) ) ] ( return ) ) ] ( return ) }
+  { FUNCTION: admin_utils.code_dehydrator.get_raw_call_name ( ( return ) ) ( [ <<parts>>.append ] ( <<parts>>.append <<parts>>.reverse ( return ) ) ( return ) ) ( admin_utils.code_dehydrator.get_raw_call_name ( return ) ) ( return ) }
+  { FUNCTION: admin_utils.code_dehydrator.qualify_name ( <<name>>.split ( ( ( return ) ) ( return ) ) ( ( return ) ) ( return ) ) ( <<name>>.split ( ( return ) ) ( ( return ) ) ( ( return ) ) ( return ) ) ( ( return ) ) ( ( return ) ) ( return ) }
+  { FUNCTION: admin_utils.code_dehydrator.build_import_map [ ( [ <<alias>>.name.split ] ( ( ( ( continue ) ) <<module_name>>.split len ) ) ) ] ( return ) }
+  { FUNCTION: admin_utils.code_dehydrator.build_local_defs ( return ) }
+  { FUNCTION: admin_utils.code_dehydrator.VarTypeCollector.__init__ }
+  { FUNCTION: admin_utils.code_dehydrator.VarTypeCollector._set_container_type }
+  { FUNCTION: admin_utils.code_dehydrator.VarTypeCollector.visit_Assign ( [ admin_utils.code_dehydrator.VarTypeCollector._set_container_type ] ( [ admin_utils.code_dehydrator.VarTypeCollector._set_container_type ] ( [ admin_utils.code_dehydrator.VarTypeCollector._set_container_type ] ( admin_utils.code_dehydrator.get_raw_call_name ( [ admin_utils.code_dehydrator.VarTypeCollector._set_container_type ] ( admin_utils.code_dehydrator.qualify_name ) ) ) ) ) ) admin_utils.code_dehydrator.VarTypeCollector.generic_visit }
+  { FUNCTION: admin_utils.code_dehydrator.VarTypeCollector.visit_AnnAssign ( admin_utils.code_dehydrator.get_raw_call_name ( admin_utils.code_dehydrator.qualify_name ) ) admin_utils.code_dehydrator.VarTypeCollector.generic_visit }
+  { FUNCTION: admin_utils.code_dehydrator.CallCollector.__init__ }
+  { FUNCTION: admin_utils.code_dehydrator.CallCollector.current ( return ) }
+  { FUNCTION: admin_utils.code_dehydrator.CallCollector._push_block self.<<stack>>.append [ admin_utils.code_dehydrator.CallCollector.visit ] [ admin_utils.code_dehydrator.CallCollector.visit ] self.<<stack>>.pop ( self.<<current>>.append ) }
+  { FUNCTION: admin_utils.code_dehydrator.CallCollector.visit_For admin_utils.code_dehydrator.CallCollector._push_block }
+  { FUNCTION: admin_utils.code_dehydrator.CallCollector.visit_While admin_utils.code_dehydrator.CallCollector._push_block }
+  { FUNCTION: admin_utils.code_dehydrator.CallCollector.visit_If admin_utils.code_dehydrator.CallCollector._push_block }
+  { FUNCTION: admin_utils.code_dehydrator.CallCollector.visit_Call admin_utils.code_dehydrator.get_raw_call_name ( admin_utils.code_dehydrator.qualify_name self.<<current>>.append ) admin_utils.code_dehydrator.CallCollector.generic_visit }
+  { FUNCTION: admin_utils.code_dehydrator.CallCollector.visit_Return admin_utils.code_dehydrator.CallCollector.generic_visit self.<<current>>.append }
+  { FUNCTION: admin_utils.code_dehydrator.CallCollector.visit_Raise admin_utils.code_dehydrator.CallCollector.generic_visit self.<<current>>.append }
+  { FUNCTION: admin_utils.code_dehydrator.CallCollector.visit_Break self.<<current>>.append }
+  { FUNCTION: admin_utils.code_dehydrator.CallCollector.visit_Continue self.<<current>>.append }
+  { FUNCTION: admin_utils.code_dehydrator.Formatter.format_block ( [ ( <list>.append ( <list>.append ( <list>.append emit_pretty <list>.append ( <list>.append emit_pretty <list>.append ) ) ) ) ] emit_pretty <list>.append ( return ) [ ( <list>.append str ( <list>.append ( <list>.append emit_compact <list>.append ( <list>.append emit_compact <list>.append ) ) ) ) ] emit_compact <list>.append ( return ) ) }
+  { FUNCTION: admin_utils.code_dehydrator.Dehydrator.create_context ast.parse admin_utils.code_dehydrator.build_import_map admin_utils.code_dehydrator.build_local_defs admin_utils.code_dehydrator.DehydrationContext ( return ) }
+  { FUNCTION: admin_utils.code_dehydrator.Dehydrator.dehydrate_node ( [ ( admin_utils.code_dehydrator.Dehydrator._process_function <<results>>.append ) ] ( admin_utils.code_dehydrator.Dehydrator._process_function <<results>>.append ) ) ( return ) }
+  { FUNCTION: admin_utils.code_dehydrator.Dehydrator._process_function admin_utils.code_dehydrator.VarTypeCollector [ <admin_utils.code_dehydrator.VarTypeCollector>.visit ] admin_utils.code_dehydrator.CallCollector [ <admin_utils.code_dehydrator.CallCollector>.visit ] admin_utils.code_dehydrator.Formatter.format_block admin_utils.code_dehydrator.DehydratedBlock ( return ) }
+  { FUNCTION: admin_utils.code_dehydrator.Dehydrator.dehydrate_module ast.parse admin_utils.code_dehydrator.DehydrationContext admin_utils.code_dehydrator.build_import_map admin_utils.code_dehydrator.build_local_defs [ ( admin_utils.code_dehydrator.Dehydrator.dehydrate_node <<all_blocks>>.extend ) ] ( return ) }
+}

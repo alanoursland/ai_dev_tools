@@ -1,0 +1,159 @@
+{ FILE: src\kinopulse\core\Parameters.py
+  { FUNCTION: kinopulse.core.Parameters.ParameterSpec.validate {? return } {? return } {? {? return } } {? return } {? {? return } } return }
+  { FUNCTION: kinopulse.core.Parameters.Parameters.__init__ set set {? {? <<data>>.named_parameters {? raise( TypeError( type ) ) } } } }
+  { FUNCTION: kinopulse.core.Parameters.Parameters.__getitem__ {? {? return } } {? raise( KeyError ) } return }
+  { FUNCTION: kinopulse.core.Parameters.Parameters.__len__ return( len ) }
+  { FUNCTION: kinopulse.core.Parameters.Parameters.__setitem__ {? {? raise( kinopulse.utils.ConfigError ) } {? raise( kinopulse.utils.ConfigError ) } {? {? raise( kinopulse.utils.ConfigError ) } } {? raise( kinopulse.utils.ConfigError ) } {? {? raise( kinopulse.utils.ConfigError ) } } } }
+  { FUNCTION: kinopulse.core.Parameters.Parameters.__contains__ {? {? return } } return }
+  { FUNCTION: kinopulse.core.Parameters.Parameters.get {t return } {c KeyError return } }
+  { FUNCTION: kinopulse.core.Parameters.Parameters.data return }
+  { FUNCTION: kinopulse.core.Parameters.Parameters.trainable return }
+  { FUNCTION: kinopulse.core.Parameters.Parameters.fixed set( <<self.trainable>>.keys ) return }
+  { FUNCTION: kinopulse.core.Parameters.Parameters.all return( <<self._data>>.copy ) }
+  { FUNCTION: kinopulse.core.Parameters.Parameters.to_dict return }
+  { FUNCTION: kinopulse.core.Parameters.Parameters.validate [ {t } {c ConfigError raise( kinopulse.utils.errors.InvalidStateError( str ) ) } ] return }
+  { FUNCTION: kinopulse.core.Parameters.Parameters.flatten [ <<tensors>>.append( <<param>>.flatten ) ] return( <torch>.cat ) }
+  { FUNCTION: kinopulse.core.Parameters.Parameters.from_dict return( cls ) }
+  { FUNCTION: kinopulse.core.Parameters.Parameters.keys return( <<self._data>>.keys ) }
+  { FUNCTION: kinopulse.core.Parameters.Parameters.values return( <<self._data>>.values ) }
+  { FUNCTION: kinopulse.core.Parameters.Parameters.items return( <<self._data>>.items ) }
+  { FUNCTION: kinopulse.core.Parameters.Parameters.update {? <<self._data>>.update {? <<self._data>>.update raise( TypeError( type ) ) } } }
+  { FUNCTION: kinopulse.core.Parameters.Parameters.clone isinstance <<v>>.clone <<self._data>>.items kinopulse.core.Parameters.Parameters <<self._trainable_names>>.copy return }
+  { FUNCTION: kinopulse.core.Parameters.Parameters.to kinopulse.core.Parameters.Parameters <<self._trainable_names>>.copy return }
+  { FUNCTION: kinopulse.core.Parameters.Parameters.device set [ {? <<devices>>.add } ] {? return {? return( <<devices>>.pop ) return( next( iter ) ) } } }
+}
+{ FILE: src\kinopulse\core\State.py
+  { FUNCTION: kinopulse.core.State.StateSpec.validate {? return } {? return } {? return } {? [ {? return } ] } return }
+  { FUNCTION: kinopulse.core.State.State.__init__ {? {? raise( TypeError( type ) ) } } }
+  { FUNCTION: kinopulse.core.State.State.tensor {? return } return( <<self>>.flatten ) }
+  { FUNCTION: kinopulse.core.State.State.shape return }
+  { FUNCTION: kinopulse.core.State.State.device return }
+  { FUNCTION: kinopulse.core.State.State.dtype return }
+  { FUNCTION: kinopulse.core.State.State.to {? <<self._tensor>>.to return( kinopulse.core.State.State( <<v>>.to <<self._subsystem_states>>.items ) ) <<v>>.to <<self._subsystem_states>>.items return( kinopulse.core.State.State ) } }
+  { FUNCTION: kinopulse.core.State.State.clone {? kinopulse.utils.clone_with_grad return( kinopulse.core.State.State( <<v>>.clone <<self._subsystem_states>>.items ) ) <<v>>.clone <<self._subsystem_states>>.items return( kinopulse.core.State.State ) } }
+  { FUNCTION: kinopulse.core.State.State.validate {? return } return( <<self.spec>>.validate ) }
+  { FUNCTION: kinopulse.core.State.State.project_to_manifold {? return( <<self>>.clone ) } <<self.spec.manifold>>.project return( kinopulse.core.State.State( <<v>>.clone <<self._subsystem_states>>.items ) ) }
+  { FUNCTION: kinopulse.core.State.State.tangent_at raise( NotImplementedError ) }
+  { FUNCTION: kinopulse.core.State.State.__getitem__ isinstance str {? return } {? {? int } {? {? raise( KeyError ) } {? <<component>>.unsqueeze } return( kinopulse.core.State.State ) } } raise( KeyError ) }
+  { FUNCTION: kinopulse.core.State.State.flatten {? return } {? raise( ValueError ) } [ <<tensors>>.append( <<substate>>.flatten ) ] return( <torch>.cat ) }
+  { FUNCTION: kinopulse.core.State.State.from_flat return( cls ) }
+  { FUNCTION: kinopulse.core.State.TangentSpace.__init__ }
+  { FUNCTION: kinopulse.core.State.TangentSpace.project {? return } <torch>.einsum return( <torch>.einsum ) }
+  { FUNCTION: kinopulse.core.State.Manifold.project }
+  { FUNCTION: kinopulse.core.State.Manifold.tangent_space }
+  { FUNCTION: kinopulse.core.State.Manifold.exp_map }
+  { FUNCTION: kinopulse.core.State.Manifold.log_map }
+  { FUNCTION: kinopulse.core.State.SO3Manifold.project {? <<R>>.unsqueeze } <<torch.linalg>>.det {? <<U>>.clone } {? <<R_proj>>.squeeze } return }
+  { FUNCTION: kinopulse.core.State.SO3Manifold.tangent_space <torch>.zeros return( kinopulse.core.State.TangentSpace ) }
+  { FUNCTION: kinopulse.core.State.SO3Manifold.exp_map <<self>>._skew_symmetric <torch>.norm {? <torch>.where( <torch>.ones_like <torch>.sin ) <torch>.where( <torch>.ones_like <torch>.cos ) <torch>.sin <torch>.cos } {? <<coeff1>>.item <<coeff2>>.item <<coeff1>>.squeeze <<coeff2>>.squeeze } <torch>.eye return }
+  { FUNCTION: kinopulse.core.State.SO3Manifold.log_map <torch>.trace <torch>.arccos( <torch>.clamp ) {? <<self>>._vee return } <torch>.sin <<self>>._vee return }
+  { FUNCTION: kinopulse.core.State.SO3Manifold._skew_symmetric {? return( <torch>.tensor ) <torch>.zeros return } }
+  { FUNCTION: kinopulse.core.State.SO3Manifold._vee return( <torch>.tensor ) }
+  { FUNCTION: kinopulse.core.State.SE3Manifold.__init__ kinopulse.core.State.SO3Manifold }
+  { FUNCTION: kinopulse.core.State.SE3Manifold.project <<T>>.clone <<self.so3>>.project return }
+  { FUNCTION: kinopulse.core.State.SE3Manifold.tangent_space return( kinopulse.core.State.TangentSpace ) }
+  { FUNCTION: kinopulse.core.State.SE3Manifold.exp_map <<self.so3>>.exp_map <torch>.norm {? <torch>.eye <<self.so3>>._skew_symmetric <torch>.cos <torch>.sin <torch>.eye <<coeff1>>.squeeze <<coeff2>>.squeeze } <torch>.zeros_like return }
+  { FUNCTION: kinopulse.core.State.SE3Manifold.log_map <<torch.linalg>>.inv <<self.so3>>.log_map( <torch>.eye ) <torch>.norm {? <<self.so3>>._skew_symmetric <torch>.cos <torch>.sin <torch>.eye <<torch.linalg>>.inv } return( <torch>.cat ) }
+}
+{ FILE: src\kinopulse\core\Time.py
+  { FUNCTION: kinopulse.core.Time.TimeSpec.duration {? return } return }
+  { FUNCTION: kinopulse.core.Time.TimeSpec.num_steps {? return } return }
+  { FUNCTION: kinopulse.core.Time.Time.__init__ isinstance {? {? {? float raise( ValueError( type ) ) } } {? {? {? int raise( ValueError( type ) ) } } {? {? {? raise( ValueError ) } {? raise( ValueError ) } raise( ValueError ) } raise( ValueError ) } } } }
+  { FUNCTION: kinopulse.core.Time.Time.value {? return {? return raise( ValueError ) } } }
+  { FUNCTION: kinopulse.core.Time.Time.continuous {? raise( ValueError ) } return }
+  { FUNCTION: kinopulse.core.Time.Time.discrete {? raise( ValueError ) } return }
+  { FUNCTION: kinopulse.core.Time.Time.hybrid {? raise( ValueError ) } return }
+  { FUNCTION: kinopulse.core.Time.Time.increment_flow {? return( kinopulse.core.Time.Time ) {? return( kinopulse.core.Time.Time ) raise( ValueError ) } } }
+  { FUNCTION: kinopulse.core.Time.Time.increment_jump {? return( kinopulse.core.Time.Time ) {? return( kinopulse.core.Time.Time ) raise( ValueError ) } } }
+  { FUNCTION: kinopulse.core.Time.Time.to_continuous {? return( kinopulse.core.Time.Time ) {? return( kinopulse.core.Time.Time ) {? {? return( kinopulse.core.Time.Time ) } return( kinopulse.core.Time.Time ) raise( ValueError ) } } } }
+  { FUNCTION: kinopulse.core.Time.Time.to_discrete isinstance isinstance {? return( kinopulse.core.Time.Time ) {? {? hasattr int int } return( kinopulse.core.Time.Time ) {? hasattr int int } return( kinopulse.core.Time.Time ) } } }
+  { FUNCTION: kinopulse.core.Time.Time.to_hybrid {? return( kinopulse.core.Time.Time ) {? return( kinopulse.core.Time.Time ) isinstance <torch>.tensor return( kinopulse.core.Time.Time ) } } }
+  { FUNCTION: kinopulse.core.Time.Time.__eq__ {? return } safe_eq {? return } return }
+  { FUNCTION: kinopulse.core.Time.Time.__eq__.safe_eq {? return } {? return } {? return( <torch>.abs ) } return( abs ) }
+  { FUNCTION: kinopulse.core.Time.Time.__lt__ {? raise( TypeError( type ) ) } {? isinstance <torch>.abs abs return } {? return {? return return } } }
+  { FUNCTION: kinopulse.core.Time.Time.__le__ {? raise( TypeError( type ) ) } {? return } return }
+  { FUNCTION: kinopulse.core.Time.Time.__gt__ {? raise( TypeError( type ) ) } {? return } return }
+  { FUNCTION: kinopulse.core.Time.Time.__ge__ {? raise( TypeError( type ) ) } {? return } return }
+  { FUNCTION: kinopulse.core.Time.Time.__add__ isinstance {? {? return( kinopulse.core.Time.Time ) {? return( kinopulse.core.Time.Time ) return( kinopulse.core.Time.Time ) } } {? {? return( kinopulse.core.Time.Time ) {? return( kinopulse.core.Time.Time ) return( kinopulse.core.Time.Time ) } } raise( TypeError( type ) ) } } }
+  { FUNCTION: kinopulse.core.Time.Time.__sub__ {? {? return( kinopulse.core.Time.Time ) {? return( kinopulse.core.Time.Time ) return( kinopulse.core.Time.Time ) } } {? {? return {? return return } } raise( TypeError( type ) ) } } }
+  { FUNCTION: kinopulse.core.Time.Time.__repr__ {? isinstance str return {? return isinstance str return } } }
+}
+{ FILE: src\kinopulse\core\system.py
+  { FUNCTION: kinopulse.core.system.DynamicalSystem.dynamics }
+  { FUNCTION: kinopulse.core.system.DynamicalSystem.output }
+  { FUNCTION: kinopulse.core.system.DynamicalSystem.jacobian raise( NotImplementedError ) }
+  { FUNCTION: kinopulse.core.system.DynamicalSystem.residual raise( NotImplementedError ) }
+  { FUNCTION: kinopulse.core.system.DynamicalSystem.events raise( NotImplementedError ) }
+  { FUNCTION: kinopulse.core.system.DynamicalSystem.reset raise( NotImplementedError ) }
+  { FUNCTION: kinopulse.core.system.DynamicalSystem.describe return }
+  { FUNCTION: kinopulse.core.system.create_system raise( NotImplementedError ) }
+  { FUNCTION: kinopulse.core.system.create_state .state.State {? <.state.State>.validate } return }
+  { FUNCTION: kinopulse.core.system.zero_state <torch>.zeros return( .state.State ) }
+  { FUNCTION: kinopulse.core.system.create_parameters return( .parameters.Parameters ) }
+}
+{ FILE: src\kinopulse\solvers\config.py
+  { FUNCTION: kinopulse.solvers.config.ToleranceConfig.__post_init__ {? raise( ValueError ) } {? raise( ValueError ) } {? raise( ValueError ) } }
+  { FUNCTION: kinopulse.solvers.config.StepSizeConfig.__post_init__ {? raise( ValueError ) } abs {? raise( ValueError ) } {? raise( ValueError ) } }
+  { FUNCTION: kinopulse.solvers.config.EventConfig.__post_init__ {? raise( ValueError ) } {? raise( ValueError ) } {? raise( ValueError ) } }
+  { FUNCTION: kinopulse.solvers.config.AdjointConfig.__post_init__ {? raise( ValueError ) } {? raise( ValueError ) } }
+  { FUNCTION: kinopulse.solvers.config.DiagnosticConfig.__post_init__ {? raise( ValueError ) } }
+  { FUNCTION: kinopulse.solvers.config.SolverConfig.__init__ <<kwargs>>.pop <<kwargs>>.pop <<self>>._coerce_method <<self>>._coerce_step_size <<self>>._coerce_tolerance [ setattr ] <<self>>.__post_init__ }
+  { FUNCTION: kinopulse.solvers.config.SolverConfig.__post_init__ <<self>>._coerce_method {? kinopulse.solvers.config.ToleranceConfig {? kinopulse.solvers.config.ToleranceConfig } } {? kinopulse.solvers.config.StepSizeConfig {? kinopulse.solvers.config.StepSizeConfig } } {? kinopulse.solvers.config.EventConfig {? kinopulse.solvers.config.EventConfig {? kinopulse.solvers.config.EventConfig } } } {? kinopulse.solvers.config.AdjointConfig {? kinopulse.solvers.config.AdjointConfig } } {? kinopulse.solvers.config.DiagnosticConfig {? kinopulse.solvers.config.DiagnosticConfig } } {? <torch>.device {? <torch>.device } } {? raise( ValueError ) } {? raise( ValueError ) } }
+  { FUNCTION: kinopulse.solvers.config.SolverConfig.dt }
+  { FUNCTION: kinopulse.solvers.config.SolverConfig.dt_min return }
+  { FUNCTION: kinopulse.solvers.config.SolverConfig.dt_max return }
+  { FUNCTION: kinopulse.solvers.config.SolverConfig.adaptive }
+  { FUNCTION: kinopulse.solvers.config.SolverConfig.rtol return }
+  { FUNCTION: kinopulse.solvers.config.SolverConfig.atol return }
+  { FUNCTION: kinopulse.solvers.config.SolverConfig._coerce_method {? return } {? {t return( kinopulse.solvers.config.SolverMethod( <<method>>.lower ) ) } {c ValueError raise( ValueError ) } } return }
+  { FUNCTION: kinopulse.solvers.config.SolverConfig._coerce_step_size {? return( dataclasses.replace ) } {? return( kinopulse.solvers.config.StepSizeConfig ) } {? <<overrides>>.setdefault( float ) return( kinopulse.solvers.config.StepSizeConfig ) } {? return( kinopulse.solvers.config.StepSizeConfig ) } raise( TypeError( type ) ) }
+  { FUNCTION: kinopulse.solvers.config.SolverConfig._coerce_tolerance {? return( dataclasses.replace ) } {? return( kinopulse.solvers.config.ToleranceConfig ) } {? return( kinopulse.solvers.config.ToleranceConfig ) } raise( TypeError( type ) ) }
+}
+{ FILE: src\kinopulse\solvers\ode\explicit.py
+  { FUNCTION: kinopulse.solvers.ode.explicit._evaluate_rk_stages len <torch>.zeros [ <kinopulse.core.State>.clone kinopulse.core.create_state <kinopulse.core.DynamicalSystem>.dynamics( kinopulse.core.Time ) ] return }
+  { FUNCTION: kinopulse.solvers.ode.explicit._combine_rk_stages <torch>.einsum return }
+  { FUNCTION: kinopulse.solvers.ode.explicit.EulerSolver.step <kinopulse.core.DynamicalSystem>.dynamics( kinopulse.core.Time ) <<self>>._to_tensor <<self>>._to_tensor kinopulse.core.create_state return }
+  { FUNCTION: kinopulse.solvers.ode.explicit.MidpointSolver.step <<self>>._to_tensor <kinopulse.core.DynamicalSystem>.dynamics( kinopulse.core.Time ) <<self>>._to_tensor kinopulse.core.create_state <kinopulse.core.DynamicalSystem>.dynamics( kinopulse.core.Time ) <<self>>._to_tensor kinopulse.core.create_state return }
+  { FUNCTION: kinopulse.solvers.ode.explicit.RK4Solver.step <<self>>._to_tensor <kinopulse.core.DynamicalSystem>.dynamics( kinopulse.core.Time ) <<self>>._to_tensor kinopulse.core.create_state <kinopulse.core.DynamicalSystem>.dynamics( kinopulse.core.Time ) <<self>>._to_tensor kinopulse.core.create_state <kinopulse.core.DynamicalSystem>.dynamics( kinopulse.core.Time ) <<self>>._to_tensor kinopulse.core.create_state <kinopulse.core.DynamicalSystem>.dynamics( kinopulse.core.Time ) <<self>>._to_tensor kinopulse.core.create_state return }
+  { FUNCTION: kinopulse.solvers.ode.explicit.DOPRI5Solver.__init__ super <<super>>.__init__ }
+  { FUNCTION: kinopulse.solvers.ode.explicit.DOPRI5Solver.invalidate_fsal }
+  { FUNCTION: kinopulse.solvers.ode.explicit.DOPRI5Solver.step <<self>>._to_tensor {? <<k>>.append <kinopulse.core.DynamicalSystem>.dynamics( kinopulse.core.Time ) <<k>>.append( <<self>>._to_tensor ) } [ [ <<self>>._to_tensor ] kinopulse.core.create_state <kinopulse.core.DynamicalSystem>.dynamics( kinopulse.core.Time ) <<k>>.append( <<self>>._to_tensor ) ] [ <<self>>._to_tensor ] [ <<self>>._to_tensor ] <torch>.abs kinopulse.core.create_state return }
+  { FUNCTION: kinopulse.solvers.ode.explicit.Tsit5Solver.__init__ super <<super>>.__init__ }
+  { FUNCTION: kinopulse.solvers.ode.explicit.Tsit5Solver.step <<self>>._to_tensor <kinopulse.core.DynamicalSystem>.dynamics( kinopulse.core.Time ) <<k>>.append( <<self>>._to_tensor ) [ [ <<self>>._to_tensor ] kinopulse.core.create_state <kinopulse.core.DynamicalSystem>.dynamics( kinopulse.core.Time ) <<k>>.append( <<self>>._to_tensor ) ] [ <<self>>._to_tensor ] [ <<self>>._to_tensor ] <torch>.abs kinopulse.core.create_state return }
+}
+{ FILE: src\kinopulse\utils\errors.py
+  { FUNCTION: kinopulse.utils.errors.ShapeError.__init__ super <<super>>.__init__ }
+  { FUNCTION: kinopulse.utils.errors.DeviceMismatchError.__init__ super <<super>>.__init__ }
+  { FUNCTION: kinopulse.utils.errors.DtypeMismatchError.__init__ super <<super>>.__init__ }
+  { FUNCTION: kinopulse.utils.errors.assert_same_device .device.get_device {? raise( kinopulse.utils.errors.DeviceMismatchError ) } }
+  { FUNCTION: kinopulse.utils.errors.assert_same_dtype .dtype.get_dtype {? raise( kinopulse.utils.errors.DtypeMismatchError ) } }
+  { FUNCTION: kinopulse.utils.errors.assert_finite [ {? {? len raise( kinopulse.utils.errors.InvalidStateError ) } } ] }
+}
+{ FILE: src\kinopulse\utils\tensor.py
+  { FUNCTION: kinopulse.utils.tensor.zeros_like_state {? return( <torch>.zeros ) return( <torch>.zeros_like ) } }
+  { FUNCTION: kinopulse.utils.tensor.ones_like_state {? return( <torch>.ones ) return( <torch>.ones_like ) } }
+  { FUNCTION: kinopulse.utils.tensor.eye_like {? .device.get_default_device } {? .dtype.get_default_dtype } <torch>.eye {? <<eye>>.unsqueeze <<eye.unsqueeze>>.expand } return }
+  { FUNCTION: kinopulse.utils.tensor.batch_over {? return( <<tensor>>.unsqueeze <<tensor.unsqueeze>>.expand ) {? return {? return( <<tensor>>.expand ) return( <<tensor>>.unsqueeze <<tensor.unsqueeze>>.expand ) } } } }
+  { FUNCTION: kinopulse.utils.tensor.clone_with_grad <<tensor>>.clone {? <<cloned>>.requires_grad_ } return }
+  { FUNCTION: kinopulse.utils.tensor.safe_detach return( <<tensor>>.detach ) }
+  { FUNCTION: kinopulse.utils.tensor.ensure_tensor {? .device.get_default_device } {? .dtype.get_default_dtype } {? return( <<obj>>.to ) } {? <torch>.from_numpy <<torch.from_numpy>>.to {? <<tensor>>.to } return } {? <torch>.tensor return } {? <torch>.tensor return } raise( TypeError( type ) ) }
+}
+{ FILE: src\tests\solvers\ode\unit\explicit\test_order_verification.py
+  { FUNCTION: test_order_verification.ExponentialDecaySystem.__init__ super <<super>>.__init__ }
+  { FUNCTION: test_order_verification.ExponentialDecaySystem.dynamics hasattr return( kinopulse.core.create_state ) }
+  { FUNCTION: test_order_verification.compute_richardson_order {? return( float ) } <numpy>.log <numpy>.log <numpy>.polyfit return }
+  { FUNCTION: test_order_verification.TestEulerConvergenceOrder.test_euler_first_order_convergence test_order_verification.ExponentialDecaySystem kinopulse.core.create_state( <torch>.tensor ) <torch>.exp( <torch>.tensor ) [ kinopulse.solvers.config.SolverConfig( kinopulse.solvers.config.StepSizeConfig ) kinopulse.solvers.ode.EulerSolver <kinopulse.solvers.ode.EulerSolver>.solve <torch>.abs <<torch.abs>>.item <<errors>>.append ] compute_richardson_order <numpy>.isinf }
+  { FUNCTION: test_order_verification.TestEulerConvergenceOrder.test_euler_error_halves_when_dt_halves test_order_verification.ExponentialDecaySystem kinopulse.core.create_state( <torch>.tensor ) <torch>.exp( <torch>.tensor ) kinopulse.solvers.config.SolverConfig( kinopulse.solvers.config.StepSizeConfig ) kinopulse.solvers.ode.EulerSolver <kinopulse.solvers.ode.EulerSolver>.solve <torch>.abs <<torch.abs>>.item kinopulse.solvers.config.SolverConfig( kinopulse.solvers.config.StepSizeConfig ) kinopulse.solvers.ode.EulerSolver <kinopulse.solvers.ode.EulerSolver>.solve <torch>.abs <<torch.abs>>.item {? float } <numpy>.isinf }
+  { FUNCTION: test_order_verification.TestMidpointConvergenceOrder.test_midpoint_second_order_convergence test_order_verification.ExponentialDecaySystem kinopulse.core.create_state( <torch>.tensor ) <torch>.exp( <torch>.tensor ) [ kinopulse.solvers.config.SolverConfig( kinopulse.solvers.config.StepSizeConfig ) kinopulse.solvers.ode.MidpointSolver <kinopulse.solvers.ode.MidpointSolver>.solve <torch>.abs <<torch.abs>>.item <<errors>>.append ] compute_richardson_order <numpy>.isinf }
+  { FUNCTION: test_order_verification.TestMidpointConvergenceOrder.test_midpoint_error_quarters_when_dt_halves test_order_verification.ExponentialDecaySystem kinopulse.core.create_state( <torch>.tensor ) <torch>.exp( <torch>.tensor ) kinopulse.solvers.config.SolverConfig( kinopulse.solvers.config.StepSizeConfig ) kinopulse.solvers.ode.MidpointSolver <kinopulse.solvers.ode.MidpointSolver>.solve <torch>.abs <<torch.abs>>.item kinopulse.solvers.config.SolverConfig( kinopulse.solvers.config.StepSizeConfig ) kinopulse.solvers.ode.MidpointSolver <kinopulse.solvers.ode.MidpointSolver>.solve <torch>.abs <<torch.abs>>.item {? float } <numpy>.isinf }
+  { FUNCTION: test_order_verification.TestComparativeConvergence.test_midpoint_more_accurate_than_euler test_order_verification.ExponentialDecaySystem kinopulse.core.create_state( <torch>.tensor ) <torch>.exp( <torch>.tensor ) kinopulse.solvers.config.SolverConfig( kinopulse.solvers.config.StepSizeConfig ) kinopulse.solvers.ode.EulerSolver <kinopulse.solvers.ode.EulerSolver>.solve <torch>.abs <<torch.abs>>.item kinopulse.solvers.config.SolverConfig( kinopulse.solvers.config.StepSizeConfig ) kinopulse.solvers.ode.MidpointSolver <kinopulse.solvers.ode.MidpointSolver>.solve <torch>.abs <<torch.abs>>.item }
+  { FUNCTION: test_order_verification.TestComparativeConvergence.test_convergence_order_difference test_order_verification.ExponentialDecaySystem kinopulse.core.create_state( <torch>.tensor ) <torch>.exp( <torch>.tensor ) [ kinopulse.solvers.config.SolverConfig( kinopulse.solvers.config.StepSizeConfig ) kinopulse.solvers.ode.EulerSolver <kinopulse.solvers.ode.EulerSolver>.solve <<errors_euler>>.append( <torch>.abs <<torch.abs>>.item ) kinopulse.solvers.config.SolverConfig( kinopulse.solvers.config.StepSizeConfig ) kinopulse.solvers.ode.MidpointSolver <kinopulse.solvers.ode.MidpointSolver>.solve <<errors_midpoint>>.append( <torch>.abs <<torch.abs>>.item ) ] compute_richardson_order compute_richardson_order }
+  { FUNCTION: test_order_verification.TestRichardsonExtrapolation.test_richardson_order_estimation_synthetic compute_richardson_order abs }
+  { FUNCTION: test_order_verification.TestRichardsonExtrapolation.test_richardson_order_first_order_synthetic compute_richardson_order abs }
+  { FUNCTION: test_order_verification.TestRK4ConvergenceOrder.test_rk4_fourth_order_convergence test_order_verification.ExponentialDecaySystem kinopulse.core.create_state( <torch>.tensor ) <torch>.exp( <torch>.tensor ) [ kinopulse.solvers.config.SolverConfig( kinopulse.solvers.config.StepSizeConfig ) kinopulse.solvers.ode.RK4Solver <kinopulse.solvers.ode.RK4Solver>.solve <torch>.abs <<torch.abs>>.item <<errors>>.append ] compute_richardson_order <numpy>.isinf }
+  { FUNCTION: test_order_verification.TestRK4ConvergenceOrder.test_rk4_error_sixteenths_when_dt_halves test_order_verification.ExponentialDecaySystem kinopulse.core.create_state( <torch>.tensor ) <torch>.exp( <torch>.tensor ) kinopulse.solvers.config.SolverConfig( kinopulse.solvers.config.StepSizeConfig ) kinopulse.solvers.ode.RK4Solver <kinopulse.solvers.ode.RK4Solver>.solve <torch>.abs <<torch.abs>>.item kinopulse.solvers.config.SolverConfig( kinopulse.solvers.config.StepSizeConfig ) kinopulse.solvers.ode.RK4Solver <kinopulse.solvers.ode.RK4Solver>.solve <torch>.abs <<torch.abs>>.item {? float } <numpy>.isinf }
+  { FUNCTION: test_order_verification.TestRK4ConvergenceOrder.test_rk4_on_nonlinear_system <torch>.device( <<torch.cuda>>.is_available ) PendulumSystem kinopulse.core.create_state( <torch>.tensor ) kinopulse.solvers.config.SolverConfig( kinopulse.solvers.config.StepSizeConfig ) kinopulse.solvers.ode.RK4Solver <kinopulse.solvers.ode.RK4Solver>.solve [ kinopulse.solvers.config.SolverConfig( kinopulse.solvers.config.StepSizeConfig ) kinopulse.solvers.ode.RK4Solver <kinopulse.solvers.ode.RK4Solver>.solve <torch>.norm <<torch.norm>>.item <<errors>>.append ] compute_richardson_order <numpy>.isinf }
+  { FUNCTION: test_order_verification.TestRK4ConvergenceOrder.test_rk4_on_nonlinear_system.PendulumSystem.__init__ super <<super>>.__init__ }
+  { FUNCTION: test_order_verification.TestRK4ConvergenceOrder.test_rk4_on_nonlinear_system.PendulumSystem.dynamics hasattr <torch>.stack( <torch>.sin ) return( kinopulse.core.create_state ) }
+  { FUNCTION: test_order_verification.TestRK4vsLowerOrderMethods.test_rk4_higher_order_than_midpoint test_order_verification.ExponentialDecaySystem kinopulse.core.create_state( <torch>.tensor ) <torch>.exp( <torch>.tensor ) [ kinopulse.solvers.config.SolverConfig( kinopulse.solvers.config.StepSizeConfig ) kinopulse.solvers.ode.MidpointSolver <kinopulse.solvers.ode.MidpointSolver>.solve <<errors_midpoint>>.append( <torch>.abs <<torch.abs>>.item ) kinopulse.solvers.config.SolverConfig( kinopulse.solvers.config.StepSizeConfig ) kinopulse.solvers.ode.RK4Solver <kinopulse.solvers.ode.RK4Solver>.solve <<errors_rk4>>.append( <torch>.abs <<torch.abs>>.item ) ] compute_richardson_order compute_richardson_order }
+}

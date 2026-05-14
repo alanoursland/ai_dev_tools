@@ -1,0 +1,6 @@
+{ FILE: admin_utils\fix_tests_merge.py
+  { FUNCTION: admin_utils.fix_tests_merge.get_file_content open <<f>>.read ( return ) print ( return ) }
+  { FUNCTION: admin_utils.fix_tests_merge.extract_class_source <<content>>.splitlines ( min ) ( ( return ) ) ( return ) }
+  { FUNCTION: admin_utils.fix_tests_merge.analyze_and_merge admin_utils.fix_tests_merge.get_file_content admin_utils.fix_tests_merge.get_file_content ( ( return ) ) ast.parse ast.parse print ( return ) ast.walk isinstance ast.walk isinstance sorted list set <<root_classes>>.keys set <<src_classes>>.keys os.path.basename ( <<root_file>>.split ) ( ( return ) ) print print ( open <<f>>.write <<f>>.write <os.path.basename>.replace <<f>>.write <<f>>.write [ admin_utils.fix_tests_merge.extract_class_source ( print <<f>>.write <<f>>.write print ) ] <admin_utils.fix_tests_merge.get_file_content>.splitlines <<nodes_to_remove>>.sort [ ( min ) ] open <<f>>.writelines print print len ) print }
+  { FUNCTION: admin_utils.fix_tests_merge.main argparse.ArgumentParser <argparse.ArgumentParser>.add_argument <argparse.ArgumentParser>.parse_args ( ( print sys.exit ) ) print ( print print ) print [ [ ( ( continue ) ) os.path.join os.path.relpath os.path.join ( admin_utils.fix_tests_merge.analyze_and_merge ) ] ] }
+}

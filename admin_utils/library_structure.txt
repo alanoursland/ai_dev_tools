@@ -1,0 +1,3034 @@
+
+FILE: _compat.py
+  def apply_compat_patches()
+
+FILE: analysis\bifurcations\detection.py
+  class BifurcationDetector: __init__(crossing_tolerance, eigenvalue_threshold), detect_from_sweep(sweep_result), detect_period_doubling(floquet_multipliers_sequence, parameter_values), classify_bifurcation(bifurcation_point, additional_data)
+
+FILE: analysis\bifurcations\parameter_sweep.py
+  class ParameterSweeper: __init__(dynamics, equilibrium_finder), sweep_parameter(parameter_name, parameter_range, initial_guess, base_params, use_continuation, eigenvalue_tolerance), sweep_multiple_parameters(parameter_names, parameter_grids, initial_guess, base_params)
+
+FILE: analysis\bifurcations\results.py
+  class BifurcationPoint: to_dict()
+  class ParameterSweepResult: get_stable_regions(), to_dict()
+  class BifurcationDiagram: to_dict()
+
+FILE: analysis\dae\index_computation.py
+  class DAEIndexComputer: __init__(system, tolerance, max_index), compute_index(x0, t0, u, params), analyze_constraints(x0, t0, u, params)
+  def compute_dae_index(system, x0, t0, u, params, tolerance)
+
+FILE: analysis\dae\initialization.py
+  class ConsistentInitializationValidator: __init__(system, tolerance, max_iterations), validate(x0, t0, u, params), project_to_manifold(x0, t0, u, params, method)
+  def validate_initial_conditions(system, x0, t0, u, params, tolerance)
+  def project_to_constraint_manifold(system, x0, t0, u, params, tolerance, method)
+
+FILE: analysis\dae\mass_matrix.py
+  class MassMatrixAnalyzer: __init__(system, tolerance), analyze(x0, params, check_state_dependence, num_samples), decompose_differential_algebraic(x0, params)
+  def analyze_mass_matrix(system, x0, params, tolerance)
+  def compute_constraint_projection(system, x0, params)
+
+FILE: analysis\dae\results.py
+  class DAEIndexResult: summary()
+  class ConstraintAnalysisResult: 
+  class MassMatrixAnalysisResult: summary()
+  class ConsistentInitializationResult: summary()
+
+FILE: analysis\dynamics\results.py
+  class VectorFieldResult: to_dict()
+  class NullclineResult: has_x_nullcline(), has_y_nullcline(), to_dict()
+  class PhasePortraitResult: num_equilibria(), has_nullclines(), to_dict()
+  class PoincareSectionResult: num_crossings(), has_return_map(), to_dict()
+
+FILE: analysis\dynamics\classification\local_types.py
+  class EquilibriumClassifier: __init__(tolerance), classify(linearization_result), classify_from_eigenvalues(point, eigenvalues, eigenvectors)
+
+FILE: analysis\dynamics\classification\normal_forms.py
+  class NormalFormComputer: __init__(system, tolerance), compute_normal_form(linearization_result, form_type, params), transform_to_normal_coordinates(x, normal_form_result), transform_from_normal_coordinates(y, normal_form_result)
+
+FILE: analysis\dynamics\classification\results.py
+  class ClassificationResult: to_dict(), is_stable(), is_unstable(), is_saddle()
+  class NormalFormResult: to_dict()
+  class StabilityResult: to_dict()
+
+FILE: analysis\dynamics\classification\stability_check.py
+  class StabilityChecker: __init__(system, tolerance), check_stability(linearization_result, params), estimate_basin_size(point, eigenvalues, params, num_samples, max_radius), compute_lyapunov_function_quadratic(linearization_result), check_linearization_validity(linearization_result, params, test_radius, num_samples)
+
+FILE: analysis\dynamics\hybrid\guard_analysis.py
+  class GuardSurfaceAnalyzer: __init__(hybrid_system), analyze_guard(guard_function, sample_point, epsilon), detect_guard_crossings(trajectory, guard_function, mode_sequence)
+
+FILE: analysis\dynamics\hybrid\hybrid_cycles.py
+  class HybridCycleDetector: __init__(hybrid_system, solver, guard_analyzer), detect_hybrid_cycle(initial_state, initial_mode, max_time, periodicity_threshold)
+
+FILE: analysis\dynamics\hybrid\mode_analysis.py
+  class HybridModeAnalyzer: __init__(hybrid_system, equilibrium_finder), analyze_mode(mode_index, initial_guesses, params), analyze_all_modes(initial_guesses_per_mode, params)
+
+FILE: analysis\dynamics\hybrid\mode_sequences.py
+  class ModeSequenceAnalyzer: __init__(), analyze_sequence(trajectory, mode_sequence, dt), visualize_sequence(mode_sequence, dt)
+
+FILE: analysis\dynamics\hybrid\results.py
+  class HybridDynamicsResult: to_dict()
+
+FILE: analysis\dynamics\limit_cycles\floquet.py
+  class FloquetAnalyzer: __init__(dynamics, integrator, dt), compute_floquet_multipliers(cycle_result, params, epsilon, step_size), compute_monodromy_matrix(x0, T, step_size, params, epsilon), analyze_stability(floquet_multipliers, tol), classify_stability(floquet_multipliers, tol), compute_characteristic_exponents(floquet_multipliers, period), analyze_cycle_stability(cycle_result, params, epsilon, step_size), compute_floquet_exponents(floquet_multipliers, period), enhance_cycle_result(cycle_result, epsilon, step_size)
+
+FILE: analysis\dynamics\limit_cycles\results.py
+  class LimitCycleResult: is_stable(), max_floquet_multiplier(), to_dict()
+
+FILE: analysis\dynamics\limit_cycles\shooting.py
+  class ShootingMethodCycleFinder: __init__(system, dt), find_limit_cycle(initial_state, initial_period_guess, params, max_iterations, tolerance)
+
+FILE: analysis\dynamics\limit_cycles\trajectory_detection.py
+  class TrajectoryBasedDetector: __init__(system, dt, tolerance), detect_limit_cycle(initial_state, max_time, params)
+
+FILE: analysis\dynamics\linearization\eigenanalysis.py
+  class EigenAnalyzer: __init__(tolerance), analyze(jacobian, compute_eigenvectors), classify_eigenvalues(eigenvalues), compute_spectral_properties(eigenvalues), compute_spectral_abscissa(eigenvalues), compute_spectral_radius(eigenvalues), is_hyperbolic(eigenvalues), count_unstable_dimensions(eigenvalues), count_stable_dimensions(eigenvalues), count_center_dimensions(eigenvalues), get_dominant_eigenvalue(eigenvalues), sort_by_real_part(eigenvalues, eigenvectors, descending)
+
+FILE: analysis\dynamics\linearization\jacobian.py
+  class JacobianComputer: __init__(system, method, fd_epsilon), compute_at_point(point, t, params), compute(point, t, params), compute_numerically(point, t, params, epsilon), verify_computation(point, t, params, tolerance)
+
+FILE: analysis\dynamics\linearization\results.py
+  class LinearizationResult: to_dict(), spectral_abscissa(), spectral_radius()
+  class TimeVaryingLinearizationResult: to_dict()
+
+FILE: analysis\dynamics\linearization\trajectory_linearization.py
+  class TrajectoryLinearizer: __init__(system, jacobian_method, jacobian_epsilon), linearize_along_trajectory(times, trajectory, params, compute_eigenvalues, compute_state_transition), compute_floquet_multipliers(times, trajectory, period, params), compute_lyapunov_exponents(times, trajectory, params), analyze_trajectory_stability(times, trajectory, params)
+
+FILE: analysis\dynamics\parameters\basin_tracking.py
+  class BasinTracker: __init__(system, solver, equilibrium_finder), estimate_basins(equilibria, bounds, num_samples, params, integration_time, convergence_threshold), compute_basin_boundaries(basin_map)
+
+FILE: analysis\dynamics\parameters\bifurcation_hints.py
+  class BifurcationDetector: __init__(tolerance, eigenvalue_threshold), detect_from_sweep(sweep_result)
+
+FILE: analysis\dynamics\parameters\results.py
+  class ParameterSweepResult: detect_bifurcations(tolerance), plot_bifurcation_diagram(), to_dict()
+
+FILE: analysis\dynamics\parameters\sweeps.py
+  class ParameterSweeper: __init__(system, equilibrium_finder), sweep_parameter(parameter_name, parameter_range, initial_guess, base_params, use_continuation), sweep_multiple_parameters(parameter_names, parameter_grids, initial_guess, base_params)
+
+FILE: analysis\dynamics\phase_space\nullclines.py
+  class NullclineComputer: __init__(system, params), compute_nullclines(bounds, grid_size, time, method, tolerance), find_nullcline_intersections(nullcline_result, tolerance), compute_nullcline_function(component, x_values, bounds, time, num_samples)
+
+FILE: analysis\dynamics\phase_space\phase_portrait.py
+  class PhasePortraitGenerator: __init__(system, params), generate(bounds, grid_size, time, compute_nullclines, find_equilibria, nullcline_grid_size, num_equilibrium_searches), generate_with_trajectories(bounds, initial_conditions, time_span, grid_size, compute_nullclines, find_equilibria), analyze_portrait(portrait)
+
+FILE: analysis\dynamics\phase_space\vector_field.py
+  class VectorFieldAnalyzer: __init__(system, params), evaluate_on_grid(bounds, grid_size, time, input_value), evaluate_at_points(points, time, input_value), compute_divergence(points, time, epsilon), find_critical_points_on_grid(vector_field_result, threshold), compute_streamlines(start_points, bounds, max_length, step_size, time)
+
+FILE: analysis\dynamics\trajectories\convergence.py
+  class ConvergenceAnalyzer: __init__(tolerance), analyze_convergence(trajectory, target)
+
+FILE: analysis\dynamics\trajectories\lyapunov_exponents.py
+  class LyapunovExponentComputer: __init__(system, dt, renormalization_period), compute_exponents(initial_state, integration_time, params), analyze_dynamics(initial_state, integration_time, params)
+
+FILE: analysis\dynamics\trajectories\results.py
+  class TrajectoryAnalysisResult: to_dict(), is_chaotic(), is_periodic(), is_converging()
+
+FILE: analysis\dynamics\trajectories\sensitivity.py
+  class SensitivityAnalyzer: __init__(system, dt), compute_parameter_sensitivity(initial_state, time_span, params, param_names), compute_initial_condition_sensitivity(initial_state, time_span, params), verify_sensitivity(initial_state, time_span, params, param_names, rtol)
+
+FILE: analysis\equilibrium\finding.py
+  class EquilibriumFinder: __init__(system, method, tolerance, max_iterations), find(initial_guess, input, params), find_multiple(initial_guesses, input, params, uniqueness_tolerance)
+
+FILE: analysis\equilibrium\results.py
+  class EquilibriumResult: is_stable(), is_isolated(), spectral_abscissa(), to_dict()
+  class MultipleEquilibriaResult: stable_equilibria(), unstable_equilibria(), to_dict()
+
+FILE: analysis\linearization\eigenvalue_analysis.py
+  class EigenvalueAnalyzer: __init__(system), analyze(equilibrium, input, params, jacobian), classify_phase_portrait_2d(eigenvalues)
+
+FILE: analysis\linearization\jacobian.py
+  def compute_jacobian(system, x, u, params, t, method, eps)
+
+FILE: analysis\linearization\results.py
+  class LinearizationResult: is_stiff(), dominant_eigenvalue(), slowest_mode_time_constant(), fastest_mode_time_constant(), to_dict()
+
+FILE: analysis\lyapunov\results.py
+  class LyapunovAnalysisResult: is_valid_lyapunov(), verification_confidence(), to_dict()
+  class ROAEstimate: contains(point), to_dict()
+
+FILE: analysis\lyapunov\verification.py
+  class LyapunovVerifier: __init__(system, lyapunov_function, method, num_samples), verify(region, params)
+
+FILE: analysis\nonautonomous\results.py
+  class TimeVaryingLinearizationResult: num_time_points(), interpolate_jacobian(t), to_dict()
+  class FloquetResult: is_stable(), spectral_radius(), to_dict()
+
+FILE: analysis\nonautonomous\averaging\results.py
+  class AveragingResult: to_dict()
+  class SlowFastResult: to_dict()
+  class AveragingValidityResult: to_dict()
+
+FILE: analysis\nonautonomous\averaging\slow_fast.py
+  class SlowFastDecomposer: __init__(system, epsilon), decompose(fast_indices, slow_indices, params), compute_slow_manifold(result, z_samples, max_iter, tol)
+  def decompose_slow_fast(system, fast_indices, slow_indices, epsilon, params)
+
+FILE: analysis\nonautonomous\averaging\standard_averaging.py
+  class AveragingAnalyzer: __init__(system, epsilon), compute_averaged_system(period, num_samples, params), compare_trajectories(x0, time_span, averaged_result, num_steps, params)
+  def compute_averaged_system(system, period, epsilon, num_samples, params)
+
+FILE: analysis\nonautonomous\averaging\validity.py
+  class AveragingValidityChecker: __init__(epsilon, period), check_validity(system, averaging_result, time_interval, params)
+  def check_averaging_validity(system, averaging_result, epsilon, period, time_interval, params)
+
+FILE: analysis\nonautonomous\floquet\analyzer.py
+  class FloquetAnalyzer: __init__(system), analyze_periodic_orbit(times, states, period, inputs, params, verify_closure, closure_tol), analyze_from_simulation(initial_state, period, input_func, params, num_points, integrator, verify_closure, closure_tol), compute_stability_margins(floquet_result, epsilon)
+
+FILE: analysis\nonautonomous\linearization\time_varying.py
+  class TimeVaryingLinearizer: __init__(system), linearize_along_trajectory(times, states, inputs, params, compute_fundamental)
+  class FundamentalMatrixComputer: __init__(system, method), compute(times, jacobians), verify_properties(Phi, times, jacobians, tol)
+
+FILE: analysis\nonautonomous\lyapunov\results.py
+  class TimeVaryingLyapunovResult: verification_confidence(), to_dict()
+  class UniformStabilityResult: verification_confidence(), to_dict()
+  class ExponentialStabilityResult: to_dict()
+  class UltimateBoundednessResult: to_dict()
+  class DecrescentPropertyResult: to_dict()
+
+FILE: analysis\nonautonomous\lyapunov\time_varying_lyapunov.py
+  class TimeVaryingLyapunovVerifier: __init__(system, lyapunov_function, params), verify(time_window, region_radius, num_time_samples, num_state_samples, check_decrescent), compute_lyapunov_derivative(t, x), check_decrescent(time_window, region_radius, num_time_samples, num_state_samples)
+
+FILE: analysis\nonautonomous\parametric_resonance\analyzer.py
+  class ParametricResonanceAnalyzer: __init__(system, period, floquet_analyzer), analyze_stability_chart(param1_name, param1_range, param2_name, param2_range, resolution, step_size), detect_principal_resonance(param)
+  class MathieuAnalyzer: __init__(delta, epsilon), is_stable(), compute_stability_chart(delta_range, epsilon_range, resolution, step_size), identify_resonance_tongue()
+
+FILE: analysis\nonautonomous\parametric_resonance\results.py
+  class ParametricResonanceResult: count_stable_points(), count_unstable_points(), fraction_stable()
+  class MathieuResult: __str__()
+
+FILE: analysis\nonautonomous\slowly_varying\adiabatic.py
+  class AdiabaticInvariantComputer: __init__(system), compute_adiabatic_invariants(trajectory, time_points, slow_parameter_func, tolerance), verify_adiabatic_approximation(slow_param_timescale, fast_param_timescale, threshold)
+
+FILE: analysis\nonautonomous\slowly_varying\frozen_time.py
+  class FrozenTimeAnalyzer: __init__(system), analyze_slowly_varying(time_window, num_time_samples, reference_point, params, validity_threshold), track_eigenvalue_evolution(time_window, num_time_samples, reference_point, params)
+  def analyze_frozen_time(system, time_window, reference_point, num_time_samples, params, validity_threshold)
+
+FILE: analysis\nonautonomous\slowly_varying\quasi_static.py
+  class QuasiStaticAnalyzer: __init__(system), check_quasi_static_validity(trajectory, time_points, params, threshold), compute_quasi_static_trajectory(time_points, initial_guess, params, max_iter, tol)
+
+FILE: analysis\nonautonomous\slowly_varying\results.py
+  class SlowlyVaryingResult: to_dict(), is_uniformly_stable()
+  class AdiabaticResult: to_dict()
+  class QuasiStaticResult: to_dict()
+
+FILE: analysis\nonautonomous\stability\exponential_stability.py
+  class ExponentialStabilityAnalyzer: __init__(system, lyapunov_function, params), estimate_exponential_rate(time_window, region_radius, num_time_samples, num_state_samples, method), compute_overshoot_factor(initial_conditions, time_horizon)
+
+FILE: analysis\nonautonomous\stability\uniform_stability.py
+  class UniformStabilityVerifier: __init__(system, lyapunov_function, params), verify_uniform_stability(time_window, region_radius, num_samples, num_time_samples, estimate_comparison_funcs)
+
+FILE: analysis\nonautonomous\stroboscopic\entrainment.py
+  class EntrainmentDetector: __init__(system), detect_entrainment(trajectory, time_points, forcing_frequency, natural_frequency, tolerance), compute_arnold_tongue(poincare_map, frequency_range, amplitude_range, num_freq, num_amp), check_phase_locking(trajectory, forcing_phase, threshold)
+
+FILE: analysis\nonautonomous\stroboscopic\phase_response.py
+  class PhaseResponseAnalyzer: __init__(system, solver), compute_phase_response_curve(limit_cycle, period, perturbation_magnitude, num_phases, params), compute_infinitesimal_prc(limit_cycle, period, params)
+
+FILE: analysis\nonautonomous\stroboscopic\poincare_map.py
+  class StroboscopicAnalyzer: __init__(system, solver), construct_poincare_map(period, params, num_steps), find_fixed_points(poincare_map, num_starts, search_region, max_iter, tol), analyze_fixed_point_stability(poincare_map, fixed_point)
+  def construct_stroboscopic_map(system, period, solver, params, find_fixed_points, num_starts)
+
+FILE: analysis\nonautonomous\stroboscopic\results.py
+  class StroboscopicResult: to_dict()
+  class EntrainmentResult: to_dict()
+  class PhaseResponseResult: to_dict()
+
+FILE: analysis\nonautonomous\utils\comparison_functions.py
+  class ComparisonFunction(ABC): is_valid(r_samples)
+  class ClassKFunction(ComparisonFunction): __init__(func), is_valid(r_samples)
+  class ClassKInfFunction(ClassKFunction): is_valid(r_samples)
+  class ClassKLFunction: __init__(func), is_valid(r_samples, t_samples)
+  def class_k_linear(c)
+  def class_k_power(c, p)
+  def class_kl_exponential(c, lam)
+  def verify_class_k_properties(func, r_min, r_max, num_samples)
+  def verify_class_k_inf_properties(func, r_min, r_max, num_samples)
+  def fit_class_k_linear(data_points)
+  def fit_class_k_power(data_points, p)
+  def check_uniform_bound(V, alpha, t_samples, x_samples, tolerance)
+  def estimate_comparison_function(V, t_samples, x_samples, function_type)
+
+FILE: analysis\pde\cfl.py
+  class CFLAnalyzer: __init__(cfl_number, safety_factor), analyze(grid_spacing, wave_speed_result, current_dt), compute_max_dt(pde_type, coefficients, grid_spacing), check_stability(current_dt, pde_type, coefficients, grid_spacing)
+  def compute_cfl_limit(pde_type, coefficients, grid_spacing, cfl_number)
+  def check_cfl_stability(current_dt, pde_type, coefficients, grid_spacing, cfl_number)
+  def recommend_time_step(pde_type, coefficients, grid_spacing, cfl_number, safety_factor)
+
+FILE: analysis\pde\results.py
+  class WaveSpeedResult: summary()
+  class CFLAnalysisResult: summary()
+  class SpatialStabilityResult: summary()
+
+FILE: analysis\pde\wave_speed.py
+  class WaveSpeedEstimator: __init__(tolerance), estimate_from_jacobian(spatial_jacobian, grid_spacing), estimate_from_pde_type(pde_type, coefficients, grid_spacing), estimate_from_field(field, field_derivative, grid_spacing)
+  def estimate_wave_speed(pde_type, coefficients, grid_spacing)
+
+FILE: analysis\simulation_based\divergence.py
+  class DivergenceDetector: __init__(threshold, min_time), detect(times, states)
+
+FILE: analysis\simulation_based\monte_carlo.py
+  class MonteCarloAnalyzer: __init__(classifier), analyze(system, initial_states, simulation_results, equilibrium, params)
+
+FILE: analysis\simulation_based\results.py
+  class DivergenceDetectionResult: to_dict()
+  class TrajectoryClassificationResult: to_dict()
+  class MonteCarloStabilityResult: to_dict()
+
+FILE: analysis\simulation_based\trajectory_classification.py
+  class TrajectoryClassifier: __init__(convergence_threshold, divergence_factor), classify(times, states, equilibrium)
+
+FILE: analysis\stability\chaos\detector.py
+  class ChaosDetector: __init__(system, dt, threshold), detect_chaos(initial_state, time_horizon, params, check_sensitive_dependence, compute_spectrum), compute_lyapunov_spectrum(initial_state, time_horizon, params), find_bifurcation_parameter(initial_state, param_name, param_range, time_horizon, resolution, params)
+
+FILE: analysis\stability\chaos\indicators.py
+  def detect_sensitive_dependence(system, initial_state, perturbation, integration_time, dt, params, divergence_threshold)
+  def compute_power_spectrum(time_series, dt)
+  def classify_power_spectrum(frequencies, power, threshold_ratio)
+  def classify_from_lyapunov(largest_exponent, threshold)
+  def detect_bifurcation_to_chaos(system, initial_state, param_name, param_range, integration_time, resolution, dt, base_params)
+  def check_convergence(exponents_history, tolerance, check_fraction)
+
+FILE: analysis\stability\chaos\results.py
+  class ChaosStabilityResult: classification(), num_positive_exponents(), num_zero_exponents(), is_volume_preserving(), is_dissipative(), to_dict(), __str__()
+
+FILE: analysis\stability\contraction\euclidean.py
+  class EuclideanContractionChecker: __init__(system), verify(region, num_samples, params, min_rate), estimate_contraction_rate(region, num_samples, params), verify_local_contraction(equilibrium, radius, num_samples, params)
+
+FILE: analysis\stability\contraction\incremental.py
+  class IncrementalStabilityChecker: __init__(system, metric), verify(region, num_samples, params), verify_convergent_system(region, num_samples, params, attractor_tol)
+
+FILE: analysis\stability\contraction\results.py
+  class ContractionResult: verification_confidence(), to_dict()
+  class IncrementalStabilityResult: to_dict()
+
+FILE: analysis\stability\input_output\bibo.py
+  class BIBOAnalyzer: __init__(system, output_map), verify_via_poles(equilibrium, params, tolerance), verify_via_simulation(input_bound, time_horizon, dt, num_trials, initial_state, params), estimate_h_infinity_norm(frequency_range, num_frequencies, equilibrium, params)
+
+FILE: analysis\stability\input_output\comparison_functions.py
+  def is_class_k(alpha, tolerance)
+  def is_class_k_infinity(alpha, tolerance)
+  def is_class_kl(beta, tolerance)
+  def class_k_linear(k)
+  def class_k_power(p, k)
+  def class_k_polynomial(coeffs)
+  def class_k_saturation(k, M)
+  def class_kl_exponential(k, lambda_)
+  def class_kl_power_exponential(p, k, lambda_)
+  def class_kl_rational(k, a)
+  def compose_class_k(alpha, beta)
+  def sum_class_k(alpha, beta)
+  def max_class_k(alpha, beta)
+  def estimate_class_k_inverse(alpha, y, max_r, tol)
+  def fit_class_k_linear(samples)
+  def fit_class_k_power(samples, p)
+  def check_small_gain(gamma1, gamma2, strict)
+  def compute_interconnection_gain(gamma1, gamma2)
+
+FILE: analysis\stability\input_output\iiss.py
+  class iISSAnalyzer: __init__(system, iiss_lyapunov, comparison_functions), verify(region, num_samples, input_bound, params), verify_integral_condition(initial_state, input_signal, time_horizon, dt, params)
+
+FILE: analysis\stability\input_output\interconnection.py
+  class InterconnectionResult: to_dict()
+  class InterconnectionAnalyzer: analyze_feedback(gamma1, gamma2, strict), analyze_cascade(gains), analyze_parallel(gains), analyze_feedback_cascade(forward_path_gains, feedback_gain, strict), find_maximum_feedback_gain(forward_gain, safety_margin), analyze_cyclic(gains, strict)
+
+FILE: analysis\stability\input_output\ios.py
+  class IOSAnalyzer: __init__(system, output_map), verify_via_simulation(initial_states, input_signals, time_horizon, dt, params), check_zero_state_observability(test_states, test_inputs, params, tolerance), check_detectability(equilibrium, params), estimate_output_gain(input_signals, time_horizon, dt, initial_state, params)
+
+FILE: analysis\stability\input_output\iss.py
+  class ISSAnalyzer: __init__(system, iss_lyapunov, comparison_functions), verify(region, num_samples, input_bound, params, estimate_gain), verify_with_trajectories(initial_states, input_signals, time_horizon, dt, params), estimate_comparison_functions(region, num_samples, params)
+
+FILE: analysis\stability\input_output\l2_gain.py
+  class L2GainAnalyzer: __init__(system, output_map), estimate_via_trajectories(input_signals, time_horizon, dt, initial_state, params), estimate_via_optimization(time_horizon, dt, num_iterations, learning_rate, initial_state, params), estimate_via_frequency_response(frequency_range, num_frequencies, equilibrium, params), verify_bounded_gain(gamma_candidate, storage_function, region, num_samples, params)
+
+FILE: analysis\stability\input_output\results.py
+  class ISSResult: is_verified(), confidence(), to_dict()
+  class BIBOResult: gain_bound(), to_dict()
+  class L2GainResult: is_bounded(), to_dict()
+  class IOSResult: to_dict()
+  class InputOutputStabilityResult: is_stable(), overall_gain(), to_dict(), __str__()
+
+FILE: analysis\stability\lyapunov\quadratic.py
+  class QuadraticLyapunovAnalyzer: __init__(A, Q), solve_lyapunov_equation(), verify_stability(), get_lyapunov_matrix(), compute_decay_rate()
+
+FILE: analysis\stability\lyapunov\results.py
+  class LyapunovStabilityResult: verification_confidence(), to_dict(), __str__()
+
+FILE: analysis\stability\lyapunov\sampling.py
+  def generate_uniform_ball_samples(n_dim, num_samples, radius, dtype, device)
+  def generate_grid_samples(n_dim, resolution, bounds, dtype, device)
+  def verify_sampling_coverage(samples, radius, min_density)
+
+FILE: analysis\stability\lyapunov\verification.py
+  class LyapunovStabilityVerifier: __init__(system, lyapunov_function, method, tolerance), verify_stability(region, num_samples, params, time)
+
+FILE: analysis\stability\orbital\hybrid.py
+  class HybridSystemAnalyzer: __init__(mode_dynamics, guard_surfaces, mode_lyapunov, device, dtype), analyze_stability(equilibrium, test_radius, num_samples, simulation_time, dt)
+  def analyze_hybrid_stability(mode_dynamics, guard_surfaces, equilibrium, mode_lyapunov, test_radius, num_samples, simulation_time, dt, device, dtype)
+
+FILE: analysis\stability\orbital\poincare.py
+  class PoincareAnalyzer: __init__(dynamics, section_point, section_normal, dt, tolerance, max_returns, device, dtype), analyze_stability(initial_state, simulation_time, min_crossings)
+  def analyze_poincare_stability(dynamics, initial_state, section_point, section_normal, simulation_time, dt, min_crossings, tolerance, device, dtype)
+
+FILE: analysis\stability\orbital\results.py
+  class OrbitalStabilityResult: stability_classification(), to_dict(), __str__()
+  class HybridStabilityResult: has_common_lyapunov(), requires_dwell_time(), to_dict(), __str__()
+
+FILE: analysis\stability\passivity\dissipativity.py
+  class DissipativityChecker: __init__(system, storage_function, output_map), verify_qsr_dissipativity(Q, S, R, region, num_samples, params), verify_l2_gain_dissipativity(gamma, region, num_samples, params), verify_passivity_via_dissipativity(region, num_samples, params)
+
+FILE: analysis\stability\passivity\passivity_check.py
+  class PassivityChecker: __init__(system, storage_function, output_map), verify(region, num_samples, input_samples, params, strict_passivity_eps), verify_with_passivity_indices(region, num_samples, params)
+
+FILE: analysis\stability\passivity\results.py
+  class PassivityResult: verification_confidence(), to_dict()
+  class DissipativityResult: to_dict()
+
+FILE: analysis\stability\robust\margins.py
+  class StabilityMarginAnalyzer: __init__(system, equilibrium, params), compute_margins(frequencies, num_frequencies), compute_gain_margin_only(frequencies), compute_phase_margin_only(frequencies)
+
+FILE: analysis\stability\robust\results.py
+  class StabilityMarginsResult: gain_margin_linear(), has_infinite_gain_margin(), to_dict()
+  class ParametricSensitivityResult: most_critical_parameter(), least_critical_parameter(), to_dict()
+  class UncertaintySetResult: to_dict()
+  class WorstCaseResult: is_stable_worst_case(), to_dict()
+  class RobustStabilityResult: has_positive_margins(), minimum_margin(), to_dict(), __str__()
+
+FILE: analysis\stability\robust\sensitivity.py
+  class ParametricSensitivityAnalyzer: __init__(system, equilibrium, params), analyze(parameter_names, perturbation_size, max_perturbation, sensitivity_threshold), compute_eigenvalue_sensitivity(parameter_name, eigenvalue_index, perturbation_size)
+
+FILE: analysis\stability\robust\worst_case.py
+  class WorstCaseAnalyzer: __init__(system, equilibrium, params), find_worst_case(parameter_ranges, method, num_samples, optimization_steps, learning_rate), compute_robustness_radius(parameter_ranges, num_samples)
+
+FILE: analysis\stability\summary\analyzer.py
+  class StabilityAnalyzer: __init__(system), analyze_all(equilibrium, lyapunov_function, initial_state, params, check_chaos, time_horizon)
+  def generate_diagnostics(summary)
+
+FILE: analysis\stability\summary\results.py
+  class StabilitySummary: num_methods_applied(), methods_agreeing(), to_dict(), __str__()
+  class LayeredReport: to_string()
+
+FILE: control\export_integration.py
+  class ExportableController: __init__(controller, state_dim, output_dim), forward(x, t)
+  def export_controller(controller, format, filepath, state_dim, output_dim)
+  def export_to_torchscript(controller, filepath, state_dim, output_dim, method)
+  def export_to_onnx(controller, filepath, state_dim, output_dim, opset_version)
+  def export_to_c_code(controller, filepath, state_dim, output_dim, include_header)
+  def verify_exported_controller(original, exported_path, format, state_dim, num_tests, rtol, atol)
+
+FILE: control\hybrid_integration.py
+  class HybridController(Controller): compute_control(params), update_controller_state(params), adapt(params), describe(), export_structure(), reset_controller_state(), get_mode_history(), reset_mode_history()
+  def create_hybrid_controller(mode_controllers, switching_logic, name, reset_on_switch)
+  def verify_hybrid_stability(hybrid_controller, plant, method)
+  def create_state_dependent_switching(threshold, state_index, mode_below, mode_above)
+  def create_time_dependent_switching(switch_times, mode_sequence)
+  def create_norm_based_switching(threshold, mode_small, mode_large, norm_type)
+
+FILE: control\performance_optimization.py
+  def jit_compile_controller(controller, state_dim, output_dim, method)
+  class BatchedController: __init__(controller, state_dim, output_dim), forward(x_batch, t)
+  def benchmark_control_computation(controller, state_dim, num_samples, warmup, device)
+  def benchmark_closed_loop_simulation(plant, controller, x0, t_span, num_runs, solver)
+  def compare_controllers(controllers, controller_names, state_dim, num_samples)
+  class CachedController: __init__(controller, cache_size), forward(t, x), get_cache_stats(), clear_cache()
+  class ControllerBenchmark: __str__()
+
+FILE: control\adaptive\controller.py
+  class AdaptiveController(StateFeedbackController): compute_control(params), update_controller_state(params), adapt(params), reset_controller_state(), describe(), export_structure(), reset_adaptation(reset_parameters)
+
+FILE: control\adaptive\factory.py
+  def create_adaptive_controller(base_controller, adaptation_law, initial_parameters, name, learning_rate, parameter_bounds)
+
+FILE: control\adaptive\disturbance\adaptive_feedforward.py
+  class AdaptiveFeedforwardController(StateFeedbackController): compute_control(params), update_controller_state(params), adapt(params), reset_controller_state(), describe(), export_structure(), compute_feedforward(reference, look_ahead), learn_feedforward(reference_trajectory, error_history)
+
+FILE: control\adaptive\disturbance\bias_correction.py
+  class BiasCorrector: estimate_bias(error_history, method), remove_bias(measurement), update_online(new_measurement, alpha), reset(), get_confidence()
+  class AdaptiveBiasCorrector(BiasCorrector): adjust_window(), update_online(new_measurement, alpha)
+
+FILE: control\adaptive\disturbance\disturbance_adaptation.py
+  class DisturbanceAdaptiveController(StateFeedbackController): compute_control(params), compensate(u_nominal), estimate_disturbance(xx, uu, x_next, dt), adapt(params), learn_constant_bias(window_size), update_controller_state(params), reset_controller_state(), describe(), export_structure()
+
+FILE: control\adaptive\disturbance\neural_disturbance.py
+  class NeuralDisturbanceModel: __init__(state_dim, disturbance_dim, hidden_dims, use_time_input, history_length), forward(x, t, history), predict(state, t), train_model(states, true_disturbances, optimizer, n_epochs, batch_size, loss_fn), update_online(state, true_disturbance, optimizer, loss_fn), reset_history()
+  class DisturbancePredictor: predict(state, t), update(state, true_disturbance), evaluate(states, true_disturbances), reset()
+
+FILE: control\adaptive\lyapunov_adaptive\barbalat_lemma.py
+  def check_barbalat_conditions(V_history, time_history, dt)
+  def verify_asymptotic_convergence(error_history, time_history, convergence_threshold, window_size)
+  def compute_lyapunov_derivative_bounds(V_history, dt, alpha_min)
+  def predict_convergence_time(V_current, alpha, beta, V_threshold)
+  def verify_uniform_continuity(signal_history, time_history, dt, tolerance)
+
+FILE: control\adaptive\lyapunov_adaptive\lyapunov_design.py
+  def solve_lyapunov(A, Q)
+  def design_lyapunov_adaptation(A_m, B_m, regressor_dim, Q, Gamma)
+  class CompositeLyapunovFunction: __init__(P, Gamma_inv), evaluate(e, theta_error), time_derivative(e, de, theta_error, dtheta)
+
+FILE: control\adaptive\lyapunov_adaptive\passivity_adaptive.py
+  class PassivityPreservingAdapter: compute_storage(xx), verify_passivity(input_history, output_history, state_history, dtt), compute_passivity_preserving_update(state, regressor, output_error), compute_energy_balance(input_history, output_history, state_history, dtt)
+  def compute_passivity_index(input_history, output_history, dtt)
+  def verify_sector_condition(input_history, output_history, alpha, beta, dtt)
+
+FILE: control\adaptive\mrac\adaptation_law.py
+  def lyapunov_adaptation_law(P, Gamma, phi, error, B)
+  def normalized_adaptation_law(P, Gamma, phi, error, B, normalization_constant)
+  def composite_adaptation_law(P, Gamma_tracking, Gamma_prediction, phi, tracking_error, prediction_error, B)
+  def projection_adaptation_law(P, Gamma, phi, error, B, theta_current, theta_min, theta_max)
+  def create_adaptation_law(law_type)
+
+FILE: control\adaptive\mrac\direct_mrac.py
+  class DirectMRAC(MRACController): compute_adaptation_law(phi, error, B)
+  def direct_mrac_synthesis(reference_model, regressor, adaptation_gain, adaptation_gain_x, adaptation_gain_r, Q, name)
+
+FILE: control\adaptive\mrac\model_reference.py
+  class MRACController(StateFeedbackController): compute_control(params), update_controller_state(params), adapt(params), reset_controller_state(), describe(), export_structure(), update_reference_model(dt, ref)
+  def mrac_synthesis(reference_model, regressor, dt, adaptation_gain_x, adaptation_gain_r, Q, B_estimate, sigma, name, use_bias)
+
+FILE: control\adaptive\mrac\reference_model.py
+  class ReferenceModel: update(reference, dt), reset(x_m_initial)
+  def verify_stability(A_m)
+  def create_reference_model(pole_locations, B_m, x_m_initial)
+
+FILE: control\adaptive\neural_adaptive\experience_replay.py
+  class ExperienceReplayBuffer: add(state, action, reward, next_state, metadata), sample(batch_size), clear(), is_ready()
+  class PrioritizedReplayBuffer(ExperienceReplayBuffer): add(state, action, reward, next_state, metadata), sample_prioritized(batch_size), update_priorities(indices, priorities), clear()
+  def train_from_replay(neural_network, optimizer, replay_buffer, n_updates, batch_size, loss_fn)
+
+FILE: control\adaptive\neural_adaptive\online_neural.py
+  class NeuralAdaptiveController(StateFeedbackController): compute_control(params), update_controller_state(params), adapt(params), reset_controller_state(), describe(), export_structure(), get_weight_norms(), get_gradient_history()
+  def neural_adaptive_synthesis(base_controller, neural_network, optimizer, loss_fn)
+
+FILE: control\adaptive\neural_adaptive\residual_adaptation.py
+  class ResidualNetwork: __init__(input_dim, output_dim, hidden_dims, activation), forward(x)
+  class ResidualAdaptiveController(StateFeedbackController): compute_control(params), update_controller_state(params), adapt(params), reset_controller_state(), describe(), export_structure(), train_step(state, target_correction), measure_improvement(), log_base_performance(tt, performance)
+
+FILE: control\adaptive\robust_adaptive\bounded_gain.py
+  class BoundedGainAdapter: apply_bounds(theta), is_within_bounds(theta, tolerance), project_gradient(theta, gradient), project_update(theta, dtheta, dt)
+  class GainSaturator: saturate(gain), is_saturated(gain, tolerance)
+  def project_to_bounds(theta, theta_min, theta_max)
+  def project_gradient_to_bounds(theta, gradient, theta_min, theta_max, tolerance)
+  def saturate_gain(gain, max_gain, norm_type)
+
+FILE: control\adaptive\robust_adaptive\dead_zone.py
+  class DeadZoneAdaptation: in_dead_zone(error), apply(error, base_gradient), dead_zone_error(error)
+  class SmoothDeadZone: compute_scaling(error), apply(error, base_gradient), smooth_dead_zone_error(error)
+  def apply_dead_zone(error, base_gradient, epsilon, smooth)
+  def compute_dead_zone_boundaries(error_history, epsilon)
+
+FILE: control\adaptive\robust_adaptive\sigma_modification.py
+  class SigmaModification: apply(theta, base_gradient, Gamma), compute_damping_term(theta, Gamma)
+  class EModification: compute_adaptive_sigma(error), apply(theta, base_gradient, error, Gamma), compute_damping_term(theta, error, Gamma)
+  def apply_sigma_modification(theta, base_gradient, Gamma, sigma)
+  def apply_e_modification(theta, base_gradient, error, Gamma, sigma_0, max_sigma)
+
+FILE: control\adaptive\sliding_mode\chattering_mitigation.py
+  class ChatteringMitigation: update(input_tensor, dt), reset()
+  class BoundaryLayer(ChatteringMitigation): update(s, dt), in_boundary_layer(s)
+  class SuperTwistingAlgorithm: get_control(), update(s, dt), reset()
+  class HigherOrderSlidingMode(ChatteringMitigation): update(s_derivatives, dt)
+  class LowPassFilter(ChatteringMitigation): update(u_raw, dt), reset()
+  def compute_chattering_metric(control_history, dt)
+  def smooth_sign_function(x, epsilon, method)
+
+FILE: control\adaptive\sliding_mode\reaching_law.py
+  class ReachingLaw: compute(s, smoothing_value), reset()
+  class ConstantRateReachingLaw(ReachingLaw): compute(s, smoothing_value)
+  class ExponentialReachingLaw(ReachingLaw): compute(s, smoothing_value)
+  class PowerRateReachingLaw(ReachingLaw): compute(s, smoothing_value)
+  class AdaptiveReachingLaw(ReachingLaw): update_gain(s, dt), compute(s, smoothing_value), reset()
+  class QuasiContinuousReachingLaw(ReachingLaw): compute(s, smoothing_value)
+  def compute_reaching_time(reaching_law, s_initial, threshold)
+
+FILE: control\adaptive\sliding_mode\sliding_surface.py
+  class LinearSlidingSurface: evaluate(x), gradient(x), time_derivative(x, dx)
+  def create_gao_hung_surface(order, lambda_param)
+  class NonlinearSlidingSurface: evaluate(x), gradient(x), time_derivative(x, dx)
+  def create_terminal_sliding_surface(alpha, p, phi)
+  def create_integral_sliding_surface(c, phi)
+
+FILE: control\adaptive\sliding_mode\smc_controller.py
+  class SMCController(StateFeedbackController): compute_control(params), update_controller_state(params), adapt(params), reset_controller_state(), describe(), export_structure(), get_sliding_variable_history(), get_control_history(), is_on_sliding_surface(tolerance), compute_chattering_metrics()
+  def smc_synthesis(system_dynamics, surface_coefficients, reaching_gain, reaching_type, epsilon, boundary_layer_thickness, disturbance_bound, name)
+
+FILE: control\adaptive\utils\adaptation_metrics.py
+  def compute_parameter_convergence(theta_history, theta_true)
+  def compute_tracking_error(x, x_ref)
+  def compute_adaptation_rate(theta_history, time_history)
+  def check_parameter_boundedness(theta_history, bounds)
+  def check_persistent_excitation(regressor_history, window, alpha)
+  def compute_lyapunov_decrease(V_history)
+
+FILE: control\adaptive\utils\confidence.py
+  class ParameterConfidence: compute_confidence_interval(theta, confidence_level), update_sample_count(n)
+  def update_covariance(cov, regressor, forgetting)
+
+FILE: control\adaptive\utils\forgetting_factors.py
+  class ExponentialForgetting: apply(data), get_weights(N)
+  class DirectionalForgetting: apply(theta, direction), set_direction(direction)
+
+FILE: control\adaptive\utils\projection.py
+  def project_to_bounds(theta, bounds)
+  def project_gradient(theta, gradient, bounds)
+  def project_to_convex_set(theta, constraint_fn, max_iter, step_size, tolerance)
+  def project_to_simplex(theta)
+  def project_to_l1_ball(theta, radius)
+
+FILE: control\base\composition.py
+  class CascadedController(Controller): __init__(name, controllers), compute_control(params), update_controller_state(params), adapt(params), reset_controller_state(), describe(), export_structure()
+  class ParallelController(Controller): __init__(name, controllers, weights), compute_control(params), update_controller_state(params), adapt(params), reset_controller_state(), describe(), export_structure()
+  class SwitchedController(StateFeedbackController): __init__(name, controllers, switch_func), compute_control(params), update_controller_state(params), adapt(params), reset_controller_state(), describe(), export_structure()
+  def compose_cascaded()
+  def compose_parallel(controllers, weights, name)
+  def compose_switched(controllers, switch_func, name)
+
+FILE: control\base\controller.py
+  class ControllerDataTypes: check_value(value_name, value, value_type), core_to_tensor(feedback_signal, auxiliary_signal, input_signal, reference_signal)
+  class ControllerCapabilities: 
+  class ControllerDescription: 
+  class Controller(Protocol): compute_control(params), update_controller_state(params), adapt(params), reset_controller_state(), describe(), export_structure()
+
+FILE: control\base\feedback_law.py
+  class StateFeedbackController(Controller): __init__(name, state_dim, input_dim, gain_func, capabilities), compute_control(params), update_controller_state(params), adapt(params), describe(), export_structure(), reset_controller_state()
+  class OutputFeedbackController(Controller): __init__(name, output_dim, input_dim, gain_func, capabilities), compute_control(params), update_controller_state(params), adapt(params), describe(), export_structure(), reset_controller_state()
+  class DynamicController(StateFeedbackController): __init__(name, input_dim, dynamics_func, output_func, initial_controller_state, capabilities), compute_control(params), update_controller_state(params), adapt(params), describe(), export_structure(), reset_controller_state()
+
+FILE: control\base\policy.py
+  class Policy(Protocol): select_action(t, x, params), update_policy(reward, trajectory), evaluate(x)
+  class ControllerAsPolicy: __init__(controller, reference), select_action(t, x, params), update_policy(reward, trajectory), evaluate(x)
+
+FILE: control\closed_loop\composition.py
+  def close_loop(plant, controller, reference, output_map)
+
+FILE: control\closed_loop\evaluation.py
+  class ClosedLoopTrajectory: t(), x(), u(), tracking_error(), control_effort(), steady_state_error(), settling_time(threshold), peak_error(), final_state(), final_control()
+
+FILE: control\closed_loop\interconnection.py
+  def validate_interconnection(plant, controller)
+  def verify_reference_compatibility(reference, state_dim)
+  def create_augmented_initial_state(plant_initial_state, controller)
+  def extract_plant_trajectory(combined_trajectory, plant_dim, has_controller_dynamics)
+
+FILE: control\closed_loop\simulation.py
+  class ClosedLoopSystem: __init__(plant, controller, reference, output_map), dynamics(tt, xx, params), simulate(x0, t_span, params, method), linearize(x_eq, params)
+  def simulate_closed_loop(plant, controller, x0, t_span, reference, output_map, params)
+
+FILE: control\constraints\anti_windup.py
+  class AntiWindupController(Controller): compute_control(params), update_controller_state(params), adapt(params), reset_controller_state(), describe(), export_structure(), get_anti_windup_compensation(), get_saturation_error()
+  def create_anti_windup_controller(controller, u_min, u_max, anti_windup_gain, name)
+
+FILE: control\constraints\input_constraints.py
+  class InputConstrainedController(Controller): compute_control(params), update_controller_state(params), adapt(params), reset_controller_state(), describe(), export_structure()
+  class RateLimitedController(Controller): compute_control(params), update_controller_state(params), adapt(params), reset_controller_state(), describe(), export_structure()
+
+FILE: control\factory\controller_factory.py
+  class ControllerFactory: synthesize(system, method, equilibrium, cost_matrices, poles, constraints), from_gains(gain_matrix, feedback_type, is_time_varying, state_dim, input_dim, name)
+
+FILE: control\factory\synthesis.py
+  class SynthesisCoordinator: register_synthesis_method(cls, name, synthesis_func), get_synthesis_method(cls, name)
+  def check_controllability(A, B)
+  def check_observability(A, C)
+  def validate_positive_definite(M, name)
+  def validate_synthesis_inputs(system, method, equilibrium, cost_matrices, poles)
+  def compute_linearization(system, equilibrium, params)
+
+FILE: control\factory\templates.py
+  class PIController(DynamicController): __init__(Kp, Ki, state_dim, input_dim, name)
+  class PIDController(DynamicController): __init__(Kp, Ki, Kd, state_dim, input_dim, derivative_filter_tau, name)
+  def LQRTemplate(state_dim, input_dim, Q, R)
+  def PolePlacementTemplate(state_dim, desired_settling_time, damping_ratio)
+  def MPCTemplate(state_dim, input_dim, prediction_horizon, control_horizon, Q, R, P, constraints)
+  def create_controller_from_template(template_name, system)
+
+FILE: control\hybrid_control\synthesis.py
+  def hybrid_controller_synthesis(system)
+
+FILE: control\linear\factories.py
+  def create_linear_controller(K, name, x_eq, u_eq)
+  def create_linear_gain_func(K)
+  def create_feedforward_gain_func(K)
+
+FILE: control\linear\synthesis.py
+  def lqr_synthesis(system, equilibrium, cost_matrices)
+  def pole_placement_synthesis(system, equilibrium, poles)
+  def mpc_synthesis(system, equilibrium, cost_matrices, constraints)
+  def gain_scheduling_synthesis(system, state_space_bounds, cost_matrices, n_operating_points, interpolation_method)
+  def lpv_synthesis(lpv_system, cost_matrices, rho_grid)
+
+FILE: control\linear\gain_scheduling\gain_scheduled_controller.py
+  class GainScheduledController(StateFeedbackController): compute_control(params), update_controller_state(params), adapt(params), reset_controller_state(), describe(), export_structure()
+  def synthesize_gain_scheduled_controller(system, operating_points, Q, R, interpolation_method, scheduling_variable)
+
+FILE: control\linear\gain_scheduling\interpolation.py
+  class GainInterpolator(ABC): interpolate(x_current)
+  class NearestNeighborInterpolator(GainInterpolator): interpolate(x_current)
+  class LinearInterpolator(GainInterpolator): interpolate(x_current)
+  class SplineInterpolator(GainInterpolator): interpolate(x_current)
+  def compute_interpolation_weights(x_current, operating_points, method, k_neighbors, epsilon)
+  def verify_interpolation_smoothness(interpolator, state_grid, threshold)
+
+FILE: control\linear\gain_scheduling\local_linearization.py
+  class OperatingPoint: 
+  def select_operating_points(system, state_space_bounds, n_points, method)
+  def linearize_at_operating_points(system, operating_points)
+  def design_local_controllers(operating_points, Q, R, method)
+  def verify_operating_point_coverage(operating_points, state_space_bounds, resolution)
+
+FILE: control\linear\gain_scheduling\lpv.py
+  class LPVSystem: 
+  class LPVController(StateFeedbackController): compute_control(params), update_controller_state(params), adapt(params), reset_controller_state(), describe(), export_structure()
+  def synthesize_lpv_controller(lpv_system, Q, R, rho_grid, rho_extractor)
+  def verify_lpv_stability(lpv_system, lpv_controller, rho_grid)
+
+FILE: control\linear\gain_scheduling\trajectory_linearization.py
+  def synthesize_trajectory_scheduled_controller(system, trajectory, Q, R)
+  def extract_operating_points_from_trajectory(trajectory, n_samples)
+
+FILE: control\linear\lqr\infinite_horizon.py
+  class LQRController(StateFeedbackController): compute_control(params), update_controller_state(params), adapt(params), reset_controller_state(), describe(), export_structure()
+  def synthesize_lqr(system, Q, R, x_eq, u_eq, verify)
+  def synthesize_lqr_from_matrices(A, B, Q, R, name, x_eq, u_eq)
+  def verify_closed_loop_stability(A, B, K, tol)
+
+FILE: control\linear\lqr\riccati.py
+  def solve_care(A, B, Q, R)
+  def verify_riccati_solution(A, B, Q, R, P, tol)
+
+FILE: control\linear\mpc\constraints.py
+  class InfeasibleMPCError(Exception): __init__(message, x0, diagnostics)
+  class Constraint(ABC): to_inequality_form(Phi, Psi, x0, N, n, m), is_satisfied(U, Phi, Psi, x0, tol)
+  class InputBoxConstraint(Constraint): to_inequality_form(Phi, Psi, x0, N, n, m), is_satisfied(U, Phi, Psi, x0, tol)
+  class StateBoxConstraint(Constraint): to_inequality_form(Phi, Psi, x0, N, n, m), is_satisfied(U, Phi, Psi, x0, tol)
+  class TerminalSetConstraint(Constraint): to_inequality_form(Phi, Psi, x0, N, n, m), is_satisfied(U, Phi, Psi, x0, tol)
+  class LinearConstraint(Constraint): to_inequality_form(Phi, Psi, x0, N, n, m), is_satisfied(U, Phi, Psi, x0, tol)
+  def combine_constraints(constraints, Phi, Psi, x0, N, n, m)
+  def check_constraint_feasibility(constraints, Phi, Psi, x0, N, n, m, verbose)
+  def compute_constraint_violations(U, constraints, Phi, Psi, x0, N, n, m)
+
+FILE: control\linear\mpc\linear_mpc.py
+  class LinearMPCController(StateFeedbackController): has_constraints(), get_constraint_count(), compute_control(params), get_predicted_trajectory(xx, reference), check_feasibility(xx, verbose), update_controller_state(params), adapt(params), reset_controller_state(), describe(), export_structure()
+  def synthesize_linear_mpc(system, Q, R, N, constraints, x_eq, u_eq, terminal_cost_method, warm_start_strategy, solver, verbose)
+
+FILE: control\linear\mpc\prediction.py
+  class PredictionHorizon: 
+  def predict_trajectory(x0, U, A, B)
+  def predict_trajectory_batch(x0, U, A, B)
+  def compute_terminal_cost(A, B, Q, R, method)
+  def receding_horizon_step(x_current, U_optimal, m)
+  def compute_predicted_cost(x_trajectory, U, Q, R, Q_terminal)
+  def analyze_horizon_effect(x0, A, B, Q, R, horizon_range, n_samples)
+
+FILE: control\linear\mpc\qp_solver.py
+  class QPProblem: 
+  class QPSolution: 
+  def build_prediction_matrices(A, B, N)
+  def build_qp_matrices(Phi, Psi, Q, R, Q_terminal)
+  def solve_qp(qp_problem, warm_start, solver, verbose)
+  def verify_qp_solution(U, qp_problem, tol)
+
+FILE: control\linear\mpc\warm_start.py
+  class WarmStartStrategy(ABC): initialize(U_previous, x_current, N, m)
+  class ShiftStrategy(WarmStartStrategy): initialize(U_previous, x_current, N, m)
+  class PreviousSolutionStrategy(WarmStartStrategy): initialize(U_previous, x_current, N, m)
+  class LQRInitializationStrategy(WarmStartStrategy): initialize(U_previous, x_current, N, m)
+  class ZeroStrategy(WarmStartStrategy): initialize(U_previous, x_current, N, m)
+  def warm_start_manager(strategy, U_previous, x_current, N, m, validate)
+  def benchmark_warm_start_strategies(strategies, x0, A, B, Q, R, N, n_steps)
+
+FILE: control\linear\observers\kalman.py
+  class KalmanFilter: predict(u, dt), update(y), predict_update(yy, u, dt), reset(x_hat_0, P_0), get_estimate(), get_covariance()
+  def design_kalman_filter(A, B, C, Q_w, R_v, x_hat_0, P_0, dt)
+  def compute_steady_state_kalman_gain(A, C, Q_w, R_v)
+  def verify_kalman_riccati(A, C, P, Q_w, R_v, tol)
+
+FILE: control\linear\observers\luenberger.py
+  class LuenbergerObserver: update(yy, u, dt), reset(x_hat_0), get_estimate(), get_innovation(y)
+  def design_luenberger_observer(A, C, poles_observer)
+  def verify_observer_convergence(A, L, C, poles_desired, tol)
+  def create_luenberger_observer(A, B, C, poles_observer, x_hat_0, dt)
+  def simulate_observer_error(observer, x_true_trajectory, u_trajectory, y_trajectory, dt)
+
+FILE: control\linear\observers\observer_controller.py
+  class ObserverBasedController(OutputFeedbackController): compute_control(params), update_controller_state(params), adapt(params), reset_controller_state(), reset_observer(x_hat_0, P_0), get_estimate(), describe(), export_structure()
+  def synthesize_observer_based_controller(A, B, C, controller_poles, observer_poles, x_eq, u_eq, x_hat_0, observer_type)
+  def verify_separation_principle(A, B, C, K, L, controller_poles, observer_poles, tol)
+  def compute_observer_bandwidth_ratio(controller_poles, observer_poles)
+
+FILE: control\linear\pole_placement\deadbeat.py
+  class DeadbeatController(StateFeedbackController): compute_control(params), update_controller_state(params), adapt(params), reset_controller_state(), describe(), export_structure()
+  def synthesize_deadbeat(A_d, B_d, x_eq, u_eq)
+  def verify_deadbeat_performance(A_d, B_d, K, n_steps, x0, tol)
+  def create_deadbeat_controller(A_d, B_d, x_eq, u_eq)
+
+FILE: control\linear\pole_placement\state_feedback.py
+  class PolePlacementController(StateFeedbackController): compute_control(params), update_controller_state(params), adapt(params), reset_controller_state(), describe(), export_structure()
+  def place_poles(A, B, poles, method)
+  def ackermann_formula(A, B, poles)
+  def verify_pole_placement(A, B, K, poles_desired, tol)
+  def synthesize_pole_placement(A, B, poles, x_eq, u_eq)
+
+FILE: control\linear\robustness\margins.py
+  def frequency_response(A, B, C, D, omega)
+  def compute_gain_margin(A, B, K, C)
+  def compute_phase_margin(A, B, K, C)
+  def analyze_stability_margins(A, B, K, C)
+
+FILE: control\linear\robustness\structured_uncertainty.py
+  class ParametricUncertainty: 
+  def analyze_parametric_robustness(system_func, parameters, parameter_bounds, K, n_samples, method)
+  def worst_case_parameter_search(system_func, parameters, parameter_bounds, K, max_iterations)
+
+FILE: control\linear\robustness\uncertainty.py
+  class UncertaintyModel: 
+  def synthesize_robust_lqr(uncertainty_model, Q, R, robustness_margin)
+  def verify_robust_stability(A_nominal, B_nominal, K, uncertainty_model, n_samples)
+
+FILE: control\linear\utils\controllability.py
+  def controllability_matrix(A, B)
+  def is_controllable(A, B, tol)
+  def is_stabilizable(A, B, tol)
+
+FILE: control\linear\utils\observability.py
+  def observability_matrix(A, C)
+  def is_observable(A, C, tol)
+  def observable_subspace(A, C, tol)
+  def unobservable_modes(A, C, tol)
+  def is_detectable(A, C, tol)
+  def duality_check(A, B, C, tol)
+
+FILE: control\nonlinear\synthesis.py
+  def sliding_mode_synthesis(system)
+
+FILE: control\nonlinear\barrier\cbf.py
+  class CBFController(StateFeedbackController): compute_control(params), update_controller_state(params), adapt(params), reset_controller_state(), describe(), export_structure(), check_safety(xx), compute_safety_margin(xx)
+  def compute_cbf_control(x, h, f, g, alpha, u_nominal, safety_margin)
+  def verify_cbf_condition(x_traj, h, h_dot, alpha, tol)
+  def zeroing_barrier_function(h_base, gamma)
+  def reciprocal_barrier_function(h_base, gamma, epsilon)
+  def exponential_barrier_function(h_base, gamma, p)
+  def compute_barrier_derivative(x, u, h, f, g)
+  def verify_safety_along_trajectory(x_traj, h, tol)
+
+FILE: control\nonlinear\barrier\high_order_cbf.py
+  class HighOrderCBF: 
+  def compute_high_order_cbf_control(x, hocbf, f, g, u_nominal)
+  def compute_cascaded_barriers(x, hocbf, f, g)
+  def create_psi_function(hocbf, k, f, g)
+  def verify_high_order_cbf(x_traj, hocbf, f, g, u_traj, tol)
+  def compute_relative_degree_for_barrier(h, f, g, x, max_order, tol)
+  def create_hocbf_from_constraint(h, f, g, x_sample, gamma, name)
+
+FILE: control\nonlinear\feedback_linearization\input_output.py
+  class IOLinearizationController(StateFeedbackController): compute_control(params), update_controller_state(params), adapt(params), reset_controller_state(), compute_output_derivatives(xx, order), describe(), export_structure()
+  def io_linearization_synthesis(f, g, output_function, equilibrium, Q, R, controller_type)
+  def compute_zero_dynamics(f, g, output_function, r, x_eq)
+  def check_zero_dynamics_stability(zero_dynamics, x_eq, tol)
+  def analyze_minimum_phase(f, g, output_function, x_eq)
+
+FILE: control\nonlinear\feedback_linearization\input_state.py
+  class FeedbackLinearizationController(StateFeedbackController): compute_control(params), update_controller_state(params), adapt(params), reset_controller_state(), describe(), export_structure()
+  def feedback_linearization_synthesis(f, g, output_function, equilibrium, Q, R, controller_type)
+  def verify_exact_linearization(f, g, controller, x, tol)
+  def compute_linearized_dynamics(transformation, f, g, x)
+
+FILE: control\nonlinear\feedback_linearization\partial.py
+  class PartialFeedbackLinearizationController(StateFeedbackController): compute_control(params), update_controller_state(params), adapt(params), reset_controller_state(), describe(), export_structure()
+  def partial_linearization_synthesis(f, g, output_function, equilibrium, r, Q, R, residual_controller)
+  def decompose_state_space(f, g, output_function, r, x_ref)
+  def analyze_internal_dynamics(f, g, output_function, r, equilibrium)
+  def design_residual_controller(f, g, output_function, r, equilibrium, method)
+
+FILE: control\nonlinear\feedback_linearization\zero_dynamics.py
+  class ZeroDynamics: evaluate_on_manifold(x), check_stability(), check_on_manifold(x, tol)
+  def extract_zero_dynamics(f, g, output_function, r, equilibrium)
+  def check_vector_field_stability(vector_field, x_eq, tol)
+  def analyze_minimum_phase(f, g, output_function, equilibrium)
+  def simulate_zero_dynamics(zd, x0, t_span, num_steps)
+  def compute_zero_dynamics_region(zd, equilibrium, max_distance, num_samples)
+
+FILE: control\nonlinear\lyapunov\clf.py
+  class CLFController(StateFeedbackController): compute_control(params), update_controller_state(params), adapt(params), reset_controller_state(), describe(), export_structure()
+  def compute_clf_control(x, V, f, g, alpha, use_sontag)
+  def verify_clf_condition(x_traj, V, V_dot, alpha, tol)
+
+FILE: control\nonlinear\lyapunov\clf_cbf.py
+  class CLFCBFController(StateFeedbackController): compute_control(params), update_controller_state(params), adapt(params), reset_controller_state(), describe(), export_structure(), check_safety(xx)
+  def solve_clf_cbf_qp(x, V, h_list, f, g, alpha, beta_list, clf_relax_penalty, u_max)
+  def verify_clf_cbf_conditions(x_traj, V, h_list, V_dot, h_dot_list, alpha, beta_list, tol)
+
+FILE: control\nonlinear\lyapunov\sontag.py
+  def sontag_formula(Lf_V, Lg_V, V, epsilon)
+  def verify_sontag_continuity(V, f, g, x_test, delta)
+  def compute_sontag_convergence_rate(xx, V, f, g)
+  def sontag_formula_with_rate(Lf_V, Lg_V, V, alpha, epsilon)
+  def compute_lyapunov_derivative(xx, u, V, f, g)
+  def verify_sontag_decrease(xx, V, f, g, tol)
+
+FILE: control\nonlinear\model_based\computed_torque.py
+  class ComputedTorqueController(StateFeedbackController): compute_control(params), update_controller_state(params), adapt(params), reset_controller_state(), describe(), export_structure()
+  def computed_torque_synthesis(mass_matrix, coriolis, gravity, dof, kp, kd, natural_frequency, damping_ratio, name)
+  def verify_computed_torque_cancellation(controller, q, qd, q_d, qd_d, qdd_d, tol)
+  def design_pd_gains(natural_frequency, damping_ratio, dof)
+  def analyze_closed_loop_stability(kp, kd)
+
+FILE: control\nonlinear\sliding_mode\chattering_reduction.py
+  class BoundaryLayer: smooth_sign(sigma)
+  def boundary_layer_smoothing(epsilon, approximation)
+  def saturation_function(sigma, epsilon)
+  def measure_chattering(u_history, dt)
+  def adaptive_boundary_layer(sigma_history, target_frequency, current_epsilon, dtt, adaptation_rate)
+  def compute_chattering_index(u_history, dtt, frequency_threshold)
+  def compare_boundary_layers(sigma, epsilon_values)
+
+FILE: control\nonlinear\sliding_mode\first_order.py
+  class SlidingModeController(StateFeedbackController): compute_control(params), update_controller_state(params), adapt(params), reset_controller_state(), compute_surface_value(xx), describe(), export_structure()
+  def first_order_sliding_mode_synthesis(system, sliding_surface, switching_gain, boundary_layer, name)
+  def compute_equivalent_control(system, sliding_surface, x)
+  def compute_switching_control(sigma, K, boundary_layer)
+  def verify_reaching_condition(sigma, sigma_dot, eta)
+  def estimate_reaching_time(sigma_0, K, uncertainty_bound)
+
+FILE: control\nonlinear\sliding_mode\reaching_law.py
+  class ReachingLaw: compute_reaching_control(sigma, sigma_dot)
+  def constant_rate_reaching_law(k)
+  def power_rate_reaching_law(k, alpha)
+  def exponential_reaching_law(k, eta)
+  def compute_reaching_time(sigma_0, reaching_law)
+  def adaptive_reaching_gain(sigma, sigma_history, base_gain, adaptation_rate)
+  def reaching_law_from_dict(params)
+
+FILE: control\nonlinear\sliding_mode\surface_design.py
+  def design_sliding_surface(A, B, poles)
+  def linear_sliding_surface(S, x_eq)
+  def nonlinear_sliding_surface(system, lyapunov, gradient)
+  def verify_sliding_surface_reachability(system, surface, K, x, dt)
+  def compute_sliding_dynamics_matrix(A, B, S)
+  def verify_sliding_mode_eigenvalues(A, B, S, desired_poles, tol)
+
+FILE: control\nonlinear\utils\diffeomorphism.py
+  class Diffeomorphism: is_valid(x, tol)
+  def create_normal_form_transformation(system, r, output_index, x_ref)
+  def verify_diffeomorphism_invertibility(phi, x, tol, num_test_points)
+  def transform_dynamics(system, phi, x)
+  def chain_rule_lie_derivative(h, phi, f, x)
+
+FILE: control\nonlinear\utils\lie_derivatives.py
+  def lie_derivative(h, f, x)
+  def lie_bracket(f, g, x)
+  def higher_order_lie_derivative(h, f, x, order)
+  def lie_derivative_symbolic(h_expr, f_expr, state_vars)
+  def verify_lie_derivative_consistency(h, f, x, h_symbolic, f_symbolic, state_vars, tol)
+
+FILE: control\nonlinear\utils\relative_degree.py
+  def compute_relative_degree(output_function, f, g, x, max_iterations, tol)
+  def compute_relative_degree_dynamical(system, x, output_index, max_iterations, tol)
+  def compute_vector_relative_degree(system, x, max_iterations, tol)
+  def check_feedback_linearizability(system, x, tol)
+  def extract_decoupling_matrix(system, x, r, tol)
+  def extract_drift_term(system, x, r)
+  def extract_control_affine_form(system, x)
+
+FILE: control\tracking\reference_filter.py
+  class ReferenceFilter: filter(t, reference_raw, dt), reset(initial_reference)
+  class SmoothStepFilter: filter(t, reference_raw), reset()
+  def create_reference_filter(filter_type)
+
+FILE: control\tracking\setpoint.py
+  class SetpointController(Controller): compute_control(params), update_controller_state(params), adapt(params), reset_controller_state(), describe(), export_structure()
+  def create_setpoint_controller(base_controller, setpoint, name)
+
+FILE: control\tracking\trajectory.py
+  class TrajectoryTrackingController(Controller): compute_control(params), update_controller_state(params), adapt(params), reset_controller_state(), describe(), export_structure()
+  def compute_feedforward(system, trajectory, t, dt)
+  def create_tracking_controller(feedback_controller, trajectory, feedforward, name)
+
+FILE: control\utils\gains.py
+  def create_linear_gain(K)
+  def create_time_varying_gain(K_func)
+  def create_scheduled_gain(schedule, interpolation)
+  def compute_gain_margin(K, A, B, tolerance)
+  def compute_phase_margin(K, A, B, C)
+  def create_output_feedback_gain(K, C)
+
+FILE: control\utils\lyapunov_design.py
+  def design_lyapunov_controller(system, lyapunov_candidate)
+  def verify_lyapunov_decrease(system, controller, V, region, num_samples, tolerance)
+  def compute_control_lyapunov_function(system, Q, method)
+
+FILE: control\utils\validation.py
+  def validate_state_dimension(x, expected_dim)
+  def validate_control_dimension(u, expected_dim)
+  def validate_reference_callable(reference)
+  def validate_gain_matrix(K, input_dim, state_dim, check_condition, condition_threshold)
+  def validate_positive_definite(M, name, tolerance)
+  def validate_system_controllable(A, B, tolerance)
+  def validate_system_observable(A, C, tolerance)
+
+FILE: control\verification\integration.py
+  def verify_closed_loop_stability(closed_loop_system, equilibrium, method, lyapunov_function, test_points, simulation_time)
+  def verify_linear_stability(A_cl, return_eigenvalues)
+  def compute_stability_margins(plant, controller, omega, method)
+  class VerificationReport: to_dict(), save(filepath), load(cls, filepath), __str__()
+
+FILE: control\verification\verification_result.py
+  class VerificationResult: to_dict(), __str__()
+  class StabilityVerificationResult: 
+  class TrackingVerificationResult: 
+
+FILE: control\verification\performance\cost_evaluation.py
+  def evaluate_lqr_cost(trajectory, control, time, Q, R, x_ref, u_ref)
+  def evaluate_mpc_cost(trajectory, control, time, Q, R, P, x_ref, u_ref, constraints)
+  def evaluate_quadratic_cost(trajectory, control, time, cost_matrices)
+
+FILE: control\verification\performance\energy.py
+  def compute_control_effort(control, time, norm_type)
+  def compute_peak_control(control, norm_type)
+  def compute_average_control(control, time)
+  def compute_control_smoothness(control, time)
+  def compute_control_rate(control, time)
+  def analyze_control_performance(control, time, R)
+
+FILE: control\verification\performance\metrics.py
+  def compute_performance_metrics(trajectory, control, time, reference, Q, R)
+  def evaluate_multi_objective_performance(trajectory, control, time, reference, weights)
+
+FILE: control\verification\reports\summary.py
+  def generate_summary(result)
+
+FILE: control\verification\reports\visualization.py
+  def plot_verification_results(result, plot_types, figsize)
+
+FILE: control\verification\stability\eigenvalue_analysis.py
+  def verify_eigenvalue_stability(closed_loop_system, equilibrium, stability_threshold, params)
+  def compute_closed_loop_eigenvalues(A, B, K)
+  def analyze_stability_margins(eigenvalues)
+  def verify_linear_stability(A_closed_loop, stability_threshold)
+
+FILE: control\verification\stability\lyapunov_verification.py
+  def verify_lyapunov_stability(closed_loop_system, lyapunov_function, equilibrium, region_radius, num_samples, margin_threshold, params)
+  def verify_quadratic_lyapunov(A_closed_loop, P, margin_threshold)
+  def create_quadratic_lyapunov(P)
+  def verify_lyapunov_decrease(closed_loop_system, lyapunov_function, equilibrium, region_radius, num_samples, params)
+
+FILE: control\verification\stability\simulation_based.py
+  def verify_simulation_stability(closed_loop_system, equilibrium, n_trajectories, t_span, initial_radius, convergence_threshold, dt, params)
+  def classify_trajectory(final_state, equilibrium, convergence_threshold)
+  def compute_convergence_rate(final_states, equilibrium, convergence_threshold)
+  def verify_region_of_attraction(closed_loop_system, equilibrium, radius_min, radius_max, num_radii, n_trajectories_per_radius, t_span, dt, params)
+
+FILE: control\verification\stability\suite.py
+  class StabilityVerificationSuite: __init__(closed_loop_system, equilibrium, params), verify_stability(method), verify_all_methods(lyapunov_function, n_trajectories), get_consensus_verdict()
+
+FILE: control\verification\tracking\convergence_rate.py
+  def compute_convergence_rate(error, time, method)
+  def verify_exponential_convergence(error, time, expected_rate, tolerance)
+  def compute_exponential_fit_quality(error, time, lambda_rate)
+  def detect_monotonic_decrease(error, tolerance)
+  def analyze_convergence(error, time, expected_rate)
+
+FILE: control\verification\tracking\error_bounds.py
+  def compute_tracking_error(trajectory, reference, time)
+  def compute_max_error(error)
+  def compute_rms_error(error)
+  def compute_mean_error(error)
+  def compute_peak_error(error)
+  def compute_integral_error(error, time)
+  def compute_error_norm(error, norm_type)
+  def compute_elementwise_max_error(error)
+  def compute_elementwise_rms_error(error)
+
+FILE: control\verification\tracking\steady_state.py
+  def compute_steady_state_error(trajectory, reference, time, window_fraction, window_duration)
+  def detect_steady_state(error, time, variance_threshold, min_window_duration)
+  def check_error_bounded(error, bound)
+  def compute_steady_state_variance(trajectory, time, window_fraction)
+  def analyze_steady_state_performance(trajectory, reference, time, window_fraction, variance_threshold)
+
+FILE: control\verification\tracking\transient_metrics.py
+  def compute_settling_time(error, time, threshold, min_duration)
+  def compute_overshoot(trajectory, reference, time)
+  def compute_rise_time(trajectory, time, reference, threshold_low, threshold_high)
+  def compute_peak_time(trajectory, time)
+  def compute_delay_time(trajectory, time, reference, threshold)
+  def analyze_transient_response(trajectory, time, reference, settling_threshold)
+
+FILE: control\verification\utils\closed_loop_utils.py
+  def create_closed_loop_system(plant, controller, reference)
+  def linearize_closed_loop(A, B, K)
+
+FILE: control\verification\utils\metrics_helpers.py
+  def compute_rms_error(trajectory, reference)
+  def compute_max_error(trajectory, reference)
+  def compute_steady_state_error(trajectory, reference, window_size)
+  def compute_convergence_rate(trajectory, reference, time_vector)
+
+FILE: control\verification\utils\sampling.py
+  def sample_initial_conditions(center, n_samples, radius, strategy, seed)
+
+FILE: core\capabilities.py
+  class Capabilities: merge(other), to_dict()
+  def query_capability(system, capability)
+  def has_capability(system, capability)
+  def get_capability(system, capability)
+
+FILE: core\composition.py
+  class CompositionTopology: 
+  class CompositeSystem: __init__(topology, capabilities, metadata), dynamics(t, x, u, params), output(t, x, u, params)
+  def series(system1, system2, name)
+  def parallel()
+  def feedback(forward_system, feedback_system, name)
+  def connect(subsystems, connections, external_inputs, external_outputs, name)
+  def compose()
+
+FILE: core\contracts.py
+  class Contract: check(system)
+  def validate_port_connection(output_port, input_port)
+  def validate_connection(from_system, to_system, connections)
+  def validate_system_dimensions(system)
+  def validate_feedback_well_posed(forward_system, feedback_system)
+
+FILE: core\export_interface.py
+  class SystemGraph: validate(), to_dict()
+  class ComputationGraph: to_dict()
+  class ExportStructure: __init__(system), to_dict(), to_json(path)
+
+FILE: core\geometry.py
+  class SpatialDomain: 
+  class GridSpec: 
+  class BoundaryCondition: 
+  class PDEGeometry: __init__(domain, discretization, boundary_conditions, coordinates), coordinates(), neighbors(), apply_boundary_conditions(field, t)
+
+FILE: core\hybrid.py
+  class DynamicalSystem(Protocol): dynamics(t, x, u, params)
+  class Mode: 
+  class Guard: 
+  class Reset: 
+  class ModeGraph: __init__(modes, guards, resets), available_transitions(current_mode), evaluate_guards(t, x, current_mode, u, params, tol), apply_reset(x_pre, source_mode, target_mode, params)
+  class EventDetector: check_events(system, t, x, u, params), detect_zero_crossing(system, t0, t1, x0, x1, event_idx, u, params, tol, max_iter)
+
+FILE: core\io.py
+  class PortSpec: is_compatible(other)
+  class Input: __init__(data, specs), tensor(), shape(), device(), dtype(), __getitem__(key), has_port(name), port_names(), validate(), __add__(other), __sub__(other), to(device), clone()
+  class Output: __init__(data, specs), tensor(), shape(), device(), dtype(), __getitem__(key), has_port(name), port_names(), validate(), to(device)
+  def check_port_compatibility(src_port, dst_port)
+  def connect_ports(src, src_port, dst, dst_port)
+
+FILE: core\metadata.py
+  class SystemMetadata: to_dict()
+
+FILE: core\parameters.py
+  class ParameterSpec: validate(param)
+  class Parameters: __init__(data, specs, subsystem_params, trainable), __getitem__(key), __setitem__(key, value), __contains__(key), get(key, default), data(), trainable(), fixed(), all(), to_dict(), validate(), flatten(), from_dict(cls, data), keys(), values(), items(), update(other), clone(), to(device), device()
+
+FILE: core\state.py
+  class StateSpec: validate(x)
+  class LegacyState: __init__(data, spec, subsystem_states, mode), tensor(), shape(), device(), dtype(), to(device), clone(), validate(), project_to_manifold(), tangent_at(), __getitem__(key), flatten(), from_flat(cls, vec, spec)
+  class TangentSpace: __init__(base_point, basis, dimension), project(v)
+  class Manifold(Protocol): project(x), tangent_space(x), exp_map(x, v), log_map(x, y)
+  class SO3Manifold: project(R), tangent_space(R), exp_map(R, omega), log_map(R1, R2)
+  class SE3Manifold: __init__(), project(T), tangent_space(T), exp_map(T, xi), log_map(T1, T2)
+  class Space(ABC): name(), flat_dim(), tangent_dim(), shape(), contains(x), retract(x, v, dt), lift(base, target), norm(base, v), interpolate(x0, x1, alpha), project(x)
+  class EuclideanSpace(Space): __init__(dim), name(), flat_dim(), shape(), contains(x, atol), retract(x, v, dt), lift(base, target), norm(base, v), interpolate(x0, x1, alpha), project(x), random()
+  class SO3Space(Space): __init__(), name(), flat_dim(), tangent_dim(), shape(), contains(x, atol), retract(x, v, dt), lift(base, target), norm(base, v), interpolate(x0, x1, alpha), project(x), random()
+  class SE3Space(Space): __init__(), name(), flat_dim(), tangent_dim(), shape(), contains(x, atol), retract(x, v, dt), lift(base, target), compose(T1, T2), inverse(T), action_on_point(T, p), action_on_vector(T, v), adjoint(T), norm(base, v), interpolate(x0, x1, alpha), project(x), random()
+  class ProductSpace(Space): __init__(), name(), flat_dim(), tangent_dim(), shape(), num_components(), get_component_space(index), split_components(x), join_components(components), contains(x, atol), project(x), retract(x, v, dt), lift(base, target), norm(base, v), interpolate(x0, x1, alpha), random()
+  class State: __init__(tensor, space, validate), tensor(), space(), shape(), device(), dtype(), __repr__(), __str__(), to(device), clone(), detach(), requires_grad_(requires_grad), retract(tangent, dt), lift(target), norm(tangent), distance(other), interpolate(other, alpha), project()
+
+FILE: core\system.py
+  class DynamicalSystem(Protocol): dynamics(t, x, u, params), output(t, x, u, params), jacobian(t, x, u, params), residual(t, x, dx, u, params), events(t, x, u, params), reset(x_minus, mode_from, mode_to, params), describe()
+  def create_system(dynamics_fn, output_fn)
+  def create_state(data, spec)
+  def zero_state(spec, batch_size, device, dtype)
+  def create_parameters(data, trainable, specs)
+
+FILE: core\time.py
+  class TimeType(Enum): 
+  class TimeSpec: duration(), num_steps()
+  class LegacyTime: __init__(value, time_type), value(), continuous(), discrete(), hybrid(), increment_flow(dt), increment_jump(count), to_continuous(dt), to_discrete(dt), to_hybrid(k), __eq__(other), __lt__(other), __le__(other), __gt__(other), __ge__(other), __add__(other), __sub__(other), __repr__()
+  class TimeKind(Enum): 
+  class HybridTime: __init__(tau, j), advance_flow(dt), increment_jump(), continuous(), __lt__(other), __le__(other), __gt__(other), __ge__(other), __eq__(other), __repr__()
+  class TimeMetadata: 
+  def to_legacy_time(t)
+  def from_legacy_time(lt)
+  def wrap_dynamics_for_legacy(dynamics_fn)
+  def unwrap_legacy_dynamics(legacy_fn)
+  def default_t_span(metadata)
+  def suggested_dt(metadata)
+
+FILE: export\base.py
+  class ExportFormat(Enum): 
+  class ValidationResult: __str__()
+  class Exporter(Protocol): export(system, metadata), validate(exported, original, tolerance)
+
+FILE: export\bundling.py
+  class ClosedLoopSystem: __init__(plant, controller, observer, reference_input), dynamics(t, x, u), output(t, x), metadata()
+  class ClosedLoopBundler: bundle(plant, controller, observer, reference_input), bundle_with_reference_filter(plant, controller, reference_filter, observer)
+  def create_closed_loop_system(plant, controller, observer, reference_input)
+
+FILE: export\compat.py
+  def get_torch_version()
+  def torch_version_geq(major, minor, patch)
+  def has_pytorch_20_onnx_issue()
+  def get_onnx_incompatibility_message()
+
+FILE: export\formats.py
+  class FormatCapabilities: is_compatible_with_system(system_capabilities)
+  class FormatRegistry: __init__(), get_capabilities(format), can_export(system, format), get_compatible_formats(system), get_deployment_formats(), get_human_readable_formats(), get_differentiable_formats(), register_format(format, capabilities), is_registered(format)
+
+FILE: export\manager.py
+  class ExportArtifact: save(path), load(cls, path, format)
+  class ExportManager: __init__(), register_exporter(format, exporter), export(system, format, output_path, validate), get_registry(), list_registered_formats(), is_format_registered(format)
+
+FILE: export\metadata.py
+  class ExportMetadata: to_dict(), from_dict(cls, data), __str__()
+
+FILE: export\parametric.py
+  class ParameterInfo: 
+  class ParametricExport: update_parameters(new_params), get_parameter_groups(), get_mode_parameters(mode), get_trainable_parameters(), get_fixed_parameters(), validate_bounds(), count_parameters(), count_trainable_parameters()
+
+FILE: export\validation.py
+  class ExportValidator: validate_numerical_equivalence(original, exported, num_test_cases, tolerance, state_bounds, input_bounds, time_range), validate_metadata_preservation(original_metadata, restored_metadata), compute_error_statistics(errors)
+
+FILE: export\graphs\builders.py
+  class GraphBuilder: __init__(), build(system, metadata), set_metadata(system_name, system_type), add_input(name, dtype, shape), add_parameter(name, value, dtype), add_operation(node_type, name, inputs), add_output(name, node)
+
+FILE: export\graphs\exporters.py
+  class JSONGraphExporter: __init__(), export(system, metadata), validate(exported, original, tolerance)
+  class GraphMLExporter: __init__(), export(system, metadata), validate(exported, original, tolerance)
+  class DOTExporter: __init__(), export(system, metadata), validate(exported, original, tolerance)
+
+FILE: export\graphs\ir.py
+  class NodeType(Enum): 
+  class TensorType: __eq__(other)
+  class Node: __eq__(other)
+  class Edge: __eq__(other)
+  class ModeTransition: 
+  class ModeGraph: 
+  class ComputationGraph: add_node(node), add_edge(edge), get_node(node_id), get_predecessors(node), get_successors(node), topological_sort()
+
+FILE: export\graphs\lowering.py
+  class LoweringTarget(Enum): 
+  class LoweringContext: add_warning(message), add_error(message), has_errors(), get_option(key, default)
+  class LoweringResult: 
+  class NodeLowerer(ABC): supported_types(), lower(node, inputs, context), can_lower(node, context)
+  class GenericNodeLowerer(NodeLowerer): supported_types(), lower(node, inputs, context)
+  class LoweringPass(ABC): name(), run(graph, context)
+  class CanonicalizePass(LoweringPass): name(), run(graph, context)
+  class TypeAnnotationPass(LoweringPass): name(), run(graph, context)
+  class LoweringPipeline: __init__(target), add_pass(lowering_pass), add_lowerer(lowerer), lower(graph, options)
+  def lower_to_string(graph)
+  def create_lowering_pipeline(target, custom_passes, custom_lowerers)
+
+FILE: export\graphs\optimization.py
+  class OptimizationResult: net_node_reduction()
+  class GraphOptimizer: __init__(max_iterations), optimize(graph, passes, iterate_to_fixed_point), optimize_with_stats(graph, passes)
+  def constant_folding(graph)
+  def eliminate_common_subexpressions(graph)
+  def eliminate_dead_code(graph)
+  def fuse_operators(graph)
+  def simplify_algebraically(graph)
+
+FILE: export\graphs\serialization.py
+  class GraphSerializer: to_json(graph), from_json(json_dict), to_graphml(graph), to_dot(graph, title)
+
+FILE: export\graphs\validation.py
+  class ValidationError: __str__()
+  class GraphValidator: __init__(strict), validate(graph), is_valid(graph)
+
+FILE: export\graphs\visualization.py
+  class LayoutAlgorithm(Enum): 
+  class LayoutHints: 
+  class DependencyInfo: 
+  class CriticalPathInfo: 
+  class GraphStatistics: 
+  class GraphAnalyzer: __init__(graph), get_statistics(), compute_depths(), compute_heights(), analyze_dependencies(node), find_critical_path(), find_bottlenecks(threshold)
+  class GraphExplorer: __init__(graph), get_nodes_by_type(node_type), get_nodes_by_name(pattern), get_nodes_at_depth(depth), extract_subgraph(root_nodes, direction, max_depth), find_path(source, target), find_common_ancestors(nodes), find_common_descendants(nodes)
+  class LayoutGenerator: __init__(graph), generate_hierarchical_layout(rank_dir), generate_radial_layout(center_nodes)
+  class DOTStyler: __init__(graph), to_styled_dot(title, highlight_nodes, highlight_critical_path, show_clusters, show_depths)
+  def analyze_graph(graph)
+  def find_critical_path(graph)
+  def extract_subgraph(graph, root_nodes, direction, max_depth)
+  def generate_styled_dot(graph, title, highlight_critical_path)
+  class NodePosition: 
+  class ComputedLayout: 
+  class LayoutComputer: __init__(graph), compute_hierarchical_layout(rank_dir, node_sep, rank_sep), compute_force_directed_layout(iterations, repulsion, attraction, damping), compute_circular_layout(radius, center), compute_grid_layout(columns, cell_width, cell_height), compute_layout(algorithm)
+  class GraphComplexity: 
+  class ComplexityAnalyzer: __init__(graph), compute_complexity(), compute_cyclomatic_complexity(), compute_halstead_volume(), compute_edge_density(), compute_average_path_length(), compute_clustering_coefficient(), compute_modularity_score()
+  def save_dot_to_file(graph, filepath, title, highlight_critical_path, show_clusters)
+  def save_layout_to_json(layout, filepath)
+  def load_layout_from_json(filepath)
+  def generate_svg_with_layout(graph, layout, width, height, node_radius)
+  def save_svg_visualization(graph, filepath, algorithm, width, height)
+  def compute_layout(graph, algorithm)
+  def compute_complexity(graph)
+
+FILE: export\graphs\__init__.py
+  def export_computation_graph(system, format, output_path, optimize, optimization_passes, validate, metadata)
+
+FILE: export\onnx\exporter.py
+  class ONNXConfig: from_system(cls, system, opset_version, dynamic_batch)
+  class ONNXValidationResult: passed()
+  class ONNXExportResult: validation_passed()
+  class ONNXExporter: __init__(config), export(system, metadata, output_path, config), load(model_path)
+
+FILE: export\symbolic\ast_export.py
+  class ASTNode: to_dict(), from_dict(cls, data), to_json(indent), from_json(cls, json_str)
+  class ASTExporter: export(system, metadata)
+  def export_to_ast(system, metadata, output_path)
+
+FILE: export\symbolic\documentation.py
+  class ParameterDoc: to_markdown(), to_latex()
+  class StabilityDoc: to_markdown()
+  class ModelDocumentation: to_markdown(), to_latex()
+  class DocumentationGenerator: __init__(), latex_exporter(), text_exporter(), generate(system, include_examples, include_stability, format)
+  def generate_documentation(system, include_examples, include_stability, format)
+
+FILE: export\symbolic\formatting.py
+  class EquationStyle(Enum): 
+  class ReferenceStyle(Enum): 
+  class FormattingOptions: 
+  class EquationReference: ref(), eqref()
+  class EquationNumbering: __init__(start, prefix), next_number(), generate_label(hint), add_equation(content, label, description), get_reference(label), reset(start)
+  class LaTeXFormatter: __init__(options), format_equation(content, label, style), format_matrix(elements, delimiter), format_vector(elements, delimiter), format_system(equations, labels, style), apply_symbol_map(latex)
+  class TemplateEngine: __init__(), register_template(name, template), register_function(name, func), render(template_name, context), render_string(template, context)
+  def create_default_engine()
+
+FILE: export\symbolic\latex.py
+  class LaTeXExporter: __init__(), export(system, metadata), validate(exported, original, tolerance)
+  def export_to_latex(system, metadata)
+
+FILE: export\symbolic\mathematica.py
+  class MathematicaExporter: __init__(), export(system, metadata), validate(exported, original, tolerance)
+  def export_to_mathematica(system, metadata)
+
+FILE: export\symbolic\matlab.py
+  class MATLABExporter: __init__(), export(system, metadata), validate(exported, original, tolerance)
+  def export_to_matlab(system, metadata)
+
+FILE: export\symbolic\methods.py
+  def to_latex(self)
+  def to_text(self)
+  def to_mathematica(self)
+  def to_matlab(self)
+  def to_documentation(self)
+  def inject_symbolic_export_methods()
+
+FILE: export\symbolic\registration.py
+  def register_symbolic_exporters(manager)
+
+FILE: export\symbolic\text.py
+  class TextExporter: __init__(), export(system, metadata), validate(exported, original, tolerance)
+  def export_to_text(system, metadata)
+
+FILE: export\torch\exporters.py
+  class TorchScriptExporterAdapter: __init__(), export(system, metadata), validate(exported, original, tolerance)
+  class ONNXExporterAdapter: __init__(), export(system, metadata), validate(exported, original, tolerance)
+
+FILE: export\torchscript\exporter.py
+  class TorchScriptExporter: __init__(), export(system, metadata, mode, example_inputs), validate(exported, original, tolerance), save(exported, path), load(path)
+
+FILE: export\torchscript\symbolic_compiler.py
+  class SymbolicCompiler: __init__(), compile(expression, variables, parameters), compile_vector(expressions, variables, parameters), clear_cache(), get_cache_size()
+
+FILE: export\torchscript\symbolic_module.py
+  class SymbolicModule: __init__(compiled_func, state_dim, input_dim, parameters), get_module()
+  def create_symbolic_module(compiled_func, state_dim, input_dim, parameters)
+
+FILE: export\torchscript\wrapper.py
+  class DynamicsModule: __init__(system), get_module()
+  def wrap_system(system)
+
+FILE: hybrid\base.py
+  class Guard: __init__(condition, direction, terminal, priority, enable_cache, max_cache_size), cache_key(t, x, u), evaluate(t, x, u), clear_cache(), cache_stats(), matches_direction(g_before, g_after)
+  class ResetMap: __init__(reset_fn), apply(x), jacobian(x)
+  class HybridSystem: __init__(modes, guards, resets, initial_mode), dynamics(t, x, u, params), output(t, x, u, params), get_guard_functions(), check_guard_activation(guard, g_before, g_after), transition(t, x, next_mode), describe()
+  def hybrid_system(modes, transitions, initial_mode)
+
+FILE: hybrid\guards\common.py
+  class StateThresholdGuard(Guard): __init__(index, threshold, direction, terminal, state_index, name), __repr__()
+  class TimeGuard(Guard): __init__(t_threshold, direction, terminal), __repr__()
+  class DistanceGuard(Guard): __init__(point, radius, direction, terminal), __repr__()
+  class VelocityThresholdGuard(Guard): __init__(velocity_indices, threshold, direction, terminal), __repr__()
+  class LinearCombinationGuard(Guard): __init__(weights, threshold, direction, terminal), __repr__()
+
+FILE: hybrid\guards\composition.py
+  class AndGuard(Guard): __init__(guards, direction, terminal), __repr__()
+  class OrGuard(Guard): __init__(guards, direction, terminal), __repr__()
+  class NotGuard(Guard): __init__(guard, direction, terminal), __repr__()
+  class SequenceGuard(Guard): __init__(guards, reset_on_violation, terminal), reset(), current_step(), is_complete(), __repr__()
+
+FILE: hybrid\guards\event_location.py
+  def locate_event(guard, t0, x0, t1, x1, u, tol, max_iterations)
+  def locate_event_hermite(guard, t0, x0, dx0, t1, x1, dx1, u, tol, max_iterations)
+
+FILE: hybrid\guards\geometric.py
+  class SphereGuard(Guard): __init__(center, radius, direction, terminal), __repr__()
+  class PlaneGuard(Guard): __init__(normal, point, direction, terminal), __repr__()
+  class HalfSpaceGuard(Guard): __init__(weights, offset, direction, terminal), __repr__()
+  class BoxGuard(Guard): __init__(min_corner, max_corner, direction, terminal), __repr__()
+  class CylinderGuard(Guard): __init__(axis_point, axis_direction, radius, direction, terminal), __repr__()
+
+FILE: hybrid\guards\hysteresis.py
+  class HysteresisGuard(Guard): __init__(guard, deadband, direction, initial_state, terminal, priority), reset(), is_hysteresis_active(), last_value(), __repr__()
+
+FILE: hybrid\guards\integration.py
+  class HybridSystemGuardManager: __init__(guards, priority_resolver), add_guard(from_mode, to_mode, guard), remove_guard(from_mode, to_mode), get_guards(from_mode), check_transitions(t, x, current_mode, u), evaluate_all_guards(t, x, current_mode, u), clear_all_caches(), get_cache_stats(), __repr__()
+
+FILE: hybrid\guards\neural.py
+  class MLP: __init__(input_dim, hidden_dims, use_batch_norm, dropout), forward(x)
+  class NeuralGuard(Guard): __init__(classifier, threshold, direction, terminal, priority), __repr__()
+  def neural_guard(state_dim, hidden_dims, threshold, direction, use_batch_norm, dropout, terminal, priority)
+  def train_neural_guard(guard, data, config)
+  def gumbel_softmax_sample(logits, temperature, hard, dim)
+  def anneal_temperature(initial_temp, final_temp, step, total_steps, schedule)
+
+FILE: hybrid\guards\priority.py
+  class GuardPriorityResolver: __init__(priorities, default_priority), resolve(active_guards), get_priority(transition), set_priority(transition, priority), has_priority(transition), __repr__()
+  def resolve_active_guards(guards, t, x, u, resolver)
+  def create_priority_map(transitions, priorities)
+  def priority_from_graph(graph, default_priority)
+  def invert_priorities(priorities, max_priority)
+
+FILE: hybrid\guards\symbolic.py
+  class SymbolicGuard(Guard): __init__(expression, variables, direction, threshold, terminal, priority), __repr__()
+  def symbolic_guard(expression, variables, direction, threshold, terminal, priority)
+
+FILE: hybrid\modes\base.py
+  class Mode: is_valid(t, x), __repr__(), __eq__(other)
+  def create_mode(name, dynamics, invariant, parameters)
+
+FILE: hybrid\modes\graph.py
+  class ModeGraph: __init__(), add_mode(mode), add_transition(from_mode, to_mode), get_adjacency_list(), reachable_from(mode), is_connected(), has_cycles(), find_strongly_connected_components(), get_isolated_modes(), validate(), __repr__()
+
+FILE: hybrid\resets\cache.py
+  class JacobianCache: __init__(max_size, tolerance), get(state), put(state, jacobian), get_or_compute(state, compute_fn), clear(), size(), hit_rate(num_hits, num_accesses), __contains__(state)
+  class CachedJacobianMixin: __init__(), enable_jacobian_cache(max_size, tolerance), disable_jacobian_cache(), clear_jacobian_cache(), jacobian(x), get_cache_stats()
+  class JacobianCacheManager: __init__(max_size_per_cache), register_reset(name, reset), get_cache(name), clear_all(), clear_cache(name), get_total_size(), get_stats()
+
+FILE: hybrid\resets\common.py
+  class JumpReset(ResetMap): __init__(reset_fn), __repr__()
+  class IdentityReset(ResetMap): __init__(), __repr__()
+  class LinearReset(ResetMap): __init__(A, b), __repr__()
+  class ComponentReset(ResetMap): __init__(index, value), __repr__()
+  class ScaleReset(ResetMap): __init__(factor, indices), __repr__()
+  class ProjectionReset(ResetMap): __init__(basis, orthonormalize), __repr__()
+
+FILE: hybrid\resets\composition.py
+  class SequentialReset(ResetMap): __init__(resets), __repr__()
+  class ConditionalReset(ResetMap): __init__(condition, reset_true, reset_false), __repr__()
+  class ParametricReset(ResetMap): __init__(reset_factory, default_params), set_params(params), get_params(), __repr__()
+  class WeightedReset(ResetMap): __init__(resets, weights, normalize_weights), __repr__()
+  class StateDependentReset(ResetMap): __init__(reset_selector), __repr__()
+
+FILE: hybrid\resets\data.py
+  class ResetDataset(Dataset): __init__(x_minus, x_plus, device, dtype), __getitem__(idx), split(train_fraction, seed), to(device), __repr__()
+  def create_reset_dataloader(dataset, batch_size, shuffle, num_workers, drop_last)
+  def generate_synthetic_reset_data(reset_fn, n_samples, state_dim, state_range, seed, device)
+  def add_noise_to_reset_data(dataset, noise_std, seed)
+
+FILE: hybrid\resets\jacobian.py
+  class BatchJacobianMixin: jacobian_batch(states)
+  class AutoDiffJacobianMixin: jacobian(x, create_graph)
+  class SymbolicJacobianMixin: jacobian(x)
+  def compute_jacobian_autograd(reset_fn, state, create_graph)
+  def compute_jacobian_batch_vmap(reset_fn, states)
+  def validate_jacobian_shape(jacobian, expected_dim)
+  def jacobian_finite_difference_check(jacobian_analytical, jacobian_numerical, atol, rtol)
+  def jacobian_max_error(jacobian_analytical, jacobian_numerical)
+  def jacobian_frobenius_error(jacobian_analytical, jacobian_numerical)
+
+FILE: hybrid\resets\losses.py
+  class EnergyDissipationLoss: __init__(energy_fn, reduction), forward(x_minus, x_plus)
+  class BoundednessConstraint: __init__(x_min, x_max, reduction), forward(x)
+  class SymmetryConstraint: __init__(symmetry_fn, reduction), forward(x_minus, x_plus)
+  class JacobianRegularization: __init__(norm_type, reduction), forward(jacobian)
+  class CombinedResetLoss: __init__(mse_weight, energy_weight, boundedness_weight, symmetry_weight, jacobian_weight, l2_weight, energy_fn, symmetry_fn, x_min, x_max), forward(x_minus, x_plus_target, x_plus_pred, model_params, jacobian)
+
+FILE: hybrid\resets\neural.py
+  class NeuralReset(ResetMap): __init__(input_dim, output_dim, hidden_dims, activation, residual, dropout, use_batch_norm, use_layer_norm, final_activation, init_method), forward(x), initialize_as_identity(), initialize_as_linear(A, b), jacobian(x), parameters(), train(mode), eval(), __repr__()
+  def neural_reset(state_dim, hidden_dims, activation, residual)
+
+FILE: hybrid\resets\physics.py
+  class ElasticImpact(ResetMap): __init__(restitution, velocity_index, invert), __repr__()
+  class InelasticImpact(ResetMap): __init__(velocity_index), __repr__()
+  class FrictionReset(ResetMap): __init__(coefficient, velocity_indices, threshold), __repr__()
+  class ReflectionReset(ResetMap): __init__(normal, restitution, normalize), __repr__()
+  class NewtonianImpact(ResetMap): __init__(mass_ratio, velocity_index, restitution, relative_velocity), __repr__()
+
+FILE: hybrid\resets\saltation.py
+  def compute_saltation_matrix(reset, state)
+  def compute_saltation_matrices_batch(reset, states)
+  def saltation_matrix_norm(saltation_matrix, ord)
+  def is_saltation_matrix_invertible(saltation_matrix, tol)
+  def saltation_matrix_condition_number(saltation_matrix)
+
+FILE: hybrid\resets\symbolic.py
+  class SymbolicReset(ResetMap): __init__(expressions, variables, simplify_expressions), jacobian(x), simplify(), trigsimp(), expand(), to_latex(), __repr__()
+  class BouncingBallReset(SymbolicReset): __init__(coefficient_of_restitution, position_index, velocity_index), __repr__()
+  def symbolic_reset(expressions, variables, simplify)
+  def bouncing_ball_reset(coefficient_of_restitution)
+
+FILE: hybrid\resets\training.py
+  class ResetTrainer: __init__(model, loss_fn, optimizer, device), fit(train_data, val_data, epochs, batch_size, early_stopping_patience, min_delta, verbose, log_interval), evaluate(test_data, batch_size)
+  def train_reset_map(reset, x_minus, x_plus, epochs, lr, batch_size, val_fraction, device, verbose, early_stopping_patience)
+  def compute_convergence_metrics(history, window_size)
+
+FILE: hybrid\resets\validation.py
+  class FiniteDifferenceMethod(Enum): 
+  def numerical_jacobian(reset, state, step_size, method)
+  def numerical_jacobian_function(reset_fn, state, step_size, method)
+  def validate_jacobian(reset, state, atol, rtol, step_size, method)
+  def compute_optimal_step_size(reset, state, min_step, max_step, num_trials)
+  def validate_jacobian_batch(reset, states, atol, rtol, step_size)
+  def jacobian_error_report(J_analytical, J_numerical)
+
+FILE: hybrid\simulation\differentiable.py
+  class JumpCheckpoint: 
+  class AdjointCheckpoints: 
+  def compute_saltation_matrix(x_minus, guard_fn, f_minus, f_plus, eps)
+  def compute_saltation_matrix_with_reset(x_minus, guard_fn, reset_fn, f_minus, f_plus_fn, eps)
+  class SoftGuard: __init__(hard_guard, temperature), temperature(), set_temperature(temperature), switching_signal(t, x, u), blended_dynamics(t, x, f_minus, f_plus, u), evaluate(t, x, u)
+  class StraightThroughGuard: forward(ctx, g_value, temperature), backward(ctx, grad_output)
+  def straight_through_decision(g_value, temperature)
+  def compute_guard_gradient(guard, t, x, u)
+  def compute_dynamics_jacobian(dynamics_fn, t, x)
+  class DifferentiableHybridSolver(HybridSolver): __init__(config, gradient_mode, soft_temperature), solve(system, x0, t_span, u, params), solve_with_gradients(system, t_span, x0, parameters, adjoint), get_saltation_matrices()
+  def differentiable_solve(system, x0, t_span)
+
+FILE: hybrid\simulation\event_detection.py
+  class EventDetector: __init__(tolerance, max_iter), detect(guard_fn, t0, t1, x0, x1, max_iter)
+  def compute_guard_distances(t, x, system, current_mode, u)
+  def find_nearest_guard(t, x, system, current_mode, u)
+  def check_guard_activation(t, x, system, current_mode, u, tolerance)
+  def compute_time_to_guard(guard_value, guard_derivative, current_time)
+
+FILE: hybrid\simulation\sliding.py
+  def detect_sliding_mode(guard_history, time_history, crossing_threshold, time_window, magnitude_threshold, verbose)
+  def detect_sliding_mode_tensor(guard_history, time_history, crossing_threshold, time_window, magnitude_threshold)
+  def warn_sliding_mode(guard_name, current_time, num_crossings, window)
+  def create_hysteresis_guard(base_guard_fn, lower_threshold, upper_threshold, initial_state)
+  def analyze_guard_oscillation(guard_history, time_history)
+
+FILE: hybrid\simulation\solver.py
+  class SolverConfig: 
+  class HybridSimulationResult: __init__(t, x, modes, transitions, diagnostics, zeno_detected, zeno_reason, terminal_guard, terminal_time), __repr__(), was_terminated(), get_terminal_guard(), summary()
+  class HybridSolver: __init__(config), solve(system, x0, t_span, u, params)
+  def hybrid_solve(system, x0, t_span)
+
+FILE: hybrid\simulation\trajectory.py
+  class InvalidModeSequenceError(Exception): 
+  class StateContinuityError(Exception): 
+  class ResetMapError(Exception): 
+  class HybridTrajectory: __init__(times, states, modes, transitions, system), __repr__(), get_state_at_time(t), get_mode_at_time(t), get_transition_times(), get_mode_intervals(), from_result(cls, result, system), to_dict(), from_dict(cls, data, system), get_transition(idx), get_transitions_in_range(t0, t1), interpolate(t, side), build_interpolant(), validate_mode_sequence(system), verify_state_continuity(tolerance), verify_reset_map(system, tolerance), save_to_disk(path), load_from_disk(cls, path, system), memory_usage_bytes(), get_compact_representation()
+
+FILE: hybrid\simulation\zeno.py
+  class ZenoStatus(Enum): 
+  class ZenoWarning(UserWarning): 
+  class NearZenoWarning(UserWarning): 
+  def compute_transition_rate(transition_times, current_time, time_window)
+  class ZenoDetector: __init__(transition_count_threshold, minimum_dwell_time, time_window, high_freq_threshold), check_zeno(transition_times, current_time, mode_info), detect_zeno(transition_times, current_time, mode_info), get_transition_rate(transition_times, current_time)
+  def create_default_detector()
+  def detect_zeno_simple(transition_times, max_transitions)
+
+FILE: identification\base.py
+  class IdentificationConfig: 
+  class SystemIdentifier(ABC): __init__(config), fit(trajectories, system_template), validate(system, validation_trajectories), __repr__()
+
+FILE: identification\dataset.py
+  class TrajectoryDataset: __init__(trajectories), split(train_fraction), to_training_data(include_derivatives, derivative_method, derivative_kwargs), __getitem__(idx), __repr__()
+
+FILE: identification\derivatives.py
+  def compute_derivative(states, times, method)
+
+FILE: identification\validation.py
+  class ValidationMetrics: to_dict(), __repr__()
+  def compute_mse(pred, true)
+  def compute_rmse(pred, true)
+  def compute_r2_score(pred, true)
+  def compute_all_metrics(pred, true)
+
+FILE: identification\hybrid\local_models.py
+  class LocalModelIdentifier: __init__(identification_method, regularization), identify_local_models(trajectories, mode_sequences), extract_mode_data(trajectories, mode_sequences, target_mode), identify_piecewise_linear(X, Y, mode_labels, n_modes), identify_piecewise_linear_single(X, Y), validate_local_model(model, X_val, Y_val), __repr__()
+
+FILE: identification\hybrid\segmentation.py
+  class ModeSegmenter: __init__(n_modes, method), segment_trajectory(trajectory, mode_labels), segment_by_clustering(X, dX), segment_by_changepoint(trajectory, threshold), segment_by_hmm(trajectories), refine_segmentation(mode_labels, min_duration), detect_transition_times(mode_labels), __repr__()
+
+FILE: identification\hybrid\transitions.py
+  class TransitionLearner: __init__(n_modes), learn_transitions(trajectories, mode_sequences), extract_transition_data(trajectories, mode_sequences, from_mode, to_mode), learn_guard_condition(transition_states, method), learn_reset_map(pre_states, post_states, method), classify_transition_type(pre_states, post_states, tol), build_transition_graph(mode_sequences), __repr__()
+
+FILE: identification\hybrid\__init__.py
+  class HybridIdentifier(SystemIdentifier): __init__(config, n_modes, segmentation_method, transition_threshold, local_method, regularization), fit(trajectories, system_template), validate_hybrid(system, trajectories), get_mode_statistics(mode_sequences), estimate_n_modes(trajectories, max_modes), __repr__()
+
+FILE: identification\online\adaptation.py
+  class ChangeDetector: __init__(window_size, threshold, method), update(error), reset()
+  class AdaptiveForgettingFactor: __init__(initial_factor, min_factor, max_factor, adaptation_rate), update(error), reset(initial_factor)
+  class MultiModelAdaptation: __init__(n_models, window_size, switch_threshold), update(errors), get_model_weights()
+  class TimeVaryingParameterTracker: __init__(n_params, forgetting_factor, change_detection), update(x, y), change_detected(), get_parameter_trajectory(), predict(x)
+  class LearningRateScheduler: __init__(initial_lr, schedule_type, decay_rate, step_size, gamma), step(epoch), update_loss(loss), get_current_lr(), reset()
+  class ConvergenceDiagnostics: __init__(window_size), add_loss(loss, timestamp), add_parameter_update(params), get_loss_trend(), get_parameter_change_norm(), is_converged(loss_tolerance, param_tolerance), get_convergence_report(), reset()
+
+FILE: identification\online\buffer.py
+  class CircularBuffer: __init__(capacity), append(item), get_last_n(n), get_all(), clear(), is_empty(), is_full(), size(), available_space(), __getitem__(index), __repr__()
+  class TensorBuffer(CircularBuffer): __init__(capacity, tensor_shape, device, dtype), append(tensor), get_last_n_as_batch(n), get_all_as_batch(), compute_statistics()
+  class StateBuffer: __init__(capacity), append(time, state, input, next_state), get_last_n(n), get_trajectory(), get_states_as_batch(), clear(), size(), is_empty(), is_full()
+
+FILE: identification\online\identifier.py
+  class OnlineIdentifier(SystemIdentifier): __init__(config, forgetting_factor, enable_change_detection, adaptive_forgetting), fit(trajectories, system_template), initialize_linear_system(state_dim), update(x, dx), predict(x), change_detected(), get_system_matrix(), get_parameter_uncertainty(), get_prediction_error_history(), reset(state_dim)
+
+FILE: identification\online\linear_system.py
+  class OnlineLinearSystem(DynamicalSystem): __init__(state_dim, forgetting_factor), update(x, dx), dynamics(t, x, u, params)
+
+FILE: identification\online\recursive.py
+  class RecursiveLeastSquares: __init__(n_params, forgetting_factor, initial_covariance, device, dtype, enable_symmetrization, min_eigenvalue_threshold, max_condition_number), update(x, y), predict(x), get_covariance(), get_parameter_std(), get_stability_diagnostics(), reset(initial_covariance)
+  class ExtendedKalmanFilter: __init__(n_state, n_obs, process_noise, measurement_noise, device, dtype), predict(dynamics_fn, jacobian_fn, dt), update(z, observation_fn, observation_jacobian_fn), predict_and_update(z, dynamics_fn, observation_fn, dt), get_state_std(), reset(x0, P0)
+  class RecursiveParameterEstimator: __init__(n_params, forgetting_factor, change_detection_threshold), update(x, y), detect_change(), adapt_to_change()
+
+FILE: identification\online\streaming.py
+  class StreamingIdentifier: __init__(state_dim, forgetting_factor, enable_change_detection), process(x, y), get_parameter_history()
+
+FILE: identification\online\system_adapter.py
+  class OnlineSystemAdapter: __init__(base_system, learning_rate, buffer_size, mini_batch_size, optimizer_type, optimizer_kwargs, lr_scheduler, parameter_groups, max_grad_norm, enable_diagnostics, change_detector, device), step(t, x, u, x_next_observed), enable_adaptation(), disable_adaptation(), is_adaptation_enabled(), freeze_parameters(indices), unfreeze_parameters(indices), set_parameter_learning_rate(param_indices, lr), get_parameter_learning_rates(), get_current_learning_rate(), set_lr_scheduler(scheduler), get_diagnostics(), is_converged(loss_tolerance, param_tolerance), print_convergence_report(), set_sample_weighting(alpha), get_smoothed_parameters(), use_smoothed_parameters(use_smoothed), get_gradient_norm(), set_optimizer(optimizer_type), get_parameters(), reset()
+
+FILE: identification\online\__init__.py
+  def online_adaptation(system, learning_rate, buffer_size, mini_batch_size, optimizer_type, enable_diagnostics, enable_change_detection, lr_schedule)
+
+FILE: identification\parametric\identifier.py
+  class ParametricIdentifier(SystemIdentifier): __init__(config), fit(trajectories, system_template)
+
+FILE: identification\parametric\linear.py
+  class LinearSystem(DynamicalSystem): __init__(A, B, C, D, state_dim, input_dim), dynamics(t, x, u, params), output(t, x, u, params)
+  class LinearSystemIdentifier: __init__(config), fit_least_squares(X, Y), fit_ridge(X, Y, alpha), identify_from_trajectories(trajectories, regularization, derivative_method, derivative_kwargs), identify_with_input(trajectories, inputs, regularization, derivative_method, derivative_kwargs)
+
+FILE: identification\parametric\nonlinear.py
+  class ParametricSystem(DynamicalSystem): __init__(dynamics_fn, initial_params, param_names, capabilities, metadata), dynamics(t, x, u, params), output(t, x, u, params), update_parameters(new_params), get_parameters()
+  class NonlinearSystemIdentifier: __init__(config), identify(trajectories, system_template, initial_params, n_starts, method, derivative_method), identify_batch(trajectories, system_template, derivative_method, method)
+  def create_van_der_pol_system(mu)
+  def create_duffing_system(delta, alpha, beta)
+
+FILE: identification\parametric\optimization.py
+  class ParameterOptimizer: __init__(loss_fn, initial_params), optimize_lbfgs(max_iter, tolerance), optimize_adam(max_iter, lr, tolerance, patience), get_loss_history()
+  def multi_start_optimize(loss_fn, param_shape, n_starts, method, param_bounds, max_iter, lr, device, dtype)
+  def compute_parameter_loss(params, X, Y, system_fn)
+  class LevenbergMarquardt: __init__(residual_fn, initial_params, initial_damping), step(), optimize(max_iter, tolerance)
+
+FILE: identification\parametric\validation.py
+  class ParameterEstimationResult: get_parameter_uncertainties(), get_confidence_intervals(confidence_level), summary()
+  class ParameterValidator: check_data_excitation(X, threshold), check_convergence(loss_history, tolerance, patience), estimate_parameter_covariance(X, Y, params, noise_variance), check_numerical_stability(X), validate_parameters(params, bounds, physical_constraints)
+  def recommend_regularization(condition_number)
+  def diagnose_identification_failure(X, Y, result)
+
+FILE: identification\pde\advanced_operators.py
+  class MixedDerivativeOperator(SpatialOperator): __init__(grid_spacing, boundary_mode, order), apply(u)
+  class DirectionalDerivativeOperator(SpatialOperator): __init__(grid_spacing, direction, boundary_mode, order), apply(u, direction)
+  class CurlOperator(SpatialOperator): __init__(grid_spacing, boundary_mode, order), apply(v)
+  class DivergenceOperator(SpatialOperator): __init__(grid_spacing, boundary_mode, order), apply(v)
+  class HigherOrderDerivativeOperator(SpatialOperator): __init__(grid_spacing, order, axis, boundary_mode, gradient_order), apply(u)
+  class OperatorComposer: __init__(), compose(operators), linear_combination(operators, coefficients)
+  class AnisotropicDiffusionOperator(SpatialOperator): __init__(grid_spacing, D_tensor, boundary_mode, order), apply(u)
+  def build_extended_pde_library(u, dx, spatial_dims, include_mixed, include_higher_order, max_order, boundary_mode)
+
+FILE: identification\pde\coefficient_fitting.py
+  class CoefficientEstimator: __init__(pde_type, regularization), estimate_diffusion_coefficient(field_data, du_dt, laplacian), estimate_wave_speed(field_data, d2u_dt2, laplacian), estimate_viscosity(field_data, du_dt, laplacian, advection_term), fit_coefficients(library_matrix, time_derivative, regularization), compute_relative_error(estimated, true_value)
+  def estimate_pde_coefficient(field_data, du_dt, spatial_term, regularization)
+  def fit_pde_coefficients_multiple(field_data, time_derivative, derivatives, regularization)
+
+FILE: identification\pde\identifier.py
+  class PDEIdentifier(SystemIdentifier): fit(trajectories, system_template), fit_from_field_data(u_data, times), identify_diffusion_coefficient(u_data, times), identify_advection_diffusion(u_data, times), estimate_regularization(states)
+
+FILE: identification\pde\operators.py
+  class SpatialOperator: __init__(grid_spacing, boundary_mode), apply(u)
+  class GradientOperator(SpatialOperator): __init__(grid_spacing, boundary_mode, order), apply(u)
+  class LaplacianOperator(SpatialOperator): __init__(spatial_dims, grid_spacing, boundary_mode), apply(u)
+  class AdvectionOperator(SpatialOperator): __init__(grid_spacing, boundary_mode, scheme), apply(u, v)
+  class DiffusionOperator(LaplacianOperator): __init__(grid_spacing, D, boundary_mode), apply(u)
+  class BiharmonicOperator(SpatialOperator): __init__(grid_spacing, boundary_mode), apply(u)
+  def build_pde_library(u, dx, spatial_dims, max_order, include_nonlinear, boundary_mode)
+  def estimate_pde_coefficients(u, du_dt, dx, spatial_dims, max_order, threshold, include_nonlinear)
+
+FILE: identification\pde\sparse_pde.py
+  class SparsePDEFinder: __init__(candidate_terms, threshold, max_iter, tolerance), build_library_matrix(field_data, derivatives), fit(library_matrix, time_derivative, method), sequential_thresholded_least_squares(Theta, b, threshold, max_iter), identify_active_terms(coefficients, threshold), get_equation_string(coefficients, threshold)
+  def find_sparse_pde(field_data, time_derivative, derivatives, candidate_terms, threshold, method)
+  def compute_sparsity(coefficients, threshold)
+  def evaluate_pde_error(Theta, coefficients, time_derivative)
+
+FILE: identification\pde\system.py
+  class PDESystem(DynamicalSystem): __init__(coefficients, feature_names, grid_spacing, spatial_dims, boundary_mode), dynamics(t, x, u, params), get_equation_string(threshold)
+
+FILE: identification\pde\validation.py
+  class RolloutAnalysis: summary()
+  class ResolutionTransferResult: is_acceptable(threshold)
+  class OperatorValidator: __init__(tolerance), verify_linearity(operator, u, v, a, b), verify_linearity_multiple(operator, field_shape, n_tests, device), verify_translation_equivariance(operator, field, shift, dim), analyze_rollout_stability(predicted_trajectory, true_trajectory, time_points)
+  class RolloutPredictor: __init__(dt, stability_check), rollout(operator, initial_condition, n_steps), rollout_with_error_tracking(operator, initial_condition, true_trajectory, n_steps)
+  class ResolutionTransferTester: __init__(), test_resolution_transfer(operator, low_res_data, high_res_data, low_res_target, high_res_target), upsample_field(field, target_size, mode)
+  def compute_relative_error(pred, target)
+  def compute_field_statistics(field)
+
+FILE: identification\sparse\advanced.py
+  class EnsembleSINDy: __init__(base_identifier, n_estimators, sample_fraction, n_jobs, random_state), fit(trajectories), get_coefficient_statistics(), get_coefficient_confidence_intervals(confidence), predict_with_uncertainty(Theta), get_ensemble_size(), get_feature_importance(threshold)
+  class HighDimensionalOptimizer: __init__(use_block_ls, block_size, use_sparse_storage, batch_size, use_gpu, progress_callback, memory_limit_gb), fit_high_dimensional(Theta, Y, threshold, max_iterations), fit_batched(Theta, Y, threshold, max_iterations)
+  class CoupledOscillatorLibrary: __init__(n_oscillators, coupling_structure, individual_library_fn, coupling_library_fn), build_library(X), get_feature_names()
+  def compute_bootstrap_confidence(coefficients_list, confidence)
+  def subsample_trajectory(trajectory, subsample_rate)
+  class CrossValidationSINDy: __init__(base_identifier, n_folds, threshold_range, scoring), evaluate(trajectories), get_summary()
+  class ModelRefinementPipeline: __init__(sparse_identifier, refinement_steps, use_ensemble, validate_symbolic, ensemble_size), fit(trajectories, validation_trajectories)
+  def evaluate_library_batched(library, X, batch_size)
+  def estimate_memory_usage(n_samples, n_features, n_outputs, dtype)
+  def discover_coupled_dynamics(trajectories, coupling_structure, n_oscillators, threshold)
+
+FILE: identification\sparse\identifier.py
+  class SparseIdentifier(SystemIdentifier): __init__(config, library_type, max_degree, sparsity_method, threshold, auto_tune_threshold, include_bias, normalize), fit(trajectories, system_template), print_equations(output_names, threshold), get_active_terms(threshold), set_library_type(library_type, max_degree), add_custom_function(name, function), tune_sparsity(trajectories, strategy)
+
+FILE: identification\sparse\library.py
+  class FunctionLibrary: __init__(library_type, max_degree, include_bias), build_library(X), build_polynomial_library(X, degree), build_trigonometric_library(X), build_mixed_library(X), build_custom_library(X), add_custom_function(name, function), get_feature_names(), get_library_size(n_features, degree), describe_library(X), build_library_batched(X, batch_size), validate_custom_function(func, X_sample)
+  def polynomial_degree_terms(n_features, degree)
+  def count_polynomial_terms(n_features, max_degree, include_bias)
+
+FILE: identification\sparse\noise_robust.py
+  def savitzky_golay_derivative(x, dt, window_length, polyorder)
+  def total_variation_derivative(x, t, reg_lambda, max_iter)
+  def soft_threshold(x, threshold)
+  def polynomial_smoothing_derivative(x, t, window_length, polyorder)
+  class WeakFormSINDy: __init__(window_size, threshold), fit(x, t, library_fn, feature_names)
+  def compute_validation_error(Xi, Theta_val, dX_val)
+  def analyze_threshold_sensitivity(Theta, Y, lambda_range, method)
+  def compute_pareto_frontier(results)
+  def recommend_threshold_from_pareto(pareto_frontier, error_tolerance)
+
+FILE: identification\sparse\regression.py
+  class SparseRegressor: __init__(sparsity_threshold, max_iterations, normalize), fit_lasso(Theta, Y, alpha, tol, method), fit_sequential_threshold(Theta, Y, threshold, init_fit_method, init_alpha, lasso_method, refit_method, refit_alpha), print_convergence_results(), fit_sr3(Theta, Y, alpha, kappa, tol), fit_ridge(Theta, Y, alpha), compute_sparsity(Xi, threshold), compute_sparsity_per_output(Xi, threshold)
+  def compute_reconstruction_error(Theta, Xi, Y)
+  def compute_relative_error(Theta, Xi, Y)
+  def compare_sparsity_methods(Theta, Y, threshold, alpha)
+
+FILE: identification\sparse\selection.py
+  def compute_aic(Y_true, Y_pred, n_params)
+  def compute_bic(Y_true, Y_pred, n_params)
+  class ModelSelector: __init__(candidate_thresholds, method, sparsity_penalty, normalize), select_best_model(Theta, Y, alpha), pareto_optimal_models(Theta, Y), cross_validate_threshold(Theta, Y, k_folds), information_criterion_selection(Theta, Y, criterion), grid_search(Theta, Y, Theta_val, Y_val), auto_threshold(Theta, Y, strategy)
+  def analyze_sparsity_pattern(Xi, feature_names, threshold)
+  def print_discovered_equations(Xi, feature_names, output_names, threshold)
+
+FILE: identification\sparse\symbolic_integration.py
+  def parse_feature_name(feature_name, state_symbols)
+  def build_symbolic_dynamics(coefficients, feature_names, state_symbols, state_dim, coefficient_threshold)
+  def sparse_to_symbolic(sparse_system, state_names, system_name, simplify, rationalize, tolerance)
+  def sparse_to_ode_system(sparse_system, state_names, system_name, simplify)
+  def validate_symbolic_equivalence(discovered_system, ground_truth, test_points, tolerance)
+  def get_symbolic_equations_latex(sparse_system, state_names, simplify)
+  def get_symbolic_equations_text(sparse_system, state_names, simplify)
+  def compare_systems_symbolically(system1, system2, simplify)
+  class SymbolicValidator: __init__(ground_truth, state_names), validate(discovered_system, test_points, tolerance), summary()
+
+FILE: identification\sparse\system.py
+  class SparseSystem(DynamicalSystem): __init__(coefficients, library, feature_names), dynamics(t, x, u), n_states(), n_features(), sparsity(), get_active_terms(threshold), to_symbolic(state_names, system_name, simplify), to_ode_system(state_names, system_name), to_latex(state_names, simplify), get_equations(state_names, simplify), validate_against(ground_truth, test_points, tolerance), __repr__()
+
+FILE: neural\base.py
+  class NeuralSystem(ABC): __init__(state_dim, input_dim, output_dim, config, device, dtype), forward(t, x, u, params), dynamics(t, x, u, params), output(t, x, u, params), jacobian(t, x, u, params), device(), device(value), parameters_dict(), system_parameters(), get_trainable_parameters(), get_frozen_parameters(), freeze_parameters(param_names), unfreeze_parameters(param_names), num_parameters(trainable_only), to(), describe()
+  class ModuleWrapper(NeuralSystem): __init__(module, state_dim, input_dim, output_dim, config, device, dtype), forward(t, x, u, params)
+
+FILE: neural\config.py
+  class NeuralConfig: 
+  class TrainingConfig: 
+
+FILE: neural\factory.py
+  class NeuralSystemFactory: register(cls, name), create(cls, system_type, state_dim, input_dim, output_dim, config), list_systems(cls)
+  class _RegisteredGenericNeuralODE(GenericNeuralODE): 
+  class _RegisteredControlAffineNeuralODE(ControlAffineNeuralODE): 
+  def neural_system(system_type, state_dim, input_dim, output_dim, config)
+  def list_neural_systems()
+
+FILE: neural\hybrid.py
+  class NeuralResidual(NeuralSystem): __init__(base_system, hidden_dims, activation, config, learn_scale, device, dtype), forward(t, x, u, params), get_base_dynamics(t, x, u, params), get_residual(t, x, u, params), freeze_base(), unfreeze_base()
+  class HybridSystem(NeuralSystem): __init__(subsystems, mode, config, device, dtype), forward(t, x, u, params)
+  def compose_additive()
+  def compose_parallel()
+  def compose_series()
+
+FILE: neural\architectures\compositional.py
+  class ResidualBlock: __init__(state_dim, hidden_dims, activation, use_batch_norm, dropout_rate), forward(x)
+  class AttentionBlock: __init__(state_dim, num_heads, hidden_dim, dropout_rate), forward(x)
+  class ModeSwitchingBlock: __init__(state_dim, num_modes, hidden_dims, mode_selector_dims, activation, hard_switching), forward(x)
+  class MultiTimescaleBlock: __init__(state_dim, fast_dim, slow_dim, fast_hidden_dims, slow_hidden_dims, activation, timescale_ratio), forward(x), split_state(x)
+  class GatedBlock: __init__(state_dim, hidden_dims, gate_dims, activation, gate_activation), forward(x)
+
+FILE: neural\architectures\deployment.py
+  def compile_for_deployment(module, example_input, method, strict, verify_equivalence, tolerance)
+  def export_for_inference(module, filepath, example_input, format)
+  def profile_architecture(module, state_dim, batch_size, n_iterations, warmup, device)
+  def benchmark_inference(module, input_sizes, n_iterations, device)
+  def benchmark_jacobian_computation(module, state_dim, batch_size, n_iterations, device)
+  def measure_memory_usage(module, state_dim, batch_size, include_backward, device)
+  def wrap_for_multi_gpu(module, device_ids)
+  def get_device_info()
+  def estimate_batch_size_for_memory(module, state_dim, target_memory_mb, device, safety_factor)
+  def verify_gradient_flow(module, state_dim, batch_size, device)
+
+FILE: neural\architectures\embeddings.py
+  class Encoder: __init__(obs_dim, latent_dim, hidden_dims, activation, use_batch_norm), forward(observations)
+  class Decoder: __init__(latent_dim, obs_dim, hidden_dims, activation, output_activation, use_batch_norm), forward(latent)
+  class LatentDynamics: __init__(latent_dim, hidden_dims, activation, use_batch_norm), forward(latent)
+  class LatentODE: __init__(obs_dim, latent_dim, encoder_dims, decoder_dims, dynamics_dims, activation, output_activation, use_batch_norm), encode(observations), decode(latent), dynamics(latent), forward(observations), reconstruct(observations), reconstruction_loss(observations, reduction)
+
+FILE: neural\architectures\factory.py
+  class ArchitectureRegistry: register(cls, name), register_factory(cls, name, factory), create(cls, arch_type), list_architectures(cls), get_architecture_class(cls, arch_type), is_registered(cls, arch_type), unregister(cls, arch_type)
+  def create_architecture(arch_type)
+  def list_architectures()
+  def create_mlp(input_dim, output_dim, hidden_dims, activation, dropout, use_batch_norm, use_layer_norm)
+  def create_hamiltonian_network(state_dim, hidden_dims, activation, output_activation)
+  def create_lagrangian_network(q_dim, hidden_dims, activation)
+  def create_port_hamiltonian_network(state_dim, hidden_dims, dissipation_dims, activation)
+  def create_gradient_flow_network(state_dim, hidden_dims, activation, output_activation)
+  def create_latent_ode(obs_dim, latent_dim, encoder_dims, decoder_dims, dynamics_dims, activation, output_activation, use_batch_norm)
+  def create_deep_residual_network(state_dim, n_blocks, hidden_dims, activation, dropout_rate)
+  def validate_architecture_config(arch_type)
+  def get_architecture_info(arch_type)
+
+FILE: neural\architectures\mlp.py
+  class MLP: __init__(input_dim, output_dim, hidden_dims, activation, dropout, dropout_rate, use_batch_norm, use_layer_norm, final_activation, init_method), forward(x), __repr__()
+
+FILE: neural\architectures\structured.py
+  def symplectic_structure_matrix(dim, device)
+  def verify_symplectic_jacobian(jacobian, tolerance)
+  def compute_energy_drift(energies)
+  class HamiltonianNetwork: __init__(state_dim, hidden_dims, activation, output_activation), forward(state), energy(state)
+  class LagrangianNetwork: __init__(q_dim, hidden_dims, activation), forward(state), generalized_momentum(state)
+  class PortHamiltonianNetwork: __init__(state_dim, hidden_dims, dissipation_dims, activation), forward(state), energy(state), dissipation_matrix(state)
+  class GradientFlowNetwork: __init__(state_dim, hidden_dims, activation, output_activation), forward(state), potential(state)
+
+FILE: neural\export\onnx.py
+  def export_onnx(module, filepath, state_dim, batch_size, input_names, output_names, dynamic_axes, opset_version, verbose)
+  def verify_onnx_model(filepath, check_shapes, verbose)
+  def run_onnx_inference(filepath, inputs, use_gpu)
+  def compare_onnx_pytorch_outputs(pytorch_module, onnx_filepath, example_inputs, input_names, atol, rtol)
+  def optimize_onnx_model(filepath, output_filepath)
+
+FILE: neural\export\torchscript.py
+  def export_torchscript(module, filepath, method, strict)
+  def load_torchscript(filepath)
+  def verify_torchscript_equivalence(original, scripted, example_inputs, atol, rtol)
+  def benchmark_torchscript_speedup(original, scripted, example_inputs, n_iterations, warmup)
+  def make_torchscript_compatible(module)
+
+FILE: neural\ode\control_affine.py
+  class ControlAffineNeuralODE(NeuralSystem): __init__(state_dim, input_dim, output_dim, config, device, dtype), drift(x), control_matrix(x), forward(t, x, u, params), describe()
+
+FILE: neural\ode\generic.py
+  class GenericNeuralODE(NeuralSystem): __init__(state_dim, input_dim, output_dim, config, device, dtype, time_invariant), forward(t, x, u, params), describe()
+
+FILE: neural\pde_operators\attention.py
+  class SpatialAttentionOperator(NeuralPDEOperator): __init__(spatial_dims, in_channels, out_channels, embed_dim, num_heads, dropout), forward(u)
+  class MultiHeadPDEAttention: __init__(embed_dim, num_heads, dropout, bias), forward(x, attn_mask)
+  class TransformerPDELayer: __init__(embed_dim, num_heads, mlp_ratio, dropout, activation), forward(x)
+  class TransformerPDEOperator(NeuralPDEOperator): __init__(spatial_dims, in_channels, out_channels, embed_dim, num_layers, num_heads, mlp_ratio, dropout), forward(u)
+  class LocalGlobalAttentionOperator(NeuralPDEOperator): __init__(spatial_dims, in_channels, out_channels, hidden_channels, embed_dim, num_heads, kernel_size), forward(u)
+
+FILE: neural\pde_operators\base.py
+  class NeuralPDEOperator(ABC): __init__(spatial_dims, in_channels, out_channels), ndim(), forward(u), __repr__()
+
+FILE: neural\pde_operators\convolutional.py
+  class ConvPDEOperator(NeuralPDEOperator): __init__(spatial_dims, in_channels, out_channels, hidden_channels, kernel_size, padding_mode, activation), forward(u), __repr__()
+
+FILE: neural\pde_operators\factory.py
+  def neural_pde_operator(operator_type, spatial_dims, in_channels, out_channels)
+
+FILE: neural\pde_operators\fourier.py
+  class FourierLayer1d: __init__(width, modes), forward(x)
+  class FourierLayer2d: __init__(width, modes1, modes2), forward(x)
+  class FourierLayer3d: __init__(width, modes1, modes2, modes3), forward(x)
+  class FourierNeuralOperator(NeuralPDEOperator): __init__(spatial_dims, in_channels, out_channels, modes, width, num_layers, activation, use_layer_norm), forward(u), __repr__()
+
+FILE: neural\pde_operators\graph.py
+  class GraphConvLayer: __init__(in_features, out_features, aggregation, bias), forward(x, edge_index, edge_attr)
+  class GraphConvPDEOperator(NeuralPDEOperator): __init__(spatial_dims, in_channels, out_channels, hidden_features, num_layers, aggregation, k_neighbors), forward(u)
+  class MessagePassingPDEOperator(NeuralPDEOperator): __init__(spatial_dims, in_channels, out_channels, hidden_dim, num_message_passing_steps, aggregation), forward(u)
+  class MeshGraphNet(NeuralPDEOperator): __init__(spatial_dims, in_channels, out_channels, hidden_dim, num_layers, use_edge_features), forward(u)
+
+FILE: neural\pde_operators\hybrid.py
+  class HybridPDEOperator: __init__(symbolic_operator, neural_operator, combination_mode, symbolic_weight, neural_weight, residual_alpha_init), freeze_symbolic(), unfreeze_neural(), freeze_neural(), forward(u), get_symbolic_component(u), get_neural_component(u), __repr__()
+  class ConservationConstraint: __init__(constraint_type, custom_functional, enforcement_weight, spatial_dx), compute_quantity(u), conservation_loss(quantity_current, quantity_initial), enforce_conservation(u, target_quantity), __repr__()
+  def create_hybrid_from_symbolic(symbolic_pde_system, neural_operator, combination_mode)
+
+FILE: neural\pde_operators\spectral.py
+  class SpectralConv1d: __init__(in_channels, out_channels, modes), forward(u)
+  class SpectralConv2d: __init__(in_channels, out_channels, modes1, modes2), forward(u)
+  class SpectralConv3d: __init__(in_channels, out_channels, modes1, modes2, modes3), forward(u)
+
+FILE: neural\pde_operators\training.py
+  def physics_informed_loss(operator_output, target_output, u_t, operator, u_field, dt, conservation_constraint, u_initial, data_weight, pde_weight, conservation_weight, boundary_weight, boundary_loss_fn)
+  def train_hybrid_operator(hybrid_operator, train_data, train_targets, optimizer, num_epochs, conservation_constraint, val_data, val_targets, early_stopping_patience, verbose)
+  def compute_symbolic_component_drift(hybrid_operator, test_inputs, initial_symbolic_outputs)
+
+FILE: neural\training\api.py
+  def train_neural_system(system, train_data, val_data, config, optimizer, loss_fn, device, verbose)
+  def quick_train(system, times, states, num_epochs, learning_rate, verbose)
+
+FILE: neural\training\data.py
+  class TrajectoryDataset(Dataset): __init__(trajectories, return_derivatives), __getitem__(idx)
+  def collate_trajectories(batch)
+  def create_dataloaders(trajectories, batch_size, validation_split, shuffle, return_derivatives, num_workers)
+  class MultiTrajectoryDataset(Dataset): __init__(trajectory_groups, return_derivatives), __getitem__(idx)
+  def split_trajectories(trajectories, train_ratio, shuffle, seed)
+
+FILE: neural\training\distributed.py
+  def wrap_data_parallel(module, device_ids, output_device)
+  def wrap_distributed_data_parallel(module, device_id, find_unused_parameters)
+  def init_distributed_training(backend, init_method)
+  def cleanup_distributed_training()
+  def get_world_size()
+  def get_rank()
+  def is_main_process()
+  def all_reduce_tensor(tensor, op)
+  def synchronize()
+  class GradientAccumulator: __init__(optimizer, accumulation_steps, clip_grad_norm), backward(loss), step(), zero_grad()
+
+FILE: neural\training\early_stopping.py
+  class EarlyStopping: __init__(patience, min_delta, mode, restore_best_weights), get_best_metric(), get_best_epoch(), reset(), __repr__()
+
+FILE: neural\training\history.py
+  class TrainingHistory: __init__(metrics), add_epoch(metrics), get_metric(name), get_all_metrics(), metric_names(), num_epochs(), best_epoch(metric, mode), best_value(metric, mode), last_epoch(), to_dict(), from_dict(cls, data), save_to_json(filepath), load_from_json(cls, filepath), summary(), plot_history(metrics, figsize, save_path), __repr__(), __str__()
+
+FILE: neural\training\losses.py
+  def trajectory_mse_loss(predicted, target, reduction)
+  def one_step_prediction_loss(system, times, states, dt, reduction)
+  def multi_step_rollout_loss(system, solver, t_span, x0, target_trajectory, reduction)
+  def weighted_trajectory_loss(predicted, target, weights, time_decay, reduction)
+  def state_derivative_loss(system, times, states, derivatives, reduction)
+
+FILE: neural\training\model_checkpointing.py
+  class ModelCheckpoint: __init__(checkpoint_dir, filename_template, save_best_only, mode, monitor, save_last, max_checkpoints, verbose), save(model, optimizer, epoch, metrics), load(filepath, model, optimizer), load_best(model, optimizer), load_last(model, optimizer), get_checkpoint_list(), __repr__()
+  def save_checkpoint(filepath, model, optimizer, epoch, metrics)
+  def load_checkpoint(filepath, model, optimizer)
+
+FILE: neural\training\regularizers.py
+  def l1_regularization(module, lambda_l1)
+  def l2_regularization(module, lambda_l2)
+  def jacobian_regularization(system, states, times, lambda_jac, norm_type)
+  def stability_regularization(system, states, times, lambda_stab, target_spectral_radius)
+  def contraction_regularization(system, states, times, lambda_contract)
+
+FILE: neural\training\schedulers.py
+  def get_scheduler(optimizer, config)
+  class WarmupScheduler: __init__(optimizer, warmup_epochs, initial_lr, main_scheduler), step(metrics), get_last_lr()
+  class CyclicLRScheduler: __init__(optimizer, min_lr, max_lr, cycle_length), step(), get_last_lr()
+  def exponential_scheduler(optimizer, gamma)
+  def multistep_scheduler(optimizer, milestones, gamma)
+
+FILE: neural\training\trainer.py
+  class SimpleTrainingHistory: 
+  class SimpleTrainer: __init__(system, config), fit(train_times, train_states, val_times, val_states, loss_fn)
+
+FILE: neural\utils\activation.py
+  def get_activation(name)
+  def list_activations()
+
+FILE: neural\utils\checkpointing.py
+  def checkpoint_forward(function)
+  class CheckpointedSequential: __init__(), forward(input)
+  class CheckpointedModule: __init__(module, use_reentrant), forward()
+  def checkpoint_trajectory_integration(system, solver, t_span, x0, num_segments)
+  def estimate_memory_savings(n_layers, activation_size_mb, reduction_factor)
+
+FILE: neural\utils\gradients.py
+  def compute_jacobian(func, inputs, create_graph)
+  def compute_jvp(func, inputs, v)
+  def compute_vjp(func, inputs, v)
+  class GradientChecker: __init__(nan_check, inf_check, range_check, min_norm, max_norm), check_gradients(module, raise_on_error)
+  def clip_grad_norm_(module, max_norm, norm_type)
+  def clip_grad_value_(module, clip_value)
+  def get_gradient_norms(module, norm_type)
+  def zero_grad_if_invalid(module)
+  def compare_jacobians_finite_diff(func, inputs, eps, atol, rtol)
+
+FILE: neural\utils\initialization.py
+  def initialize_weights(module, method, gain)
+  def initialize_layer(layer, weight_init, bias_init, gain)
+  def get_recommended_init(activation)
+  def list_initializations()
+
+FILE: neural\utils\normalization.py
+  def get_normalization(normalization_type, num_features)
+  def apply_batch_norm(module, num_features, affine, track_running_stats)
+  def apply_layer_norm(module, normalized_shape, eps, elementwise_affine)
+  def get_norm_layer(norm_type, num_features, num_groups)
+  def list_normalizations()
+
+FILE: neural\utils\stability.py
+  def clip_gradient_norm(parameters, max_norm, norm_type)
+  def clip_gradient_value(parameters, clip_value)
+  def adaptive_gradient_clip(parameters, clip_factor, eps)
+  def check_nan_inf(tensor, name)
+  def replace_nan_inf(tensor, nan_value, inf_value)
+  def clamp_output(tensor, min_value, max_value)
+  class StabilityMonitor: __init__(raise_on_nan, log_warnings), check_tensor(tensor, name), check_gradients(model, max_norm), get_stats(), reset()
+  class NumericalStabilizer: __init__(module, clamp_output, clamp_min, clamp_max, replace_nan, nan_value, fallback), forward()
+
+FILE: numeric\batch.py
+  class BatchEvaluator: evaluate_batched(system, t, x_batch, u_batch, params), broadcast_input(u, batch_size), batched_jacobian(system, t, x_batch, u_batch, params)
+  def extract_parameters(module)
+  def load_parameters(module, param_vector)
+  def freeze_parameters(module, names)
+  def unfreeze_parameters(module, names)
+  def verify_gradient_flow(module)
+
+FILE: numeric\capabilities_inference.py
+  def infer_capabilities(func, signature, jacobian_method)
+  def check_torchscript_compatible(func)
+  def check_differentiable(func)
+  def infer_system_type(func)
+  def detect_autonomous(signature)
+  def detect_time_varying(signature)
+
+FILE: numeric\derivatives.py
+  class JacobianComputationError(Exception): 
+  def select_epsilon(dtype)
+  def batched_jacobian(func, x_batch, mode)
+  class CachedJacobianSystem: __init__(system, cache_size), jacobian(t, x, u, params), dynamics(t, x, u, params), output(t, x, u, params), clear_jacobian_cache(), cache_statistics()
+
+FILE: numeric\device_management.py
+  class DeviceError(Exception): 
+  class DeviceManager: ensure_device(tensor, device), ensure_dtype(tensor, dtype), ensure_consistency(), infer_device(), infer_dtype()
+
+FILE: numeric\nonautonomous.py
+  class TimeVaryingWrapper: add_periodic_forcing(autonomous_func, amplitude, frequency, phase), add_time_varying_gain(func, gain_schedule), autonomous_to_nonautonomous(autonomous_func, time_dependence)
+
+FILE: numeric\signature_detection.py
+  class SignatureDetectionError(Exception): 
+  class FunctionSignature: detect(cls, func)
+
+FILE: numeric\stochastic.py
+  class StochasticSystem(NumericSystem): __init__(drift, diffusion, state_dim, noise_dim, input_dim, noise_type, device, dtype, jacobian_method), dynamics(t, x, u, params, noise), diffusion_matrix(t, x, u, params), sample_noise(batch_shape, dt), jacobian(t, x, u, params)
+  def wrap_stochastic(drift, diffusion, state_dim, noise_dim, input_dim, noise_type, device, dtype, jacobian_method)
+
+FILE: numeric\validation.py
+  class ValidationError(Exception): 
+  def validate_state_shape(state, expected_dim, allow_batch)
+  def validate_input_shape(input_tensor, expected_dim, batch_size)
+  def validate_device_consistency()
+  def validate_dtype_consistency()
+  def validate_batch_shape()
+  def validate_tensor_finite(tensor, name)
+
+FILE: numeric\wrapper.py
+  class NumericSystem: __init__(func, state_dim, input_dim, output_dim, device, dtype, signature, jacobian_method, capabilities, metadata), dynamics(t, x, u, params), output(t, x, u, params), jacobian(t, x, u, params)
+  class ModuleSystem: __init__(module, state_dim, input_dim, output_dim, forward_method, device, dtype, metadata), dynamics(t, x, u, params), output(t, x, u, params), get_parameters(), set_parameters(params), jacobian(t, x, u, params)
+  def wrap_function(func, state_dim, input_dim, output_dim, device, dtype, jacobian_method)
+  def wrap_module(module, state_dim, input_dim, output_dim, forward_method, device, dtype)
+
+FILE: solvers\adjoint.py
+  class Checkpointer: __init__(checkpoint_steps, max_checkpoints), save_checkpoint(step, t, x), get_checkpoint(step), clear()
+  class AdjointSolver: __init__(config, method), solve_adjoint(system, trajectory, loss_fn, x0)
+  def compute_jacobian(system, t, x, u, params)
+  def compute_parameter_jacobian(system, t, x, params, u)
+  def validate_gradients(gradients, finite_diff_gradients, rtol, atol)
+  def compute_finite_diff_gradient(system, t_span, loss_fn, solver_fn, x0, epsilon)
+
+FILE: solvers\base.py
+  class Solver(Protocol): solve(system, t_span, x0, u, params), step(system, t, x, dt, u, params)
+
+FILE: solvers\config.py
+  class SolverMethod(Enum): 
+  class ToleranceConfig: 
+  class StepSizeConfig: 
+  class EventConfig: 
+  class AdjointConfig: 
+  class DiagnosticConfig: 
+  class SolverConfig: __init__(method, tolerance, step_size, events, adjoint, diagnostics, device, dtype, save_every, dense_output, max_steps, batch_mode), dt(), dt(value), dt_min(), dt_max(), adaptive(), adaptive(value), rtol(), atol()
+
+FILE: solvers\diagnostics.py
+  class Event: 
+  class StepMetadata: 
+  class Diagnostics: add_warning(message), summary(), print_summary(), __repr__(), __getitem__(key), __contains__(key)
+  def detect_stiffness(step_metadata, threshold)
+  def issue_stiffness_warning(diagnostics, rejection_rate)
+  class InvariantTracker: __init__(invariants), compute_invariant(name, t, x, system), track_invariants(trajectory, system, threshold)
+
+FILE: solvers\dispatcher.py
+  class SolverSelectionError(Exception): 
+  class SystemDispatcher: detect_system_type(system), select_solver(system, config)
+
+FILE: solvers\events.py
+  class EventDetectionError(Exception): 
+  class EventLocationError(Exception): 
+  class EventType(str, Enum): 
+  class EventCandidate: 
+  class EventDetectionConfig: 
+  class EventDebounceState: 
+  def snap_to_zero(g, tol)
+  def sign_nonzero(g)
+  def classify_crossing_direction(g0, g1)
+  def detect_zero_crossing(event_value_before, event_value_after, direction, tol)
+  def passes_direction_filter(inferred, requested)
+  def detect_event_candidate_in_step(g0, g1, requested_direction)
+  def should_debounce_event()
+  def update_debounce_state(debounce)
+  def interpolate_state_linear(x0, x1, alpha)
+  def locate_root_bisection_on_interpolant(event_fn)
+  def refine_event_candidate(candidate)
+  def detect_endpoint_hit(event_value)
+  def check_event_direction(event_value_before, event_value_after)
+  def interpolate_state_hermite(x0, x1, f0, f1, t0, t1, t)
+  def locate_event_bisection(system, event_fn, t_before, x_before, t_after, x_after, u, params, tol, max_iter)
+  def interpolate_state(x0, x1, t0, t1, t)
+  def detect_simultaneous_events(events, time_tol)
+  def apply_event_reset(x_pre, reset_fn)
+  def check_terminal(event_idx, terminal_flags)
+  class EventDetector: __init__(event_functions, directions, terminal, tolerance), evaluate_all(t, x), detect_crossings(t, x, current_values), reset()
+
+FILE: solvers\input_scheduling.py
+  class InputSchedulingError(Exception): 
+  class InputScheduler: __init__(input_spec, t_span), get_input(t, x)
+
+FILE: solvers\solve_functions.py
+  def solve(system, t_span, x0, u, params, method, config, events, event_directions, event_terminal)
+  def solve_ivp(fun, t_span, y0, method, t_eval, dense_output, events, vectorized, args)
+
+FILE: solvers\step_control.py
+  class ErrorEstimator: __init__(tolerance), estimate_local_error(x_low, x_high), weighted_norm(err, x, tolerance), compute_step_acceptance(error, tolerance)
+  class StepSizeController: __init__(config), compute_next_step(dt_current, error, tolerance), reset()
+  def adaptive_step(solver, system, t, x, dt, tolerance, controller, u, params, max_retries)
+
+FILE: solvers\trajectory.py
+  class Trajectory: __init__(times, states, outputs, step_metadata, diagnostics, system, config, interpolants), t(), x(), y(), device(), dtype(), __getitem__(idx), interpolate(t_query, method), to(device), slice(start, end), plot(components), animate(), __repr__()
+
+FILE: solvers\dae\base.py
+  class DAESolver(Solver, ABC): __init__(config, max_iter, tol, damping, device, dtype), step(system, t, x, dt, u, params), solve(system, t_span, x0, u, params)
+
+FILE: solvers\dae\diagnostics.py
+  class DAEDiagnostics(Diagnostics): record_newton_iteration(iterations), record_constraint_violation(violation), record_projection(iterations, success), get_newton_statistics(), get_constraint_statistics(), get_projection_statistics(), summary(), compare_with(other), print_summary(), __str__(), __repr__()
+  def generate_diagnostic_report(diagnostics)
+  def export_diagnostics(diagnostics, filepath)
+  def compare_diagnostics(diag1, diag2, label1, label2)
+
+FILE: solvers\dae\implicit.py
+  class BackwardEulerSolver(DAESolver): step(system, t, x, dt, u, params)
+  class TrapezoidalSolver(DAESolver): step(system, t, x, dt, u, params)
+
+FILE: solvers\dae\initialization.py
+  class ConsistentInitializer: __init__(system, config), compute_consistent(t0, x0, u, params), compute_consistent_derivative(t0, x0, dx0, u, params), validate_consistency(t, x, u, params, tol)
+
+FILE: solvers\dae\mass_matrix.py
+  class IllConditionedJacobianWarning(UserWarning): 
+  class HigherIndexDAEWarning(UserWarning): 
+  class MassMatrixSystem: __init__(mass_matrix, rhs, state_dim), residual(t, x, xdot, u, params), jacobian_xdot(x), is_singular(x, tol)
+  def compute_rank(A, atol)
+  def compute_constraint_jacobian(constraint_fn, t, x, u, params, eps, device, dtype)
+  def check_jacobian_conditioning(jac, warning_threshold)
+  def detect_dae_index(system, x0, u, params, t0, eps, atol)
+
+FILE: solvers\dae\newton.py
+  class NewtonSolver: __init__(max_iter, tol, damping, device, dtype), solve(residual, x0, jacobian)
+
+FILE: solvers\dae\projection.py
+  class ConstraintDriftWarning(UserWarning): 
+  class ConstraintProjector: __init__(system, config), project(t, x, u, params), get_violation(t, x, u, params)
+  class BaumgarteStabilizer: __init__(system, alpha, beta, config), stabilize_dynamics(t, x, dx, u, params), get_stabilized_system()
+  class StabilizedSystem: __init__(base_system, stabilizer), dynamics(t, x, u, params), constraint()
+  class DriftStatistics: 
+  class DriftMonitor: __init__(system, config, violation_threshold, drift_threshold, growth_factor), record(t, x, u, params), check_and_warn(t), get_statistics(), reset()
+
+FILE: solvers\dae\__init__.py
+  def get_dae_solver(method, config)
+  def backward_euler(system, t_span, x0, u, params)
+  def trapezoidal(system, t_span, x0, u, params)
+  def solve_dae(system, t_span, x0, method, u, params)
+  def recommend_dae_method(system)
+  def validate_dae_system(system, x0)
+  class DAEConfigPresets: stiff(), smooth(), constrained(), tight_tolerance()
+
+FILE: solvers\ode\adaptive.py
+  class AdaptiveODESolver(ODESolver): __init__(config)
+
+FILE: solvers\ode\base.py
+  class ODESolver(ABC): __init__(config), step(system, t, x, dt, u, params), solve(system, t_span, x0, u, params, events, event_directions, event_terminal)
+
+FILE: solvers\ode\batch.py
+  def gpu_batch_solve(system, t_span, x0_batch, u, params, method, dt, device)
+  def split_batch_solve(system, t_span, x0_batch, u, params, method, dt, device, max_batch_size)
+  def estimate_gpu_batch_size(state_dim, num_steps, dtype, safety_factor)
+  def benchmark_gpu_speedup(system, t_span, x0_batch, method, dt)
+
+FILE: solvers\ode\error_estimation.py
+  class ErrorEstimator: compute_error_norm(error, x, atol, rtol, norm_type, weights), estimate_local_error(x_high, x_low, order_high, order_low), check_convergence(residual, tol, norm_type)
+
+FILE: solvers\ode\explicit.py
+  class EulerSolver(ODESolver): step(system, t, x, dt, u, params)
+  class MidpointSolver(ODESolver): step(system, t, x, dt, u, params)
+  class RK4Solver(ODESolver): step(system, t, x, dt, u, params)
+  class DOPRI5Solver(AdaptiveODESolver): __init__(config), invalidate_fsal(), step(system, t, x, dt, u, params)
+  class Tsit5Solver(AdaptiveODESolver): __init__(config), invalidate_fsal(), step(system, t, x, dt, u, params)
+
+FILE: solvers\ode\interpolation.py
+  class HermiteInterpolator: interpolate(t0, t1, x0, x1, dx0, dx1, t_query, warn_extrapolation), interpolate_batch(t0, t1, x0, x1, dx0, dx1, t_queries, warn_extrapolation)
+  class DenseOutputRK: __init__(method), create_interpolant(t0, t1, x0, x1, dx0, dx1, stages)
+
+FILE: solvers\ode\jit_kernels.py
+  def jit_euler_step(x, f, t, dt)
+  def jit_rk4_step(x, f, t, dt)
+  def jit_midpoint_step(x, f, t, dt)
+  def try_jit_compile_dynamics(system, device, dtype)
+  class JITCompiledSolver: __init__(enable_jit), try_compile(system, device, dtype), is_compiled()
+  def benchmark_jit_speedup(system, x0, t_span, dt, n_trials)
+
+FILE: solvers\ode\methods.py
+  def get_ode_solver(method, config)
+  def euler(system, t_span, x0, u, params, dt)
+  def midpoint(system, t_span, x0, u, params, dt)
+  def rk4(system, t_span, x0, u, params, dt)
+  def dopri5(system, t_span, x0, u, params, rtol, atol, dt, norm)
+  def rk45(system, t_span, x0, u, params, rtol, atol, dt)
+  def tsit5(system, t_span, x0, u, params, rtol, atol, dt)
+
+FILE: solvers\ode\symplectic.py
+  class SymplecticEulerSolver(ODESolver): step(system, t, x, dt, u, params)
+  class LeapfrogSolver(ODESolver): step(system, t, x, dt, u, params)
+  class EnergyDiagnostics: __init__(hamiltonian), track_energy(x), compute_drift(), compute_max_drift(), compute_relative_drift(), get_energy_history()
+
+FILE: solvers\ode\tableau.py
+  class ButcherTableau: order(), embedded_order(), is_explicit(), validate(tol), from_name(cls, name)
+
+FILE: solvers\opt\base.py
+  class ConvergenceStatus(Enum): 
+  class SolverResult: success()
+  class OptSolverConfig: 
+  class OptSolver: solve()
+
+FILE: solvers\opt\line_search.py
+  class BacktrackingLineSearch: search(f, x, direction, f_x, grad_x)
+  class StrongWolfeLineSearch: search(f, grad_f, x, direction, f_x, grad_x)
+  class QuadraticInterpolationLineSearch: search(f, x, direction, f_x, grad_x)
+
+FILE: solvers\opt\proximal.py
+  def prox_l1(v, lambda_)
+  def prox_l2(v, lambda_)
+  def prox_elastic_net(v, lambda_l1, lambda_l2)
+  def prox_box(v, lower, upper)
+  def prox_simplex(v)
+  def prox_nuclear(v, lambda_)
+  def prox_indicator_psd(v)
+  class ProximalOperator: 
+
+FILE: solvers\opt\constrained\augmented_lagrangian.py
+  class AugmentedLagrangianSolver(OptSolver): solve(objective_fn, gradient_fn, x0, eq_constraint_fn, eq_jacobian_fn, ineq_constraint_fn, ineq_jacobian_fn)
+
+FILE: solvers\opt\constrained\projected.py
+  class ProjectedGradientSolver(OptSolver): solve(objective_fn, gradient_fn, x0, lb, ub, projection_fn)
+  class AcceleratedProjectedGradientSolver(OptSolver): solve(objective_fn, gradient_fn, x0, lb, ub, projection_fn)
+
+FILE: solvers\opt\least_squares\linear.py
+  class RidgeSolver(OptSolver): solve(A, b, x0)
+  class LASSOSolver(OptSolver): solve(A, b, x0)
+  class ElasticNetSolver(OptSolver): solve(A, b, x0)
+  class STLSSolver(OptSolver): solve(A, b, x0)
+  class SR3Solver(OptSolver): solve(A, b, x0)
+
+FILE: solvers\opt\least_squares\nonlinear.py
+  class GaussNewtonSolver(OptSolver): solve(residual_fn, jacobian_fn, x0)
+  class LevenbergMarquardtSolver(OptSolver): solve(residual_fn, jacobian_fn, x0)
+
+FILE: solvers\opt\quadratic\admm.py
+  class OSQPSolver(OptSolver): solve(H, q, A, l, u, x0), solve_mpc(H, q, A_eq, b_eq, lb, ub, x0)
+
+FILE: solvers\opt\quadratic\dense.py
+  class DenseQPSolver(OptSolver): solve(H, q, A_eq, b_eq, A_ineq, b_ineq, lb, ub, x0)
+
+FILE: solvers\opt\specialized\tv.py
+  class ChambolleTV1DSolver(OptSolver): solve(f, x0), solve_batch(f_batch)
+  class TVDifferentiationSolver(OptSolver): solve(f, x0), solve_batch(f_batch, dt)
+  class CondatTV1DSolver(OptSolver): solve(f, x0)
+
+FILE: solvers\opt\unconstrained\gradient.py
+  class GradientDescentSolver(OptSolver): solve(f, grad_f, x0)
+  class AcceleratedGradientSolver(OptSolver): solve(f, grad_f, x0)
+
+FILE: solvers\opt\unconstrained\proximal_gradient.py
+  class ISTASolver(OptSolver): solve(f, grad_f, prox_g, x0)
+  class FISTASolver(OptSolver): solve(f, grad_f, prox_g, x0)
+  class ADMMSolver(OptSolver): solve(f_prox, g_prox, x0)
+
+FILE: solvers\opt\unconstrained\quasi_newton.py
+  class LBFGSSolver(OptSolver): solve(f, grad_f, x0)
+  class BFGSSolver(OptSolver): solve(f, grad_f, x0)
+
+FILE: solvers\pde\base.py
+  class PDESystem: __init__(spatial_operator_func, grid, channels, name)
+  class PDETrajectory: __getitem__(idx), animate()
+  class MethodOfLinesSolver: __init__(spatial_operator, time_integrator, config), solve(pde_system, t_span, u0, boundary_conditions)
+
+FILE: solvers\pde\boundary_conditions.py
+  class BoundaryCondition: validate()
+
+FILE: solvers\pde\cfl.py
+  class CFLChecker: __init__(grid), compute_max_dt(max_wave_speed, safety_factor), compute_cfl_number(dt, max_wave_speed), check_stability(dt, max_wave_speed, cfl_limit, warn), estimate_diffusion_dt(diffusivity, safety_factor)
+
+FILE: solvers\pde\examples.py
+  class HeatEquation(PDESystem): __init__(grid, alpha)
+  class WaveEquation(PDESystem): __init__(grid, c)
+  class BurgersEquation(PDESystem): __init__(grid, nu)
+  def heat_1d_analytical(x, t, alpha)
+  def wave_1d_analytical(x, t, c)
+  def compute_l2_error(u_numerical, u_analytical, dx)
+
+FILE: solvers\pde\field_ops.py
+  class Field: __init__(data, grid, channels), batch_size(), shape(), __getitem__(channel), flatten_spatial(), unflatten_spatial(flat), __mul__(other), __add__(other), __sub__(other)
+
+FILE: solvers\pde\finite_difference.py
+  class FiniteDifferenceOperator(SpatialOperator): __init__(order, grid), apply(field, derivative, bcs)
+
+FILE: solvers\pde\grid.py
+  class Grid: meshgrid(), num_points()
+
+FILE: solvers\pde\solver.py
+  def solve_pde(pde_system, t_span, u0, boundary_conditions, spatial_method, time_method)
+  def solve_pde_gpu(pde_system, t_span, u0, boundary_conditions, spatial_method, time_method, device)
+  def solve_pde_batch(pde_system, t_span, u0_batch, boundary_conditions, spatial_method, time_method)
+
+FILE: solvers\pde\spatial_ops.py
+  class SpatialOperator(ABC): apply(field, derivative, bcs), laplacian(field, bcs), gradient(field, bcs), divergence(fields, bcs)
+
+FILE: solvers\pde\spectral.py
+  class SpectralOperator(SpatialOperator): __init__(grid), apply(field, derivative, bcs)
+
+FILE: symbolic\compilation.py
+  class PyTorchCompiler: __init__(), compile_scalar(expr, variables, device, dtype), compile_vector_field(f, variables, device, dtype), compile_jacobian(f, variables, device, dtype), compile_with_parameters(expr, state_vars, param_vars, device, dtype)
+  def compile_to_torch(expr, variables, device, dtype)
+
+FILE: symbolic\differentiation.py
+  class DifferentiationEngine: __init__(), differentiate(expr, var, order), gradient_cached(expr, variables), jacobian_cached(f, variables), hessian_cached(expr, variables), clear_cache()
+  def directional_derivative(expr, direction, variables)
+  def get_differentiation_engine()
+
+FILE: symbolic\factories.py
+  def create_linear_system(A, state_vars, B, input_vars, name)
+  def create_control_affine_system(f, g, state_vars, input_vars, name)
+  def create_parametric_system(dynamics, state_vars, param_vars, name)
+  def create_nonautonomous_system(dynamics, state_vars, time_var, name)
+  def van_der_pol(mu)
+  def lorenz(sigma, rho, beta)
+  def pendulum(damping)
+  def double_integrator()
+
+FILE: symbolic\factorization.py
+  class FactorizationEngine: factor(expr), collect(expr, variables), expand(expr), cancel(expr), apart(expr, var), together(expr), simplify_rational(expr)
+  def factor(expr)
+  def collect(expr, variables)
+  def expand(expr)
+  def apart(expr, var)
+  def together(expr)
+
+FILE: symbolic\integration.py
+  class IntegrationEngine: integrate(expr, var), definite_integrate(expr, var, lower, upper), integrate_vector_field(f, var), verify_antiderivative(expr, antiderivative, var)
+  def integrate(expr, var)
+  def definite_integrate(expr, var, lower, upper)
+
+FILE: symbolic\linearization.py
+  def compute_system_jacobian(system)
+  def linearize_at_equilibrium(system, equilibrium_point)
+  def find_equilibria(system, domain)
+  def compute_equilibrium_jacobian(system, equilibrium)
+
+FILE: symbolic\matrix_ops.py
+  class MatrixOps: determinant(M), eigenvalues(M), eigenvectors(M), inverse(M), trace(M), rank(M), nullspace(M), qr_decomposition(M), lu_decomposition(M), cholesky(M)
+  def determinant(M)
+  def eigenvalues(M)
+  def inverse(M)
+
+FILE: symbolic\operations.py
+  class SymbolicOps: vector_field(expressions, context), jacobian(f, variables), gradient(f, variables), hessian(f, variables), lie_derivative(V, f, variables), divergence(f, variables), curl(f, variables)
+
+FILE: symbolic\patterns.py
+  class PatternMatcher: is_quadratic_form(expr, variables), extract_quadratic_matrix(V, variables), detect_control_affine(f, state_vars, input_vars)
+  def is_quadratic_form(expr, variables)
+  def extract_quadratic_matrix(V, variables)
+  def detect_control_affine(f, state_vars, input_vars)
+
+FILE: symbolic\series.py
+  class TaylorExpander: expand(expr, var, point, order), multivariate_expand(expr, variables, point_dict, order), expand_vector_field(f, variables, point, order), estimate_truncation_error(expr, taylor_approx, var, point, order)
+  def taylor_expand(expr, var, point, order)
+
+FILE: symbolic\simplify.py
+  class Simplifier: __init__(strategy), simplify(expr, assumptions), simplify_vector_field(f, assumptions)
+  def simplify(expr, strategy)
+
+FILE: symbolic\substitution.py
+  class SubstitutionEngine: substitute(expr, substitutions), substitute_vector_field(f, substitutions), evaluate_numeric(expr, substitutions), partial_substitute(expr, fixed_params, free_vars), evaluate_vector_field_numeric(f, substitutions)
+  def substitute(expr, substitutions)
+  def evaluate(expr, substitutions)
+
+FILE: symbolic\symbols.py
+  class SymbolicContext: all_symbols(), create_vector(prefix, n)
+  class SymbolRegistry: __init__(), get_or_create(name), register_context(name, context), get_context(name)
+  def symbol(name)
+  def create_state_symbols(n, prefix)
+  def create_input_symbols(m, prefix)
+  def create_param_symbols(k, prefix)
+
+FILE: symbolic\system.py
+  class SymbolicSystem: __init__(state_vars, dynamics, context, input_vars, param_vars, time_var, name), n_states(), n_inputs(), n_params(), is_autonomous(), is_time_invariant(), get_state_vars(), get_state_names(), validate_state_dimension(), set_parameters(param_dict), get_parameters(), substitute_parameters(param_values), substitute(subs_dict), linearize(equilibrium), scale_states(scale_factors), __repr__()
+
+FILE: symbolic\system_factory.py
+  def symbolic_system(system_type, equations, variables, inputs, params, A)
+
+FILE: symbolic\system_properties.py
+  class SystemPropertyAnalyzer: detect_linearity(system), detect_polynomial_degree(system), detect_control_affine(system), detect_hamiltonian(system)
+  def is_linear(system)
+  def is_control_affine(system)
+
+FILE: symbolic\dae\factory.py
+  def dae_system(residual, differential_vars, algebraic_vars, derivatives, inputs, params, time, form, name)
+  def semi_explicit_dae(differential_eqs, algebraic_eqs, differential_vars, algebraic_vars, inputs, params, time, name)
+
+FILE: symbolic\dae\analysis\consistency.py
+  class ConsistencyStatus: __str__()
+  def check_constraint_consistency(dae, tolerance)
+  def find_redundant_constraints(dae, tolerance)
+  def eliminate_redundant_constraints(dae)
+  def check_consistent_initial_conditions(dae, initial_state, tolerance)
+
+FILE: symbolic\dae\analysis\constraints.py
+  def extract_constraints(dae)
+  def extract_differential_equations(dae)
+  def classify_equations(dae)
+
+FILE: symbolic\dae\analysis\constraint_satisfaction.py
+  def verify_constraint_satisfaction(dae, ics, tolerance)
+  def compute_constraint_residual(dae, ics)
+  def verify_hidden_constraint_satisfaction(dae, ics, tolerance, max_level)
+
+FILE: symbolic\dae\analysis\free_variables.py
+  def identify_free_variables(dae)
+  def count_degrees_of_freedom(dae)
+  def suggest_free_variable_values(dae, scenario)
+
+FILE: symbolic\dae\analysis\hidden_constraints.py
+  def detect_hidden_constraints(dae, max_level, simplify)
+  def time_derivative(expr, variables, simplify, dae)
+  def is_hidden_constraint(constraint, existing_constraints, variables, tolerance)
+
+FILE: symbolic\dae\analysis\index.py
+  def compute_dae_index(dae)
+  def check_index_2_semi_explicit(dae)
+  def check_index_1_semi_explicit(dae)
+  def detect_index_reduction_needed(dae)
+
+FILE: symbolic\dae\analysis\initialization.py
+  def find_consistent_ics(dae, free_var_values, method, initial_guess, tolerance)
+  def solve_constraints_symbolically(dae, free_var_values, constraints, all_vars)
+  def solve_constraints_numerically(dae, free_var_values, initial_guess, constraints, all_vars, tolerance)
+  def project_onto_manifold(dae, inconsistent_ics, tolerance)
+
+FILE: symbolic\dae\analysis\least_squares_ic.py
+  def find_least_squares_ics(dae, initial_guess, tolerance, max_iterations)
+  def evaluate_ic_quality(dae, ics)
+  def weighted_least_squares_ics(dae, weights, initial_guess, tolerance)
+
+FILE: symbolic\dae\analysis\parametric_ics.py
+  def generate_parametric_ics(dae, free_vars)
+  def sample_parametric_ics(parametric_solution, free_vars, n_samples, bounds, random_seed)
+  def create_ic_generator(parametric_solution, free_vars)
+  def enumerate_grid_ics(parametric_solution, free_vars, grid_points)
+  def visualize_ic_manifold(parametric_solution, free_vars, projection_vars, n_points)
+
+FILE: symbolic\dae\analysis\stabilization.py
+  def add_baumgarte_stabilization(dae, alpha, beta, name)
+  def estimate_stabilization_params(dae, time_scale)
+
+FILE: symbolic\dae\analysis\structure.py
+  def detect_differential_vars(residual_expressions, candidate_vars, derivative_vars)
+  def detect_algebraic_vars(residual_expressions, candidate_vars, derivative_vars)
+  def detect_pure_algebraic_equations(residual_expressions, derivative_vars)
+  def analyze_sparsity(jacobian)
+  def detect_linear_in_derivative(residual_expressions, derivative_vars)
+  def extract_mass_matrix(residual_expressions, differential_vars, derivative_vars)
+
+FILE: symbolic\dae\analysis\system_classification.py
+  def classify_constraint_system(dae)
+  def detect_overdetermined_system(dae)
+  def detect_underdetermined_system(dae)
+  def is_well_posed(dae)
+  def assess_constraint_rank(dae)
+
+FILE: symbolic\dae\compilation\jacobian_codegen.py
+  def compile_jacobians(dae, device, dtype)
+
+FILE: symbolic\dae\compilation\residual_codegen.py
+  class CompiledDAEResidual: __init__(dae, device, dtype), batch_eval(x, x_dot, t, u, p)
+  def compile_residual(dae, device, dtype)
+
+FILE: symbolic\dae\core\dae_system.py
+  class DAEForm(Enum): 
+  class DAESystem: n_total(), n_differential(), n_algebraic(), n_inputs(), n_params(), is_autonomous(), is_linear_in_deriv(), is_linear_in_derivative(), index(), jacobian_state(simplify), jacobian_derivative(simplify), __repr__()
+
+FILE: symbolic\dae\core\residual.py
+  class ResidualVector: __getitem__(index), subs(substitutions), simplify(), as_matrix(), __repr__()
+
+FILE: symbolic\dae\core\variables.py
+  class DAEVariableSet: n_differential(), n_algebraic(), n_total(), n_inputs(), n_params(), all_state_vars(), all_symbols(), derivative_of(var), create(cls, n_differential, n_algebraic, n_inputs, n_params, autonomous, state_prefix, algebraic_prefix), __repr__()
+
+FILE: symbolic\dae\differentiation\constraint_jacobian.py
+  def constraint_jacobian_algebraic(dae, simplify)
+  def constraint_jacobian_differential(dae, simplify)
+  def constraint_jacobian_full(dae, simplify)
+  def evaluate_constraint_rank(dae, simplify)
+
+FILE: symbolic\dae\differentiation\jacobian.py
+  def compute_jacobian(expressions, variables, simplify)
+  def compute_jacobian_state(expressions, differential_vars, simplify)
+  def compute_jacobian_derivative(expressions, derivatives, simplify)
+  def compute_jacobian_algebraic(expressions, algebraic_vars, simplify)
+  def compute_constraint_jacobian(algebraic_equations, algebraic_vars, simplify)
+
+FILE: symbolic\dae\export\latex.py
+  def to_latex(dae, form)
+
+FILE: symbolic\dae\export\serialization.py
+  def to_dict(dae)
+  def from_dict(data)
+
+FILE: symbolic\dae\linearization\implicit_linear.py
+  def linearize_dae(dae, equilibrium_state, equilibrium_input, simplify)
+  def analyze_linearized_stability(E, A)
+
+FILE: symbolic\dae\reduction\construction.py
+  def construct_reduced_dae(original_dae, additional_constraints, reduction_level, name)
+  def augment_with_differentiated_constraints(dae, new_constraints)
+  def update_variable_classification(dae, new_algebraic_vars, new_differential_vars)
+  def simplify_reduced_dae(dae, eliminate_trivial, simplify_expressions)
+
+FILE: symbolic\dae\reduction\dummy_derivatives.py
+  def add_dummy_derivative(dae, algebraic_var, derivative_name)
+  def detect_required_dummy_derivatives(dae, equations_to_differentiate)
+  def eliminate_dummy_derivatives(dae, dummy_vars)
+  def create_consistency_equation(algebraic_var, dummy_derivative, actual_derivative_expr)
+
+FILE: symbolic\dae\reduction\elimination.py
+  def try_convert_to_ode(dae)
+  def extract_mass_matrix_form(dae)
+  def eliminate_algebraic_variables(dae)
+
+FILE: symbolic\dae\reduction\index_reduction.py
+  def reduce_index(dae, target_index, max_iterations, method)
+  def reduce_index2_to_index1(dae)
+  def reduce_index3_to_index1(dae)
+  def reduce_higher_index(dae, method, max_diff_level)
+
+FILE: symbolic\dae\reduction\pantelides.py
+  def pantelides_algorithm(dae, target_index)
+  def build_signature_matrix(dae)
+  def identify_equations_to_differentiate(dae, sig_matrix)
+  def introduce_dummy_derivatives(dae, algebraic_vars)
+
+FILE: symbolic\dae\reduction\verification.py
+  def verify_index_reduction(original_dae, reduced_dae, expected_reduction)
+  def verify_equivalence(original_dae, reduced_dae, check_symbolic)
+  def check_hidden_constraints_found(dae, reduced_dae, diff_level)
+  def verify_jacobian_rank_increased(original_dae, reduced_dae)
+
+FILE: symbolic\geometry\analysis\integration_utils.py
+  def lyapunov_derivative(lyapunov_func, drift, variables)
+  def verify_lyapunov_conditions(V, drift, variables, equilibrium, region)
+  def compute_invariant_sublevel_set(V, drift, variables, c)
+
+FILE: symbolic\geometry\analysis\invariant.py
+  class InvariantSet: type(), contains(point, tolerance), boundary(), from_level_set(cls, func, variables, invariance_type), from_sublevel_set(cls, func, variables, level, invariance_type)
+  def check_forward_invariance(inv_set, vector_field, method, return_details)
+  def check_control_invariance(inv_set, drift, input_fields, return_details)
+  def compute_control_barrier_certificate(inv_set, drift, input_fields)
+
+FILE: symbolic\geometry\analysis\linear_algebra.py
+  def symbolic_rank(matrix)
+  def symbolic_nullspace(matrix)
+  def symbolic_span_check(vector, basis)
+  def orthonormalize_basis(basis, variables)
+  def symbolic_eigenvalues(matrix)
+  def symbolic_eigenvectors(matrix)
+  def matrix_exponential(matrix, t)
+
+FILE: symbolic\geometry\analysis\tangent_space.py
+  class TangentSpace: dimension(), project(vector), is_tangent(vector, tolerance), orthonormal_basis()
+  def compute_tangent_space(manifold_constraints, variables, point)
+  def compute_projection_matrix(manifold_constraints, variables)
+
+FILE: symbolic\geometry\compilation\torch_codegen.py
+  def compile_vector_field(vf, device, dtype)
+  def compile_lie_derivative(scalar_func, vf, device, dtype)
+  def compile_lie_bracket(f, g, device, dtype)
+  def compile_jacobian(vf, device, dtype)
+
+FILE: symbolic\geometry\control\decoupling.py
+  def compute_decoupling_matrix(outputs, drift, inputs, rel_degrees, variables)
+
+FILE: symbolic\geometry\control\feedback.py
+  def feedback_linearization_transform(output, drift, control_input, variables, relative_degree)
+
+FILE: symbolic\geometry\control\relative_degree.py
+  def compute_relative_degree(output, drift, inputs, variables, max_order)
+  def compute_relative_degrees_mimo(outputs, drift, inputs, variables, max_order)
+
+FILE: symbolic\geometry\control\structure.py
+  def check_feedback_linearizable(outputs, drift, inputs, variables)
+  def check_input_output_linearizable(output, drift, control_input, variables)
+
+FILE: symbolic\geometry\core\coordinates.py
+  class CoordinateType(Enum): 
+  class CoordinateSystem: cartesian(cls, dimension), polar(cls), cylindrical(cls), spherical(cls)
+  def transformation_jacobian(from_coords, to_coords, variables)
+  def standard_transformations(from_type, to_type)
+
+FILE: symbolic\geometry\core\covector.py
+  class OneForm: evaluate_on(vector_field), from_gradient(cls, scalar_func, variables), as_matrix(), __repr__(), exterior_derivative(), wedge(other)
+
+FILE: symbolic\geometry\core\manifold.py
+  class ManifoldType(Enum): 
+  class Manifold: coordinates(), euclidean(cls, dimension, name), sphere(cls, dimension, name), embedded(cls, constraints, ambient_dimension, name), tangent_space(point), __repr__()
+
+FILE: symbolic\geometry\core\vector_field.py
+  class VectorField: __getitem__(idx), dimension(), is_polynomial(), is_divergence_free(), __add__(other), __mul__(scalar), jacobian(simplify), as_matrix(), from_function(cls, func, variables, manifold), __repr__()
+  def vector_field(expressions, variables, manifold, name)
+
+FILE: symbolic\geometry\distributions\controllability.py
+  def accessibility_distribution(drift, input_fields, max_order)
+  def controllability_rank_condition(drift, input_fields, max_order, return_rank)
+  def strong_accessibility(drift, input_fields, max_order)
+  def compute_lie_closure(vector_fields, variables, max_order)
+  def compute_controllability_distribution(drift, inputs, variables, max_depth)
+
+FILE: symbolic\geometry\distributions\distribution.py
+  class Distribution: rank(), is_involutive(), dimension(), add_generator(vf), constant_rank(), dimension_at(point), span_at(point), __repr__()
+
+FILE: symbolic\geometry\distributions\involutivity.py
+  def check_involutivity(distribution)
+  def compute_lie_closure(distribution, max_iterations)
+  def frobenius_theorem_check(distribution)
+  def compute_integral_manifold(distribution, initial_point, symbolic)
+
+FILE: symbolic\geometry\export\latex.py
+  def export_latex(obj, style)
+  def vector_field_to_latex(vf, style)
+  def lie_bracket_to_latex(f, g)
+  def manifold_to_latex(manifold)
+  def coordinate_transformation_to_latex(transform, style)
+
+FILE: symbolic\geometry\operators\differential.py
+  def divergence(expressions, variables, simplify)
+  def curl(expressions, variables, simplify)
+  def gradient(expression, variables, simplify)
+  def laplacian(expression, variables, simplify)
+
+FILE: symbolic\geometry\operators\flow.py
+  def symbolic_flow(vector_field, variables, time_symbol, initial_point)
+  def compute_flow_time(flow, target_set, variables, time_symbol)
+
+FILE: symbolic\geometry\operators\lie_bracket.py
+  def lie_bracket(f, g, variables)
+  def check_jacobi_identity(f, g, h)
+  def check_antisymmetry(f, g)
+  def check_bilinearity(f, g, h, alpha, beta)
+  def repeated_lie_bracket(f, g, n)
+  def iterated_lie_bracket(fields)
+
+FILE: symbolic\geometry\operators\lie_derivative.py
+  def lie_derivative_scalar(scalar_func, vector_field, variables)
+  def lie_derivative(scalar_func, drift, variables)
+  def lie_derivative_vector_field(vf1, vf2, variables)
+  def higher_lie_derivative(scalar_func, vector_field, order, variables)
+  class PerformanceWarning(UserWarning): 
+
+FILE: symbolic\geometry\operators\pushforward.py
+  def pushforward_vector_field(vf, transformation)
+  def pullback_form(form, transformation)
+  def pushforward_covector(form, transformation)
+
+FILE: symbolic\geometry\transformations\coordinate_change.py
+  class CoordinateTransformation: expressions(), pushforward(vf), pullback_form(one_form)
+  def coordinate_transformation(forward, variables_from, variables_to, inverse)
+  def compute_inverse_transformation(transformation, timeout)
+  def compose_transformations(phi1, phi2)
+  def transform_system(ode_system, transformation)
+
+FILE: symbolic\geometry\transformations\diffeomorphism.py
+  def is_diffeomorphism(transformation, domain)
+  def verify_diffeomorphism_conditions(transformation)
+  def is_local_diffeomorphism(transformation, point)
+
+FILE: symbolic\geometry\transformations\standard.py
+  def polar_to_cartesian()
+  def cartesian_to_polar()
+  def spherical_to_cartesian()
+  def cartesian_to_spherical()
+  def cylindrical_to_cartesian()
+  def cartesian_to_cylindrical()
+
+FILE: symbolic\lyapunov\factory.py
+  def lyapunov_function(expression, variables, parameters, lyapunov_type)
+  def quadratic_lyapunov(n, variables, P)
+  def polynomial_lyapunov(variables, degree)
+
+FILE: symbolic\lyapunov\compilation\function_codegen.py
+  class TorchLyapunovFunction: __init__(lyapunov, device, dtype), gradient(x, p), lie_derivative(vector_field, x, p), __repr__()
+  def compile_lyapunov(lyapunov, device, dtype)
+
+FILE: symbolic\lyapunov\core\barrier_function.py
+  class BarrierFunction: expression(), variables(), parameters(), barrier_condition(vector_field, simplify), is_safe(point), safe_set_expression(), __repr__()
+
+FILE: symbolic\lyapunov\core\lyapunov_function.py
+  class LyapunovType(Enum): 
+  class LyapunovFunction: degree(), is_homogeneous(), homogeneity_degree(), gradient(simplify), hessian(simplify), evaluate_at(point), subs(substitutions), sublevel_set(c), __repr__()
+
+FILE: symbolic\lyapunov\core\storage_function.py
+  class StorageFunction: expression(), variables(), parameters(), dissipation_inequality(vector_field, simplify), from_lyapunov(cls, lyapunov, supply_rate), __repr__()
+
+FILE: symbolic\lyapunov\differentiation\gradient.py
+  def compute_gradient(expression, variables, simplify)
+
+FILE: symbolic\lyapunov\differentiation\hessian.py
+  def compute_hessian(expression, variables, simplify)
+  def verify_hessian_symmetry(H, tolerance)
+
+FILE: symbolic\lyapunov\differentiation\lie_derivative.py
+  def lie_derivative_lyapunov(lyapunov_expression, vector_field, variables, simplify)
+  def compute_lyapunov_derivative(lyapunov_expression, vector_field, variables, simplify)
+
+FILE: symbolic\lyapunov\export\latex.py
+  def to_latex(lyapunov, full_form)
+  def to_latex_with_derivative(lyapunov, vector_field)
+
+FILE: symbolic\lyapunov\export\serialization.py
+  def to_dict(lyapunov)
+  def from_dict(data)
+
+FILE: symbolic\lyapunov\structure\homogeneity.py
+  def check_homogeneous(expression, variables)
+  def verify_homogeneity(expression, variables, degree)
+  def decompose_by_degree(expression, variables)
+
+FILE: symbolic\lyapunov\structure\polynomial.py
+  class PolynomialStructure: 
+  def analyze_polynomial_structure(expression, variables)
+  def get_monomial_basis(degree, variables)
+
+FILE: symbolic\lyapunov\structure\quadratic_form.py
+  def extract_quadratic_form(expression, variables)
+  def verify_quadratic_form(P, variables, expression)
+  def is_positive_definite_symbolic(P)
+
+FILE: symbolic\lyapunov\templates\polynomial.py
+  class PolynomialLyapunovTemplate: to_lyapunov_function(), homogeneous_form(homogeneity_degree), n_monomials(), n_parameters(), __repr__()
+
+FILE: symbolic\lyapunov\templates\quadratic.py
+  class QuadraticLyapunovTemplate: to_lyapunov_function(), with_P(P), __repr__()
+
+FILE: symbolic\lyapunov\templates\rational.py
+  class RationalLyapunovTemplate: to_lyapunov_function(), quadratic_over_linear(cls, variables, P, q_coeffs), __repr__()
+
+FILE: symbolic\ode\factory.py
+  def ode_system(vector_field, states, inputs, params, time, name, wrap_for_simulation)
+
+FILE: symbolic\ode\__init__.py
+  class ODESystem(CoreODESystem): __init__()
+
+FILE: symbolic\ode\analysis\equilibrium.py
+  def find_equilibria(ode, input_values, param_values, simplify, rational)
+  def is_equilibrium(ode, point, input_values, param_values, tolerance)
+  def equilibrium_manifold(ode, manifold_params, input_values, param_values)
+  def find_equilibria_numeric(ode, initial_guesses, input_values, param_values, tolerance)
+
+FILE: symbolic\ode\analysis\linearization.py
+  def linearize_at_point(ode, equilibrium_state, equilibrium_input, simplify)
+  def extract_linear_form(ode, simplify)
+  def is_linear_form(ode)
+  def find_equilibria(ode, input_values, param_values, max_solutions, simplify, rational)
+  def validate_linear_coefficients(A, B, n_states, n_inputs)
+  def extract_time_varying_linear_form(ode, simplify)
+  def is_ltv_system(ode)
+  def linear_form_to_torch(A, B, c, param_values, dtype, device)
+
+FILE: symbolic\ode\analysis\stability.py
+  class StabilityType(Enum): 
+  def classify_stability(eigenvalues, tolerance)
+  def classify_equilibrium(ode, equilibrium, input_values, param_values, simplify)
+  def analyze_equilibrium(ode, equilibrium, input_values, param_values, compute_eigenvectors, simplify)
+
+FILE: symbolic\ode\analysis\structure.py
+  def detect_order(ode_or_expressions)
+  def is_first_order(ode_or_expressions)
+  def is_explicit(ode)
+  def is_state_space_form(ode)
+  def count_equations(ode)
+  def get_system_dimension(ode)
+
+FILE: symbolic\ode\compilation\torch_codegen.py
+  class CompiledODE: __init__(ode, device, dtype), batch_eval(x, t, u, p)
+  def compile_ode(ode, device, dtype)
+
+FILE: symbolic\ode\core\ode_system.py
+  class ODESystem: n_states(), n_inputs(), n_params(), states(), inputs(), params(), time(), dynamics(), is_autonomous(), is_linear(), get_linear_matrices_torch(param_values, dtype, device), __repr__()
+
+FILE: symbolic\ode\core\variables.py
+  class VariableSet: n_states(), n_inputs(), n_params(), all_symbols(), state_index(var), input_index(var), param_index(var), subs(substitutions), create(cls, n_states, n_inputs, n_params, include_time, state_prefix, input_prefix, param_prefix)
+
+FILE: symbolic\ode\core\vector_field.py
+  class VectorField: dimension(), __getitem__(index), subs(substitutions), simplify(), as_matrix(), from_matrix(cls, matrix, metadata), from_function(cls, func, variables, metadata)
+
+FILE: symbolic\ode\differentiation\eigenvalues.py
+  def compute_eigenvalues(matrix, simplify, numeric_fallback)
+  def compute_eigenvectors(matrix, simplify)
+  def eigenvalue_properties(eigenvalues)
+  def characteristic_polynomial(matrix)
+
+FILE: symbolic\ode\differentiation\jacobian.py
+  def compute_jacobian(expressions, variables, simplify, with_respect_to)
+  def jacobian_state(ode, simplify)
+  def jacobian_input(ode, simplify)
+  def jacobian_param(ode, simplify)
+
+FILE: symbolic\ode\manipulation\standard_forms.py
+  def to_explicit_form(ode)
+  def to_implicit_form(ode)
+  def to_state_space(ode, order)
+  def from_state_space(ode, original_order)
+  def to_companion_form(expressions, state_vars)
+  def is_companion_form(ode)
+
+FILE: symbolic\ode\solutions\base.py
+  class SolutionMethod(Enum): 
+  class ODESolution: evaluate(values, param_values), substitute(substitutions), to_torch(param_values), __repr__()
+
+FILE: symbolic\ode\solutions\dsolve_integration.py
+  def solve_with_dsolve(ode, initial_condition, state_var, hint, simplify, timeout)
+
+FILE: symbolic\ode\solutions\integrating_factor.py
+  def compute_integrating_factor(p, independent_var)
+  def solve_linear_first_order(ode, initial_condition, state_var, simplify)
+  def is_linear_first_order(ode, state_var)
+
+FILE: symbolic\ode\solutions\separation_variables.py
+  def is_separable(ode, state_var)
+  def solve_separable(ode, initial_condition, state_var, simplify)
+
+FILE: symbolic\ode\solutions\verification.py
+  def verify_solution(ode, solution, tolerance)
+  def verify_initial_conditions(solution, initial_conditions, tolerance)
+  def compute_residual(ode, solution, eval_points)
+
+FILE: symbolic\pde\factory.py
+  def pde_system(fields, spatial_ops, domain, boundary_conditions, time_dependent, pde_type, name)
+
+FILE: symbolic\pde\boundary\conditions.py
+  class BCType(Enum): 
+  class BoundaryCondition: dirichlet(cls, field, boundary, value), neumann(cls, field, boundary, value), robin(cls, field, boundary, alpha, beta, value), periodic(cls, field, boundary_pair), __repr__()
+  class InitialCondition: evaluate_at(), __repr__()
+
+FILE: symbolic\pde\boundary\enforcement.py
+  def validate_boundary_conditions(pde_system, boundary_conditions)
+  def check_bc_compatibility(boundary_conditions)
+  def validate_initial_conditions(pde_system, initial_conditions)
+  def is_well_posed(pde_system, boundary_conditions, initial_conditions)
+
+FILE: symbolic\pde\core\domain.py
+  class Domain: __init__(dimension, coordinates, spatial_dims, variables, bounds, periodic, coordinate_system, metadata), interval(cls, x_min, x_max, periodic, coordinate), rectangle(cls, x_min, x_max, y_min, y_max, periodic_x, periodic_y, coordinates), box(cls, x_min, x_max, y_min, y_max, z_min, z_max, periodic_x, periodic_y, periodic_z, coordinates), get_boundaries(), boundary_normal(boundary), __repr__()
+
+FILE: symbolic\pde\core\fields.py
+  class FieldVariable: scalar(cls, name), vector(cls, name, dimension), diff(), __repr__()
+
+FILE: symbolic\pde\core\pde_system.py
+  class PDEType(Enum): 
+  class PDESystem: __init__(fields, spatial_ops, domain, equations, boundary_conditions, time_dependent, pde_type, name, metadata), n_fields(), spatial_dim(), time_symbol(), spatial_coords(), is_linear(), is_autonomous(), time_order(), spatial_order(), __repr__()
+
+FILE: symbolic\pde\discretization\bc_discretization.py
+  def discretize_dirichlet_bc(operator, bc_value, boundary_indices)
+  def discretize_neumann_bc(operator, bc_value, boundary_indices, dx, is_left)
+  def discretize_robin_bc(operator, alpha, beta, bc_value, boundary_indices, dx, is_left)
+  def discretize_periodic_bc(operator, boundary_pair)
+
+FILE: symbolic\pde\discretization\method_of_lines.py
+  class SpatialGrid: coordinates(), spacing(), n_total_points(), dimension(), reshape(flat_vector), flatten(grid_array)
+  class DiscretizedPDE: 
+  def discretize_pde(pde, n_points, method, order)
+
+FILE: symbolic\pde\discretization\stencils.py
+  def first_derivative_stencil(method, order)
+  def second_derivative_stencil(order)
+  def laplacian_stencil_1d(n_points, dx, order)
+  def laplacian_stencil_2d(nx, ny, dx, dy, order)
+  def laplacian_stencil_3d(nx, ny, nz, dx, dy, dz, order)
+
+FILE: symbolic\pde\operators\divergence.py
+  def divergence(v, coordinates, simplify)
+
+FILE: symbolic\pde\operators\gradient.py
+  def gradient(u, coordinates, simplify)
+  def curl(v, coordinates, simplify)
+
+FILE: symbolic\pde\operators\laplacian.py
+  def laplacian(u, coordinates, simplify)
+
+FILE: symbolic\pde\solutions\fourier.py
+  class FourierSeries: evaluate(x, t), sine_series(cls, coefficients, period), cosine_series(cls, coefficients, period)
+  def fourier_heat_solution(initial_condition, length, diffusivity, n_terms, boundary_type)
+  def fourier_wave_solution(initial_displacement, initial_velocity, length, wave_speed, n_terms)
+
+FILE: symbolic\pde\solutions\library.py
+  def heat_equation_1d_solution(initial_condition, length, diffusivity, n_modes)
+  def wave_equation_1d_solution(initial_displacement, initial_velocity, length, wave_speed, n_modes)
+  def diffusion_infinite_domain(diffusivity)
+  def laplace_equation_2d_rectangle(boundary_values, width, height, n_modes)
+
+FILE: symbolic\pde\solutions\separation.py
+  class SeparationOfVariables: __init__(pde), is_separable(), separate()
+  def apply_separation_of_variables(pde, boundary_conditions)
+
+FILE: symbolic\pde\solutions\solution.py
+  class SolutionMethod(Enum): 
+  class PDESolution: evaluate(points, device, dtype), verify(tolerance), spatial_derivative(variable, order), time_derivative(order), residual(), to_latex(), to_numpy(), to_torch(device, dtype), __repr__()
+
+FILE: symbolic\pde\solutions\verification.py
+  def verify_pde_solution(solution, pde, tolerance)
+  def verify_boundary_conditions(solution, boundary_conditions, tolerance)
+  def verify_initial_conditions(solution, initial_condition, tolerance)
+  def compute_solution_error(solution, numeric_solution, points, norm_type)
+
+FILE: utils\config.py
+  class Config: to_dict(), from_dict(cls, data), merge(other), save(path), load(cls, path)
+  def validate_config(config, schema, warn_unknown)
+
+FILE: utils\context.py
+  def diagnostic_mode()
+  def no_grad_context()
+  def mixed_precision_context()
+
+FILE: utils\device.py
+  def set_default_device(device)
+  def get_default_device()
+  def to_device(obj, device, inplace)
+  def get_device(obj)
+  def ensure_same_device()
+  def use_device(device)
+
+FILE: utils\dtype.py
+  def set_default_dtype(dtype)
+  def get_default_dtype()
+  def is_precision_loss(from_dtype, to_dtype)
+  def to_dtype(obj, dtype, warn_precision_loss)
+  def get_dtype(obj)
+  def use_dtype(dtype)
+
+FILE: utils\errors.py
+  class KinoPulseError(Exception): 
+  class ShapeError(KinoPulseError): __init__(message, expected, actual, name)
+  class DeviceMismatchError(KinoPulseError): __init__(message, devices, names)
+  class DtypeMismatchError(KinoPulseError): __init__(message, dtypes, names)
+  class ConfigError(KinoPulseError): 
+  class ModelInconsistencyError(KinoPulseError): 
+  class NotDifferentiableError(KinoPulseError): 
+  class InvalidStateError(KinoPulseError): 
+  class ConvergenceError(KinoPulseError): 
+  class ExportNotSupportedError(KinoPulseError): 
+  class HybridInconsistencyError(KinoPulseError): 
+  class PDEGeometryError(KinoPulseError): 
+  def assert_same_device()
+  def assert_same_dtype()
+  def assert_finite()
+
+FILE: utils\functional.py
+  def partial(func)
+  def compose()
+  def memoize(maxsize)
+
+FILE: utils\graph.py
+  class Graph: add_node(node), add_edge(from_node, to_node), successors(node), predecessors(node)
+  def topological_sort(graph)
+  def find_cycles(graph)
+  def strongly_connected_components(graph)
+
+FILE: utils\introspection.py
+  def count_parameters(module)
+  def print_parameter_summary(module)
+
+FILE: utils\linalg.py
+  def block_diag(matrices)
+  def kronecker_product(A, B)
+  def vectorize(matrix)
+  def unvec(vector, shape)
+  def solve(A, b)
+  def inv(A)
+
+FILE: utils\logging.py
+  class LogLevel(Enum): 
+  class KinoPulseLogger: __init__(name), debug(message), info(message), warn(message), error(message)
+  def get_logger(name)
+  def set_global_log_level(level)
+
+FILE: utils\math_ops.py
+  def safe_inverse(matrix, regularization, warn_threshold)
+  def stable_norm(x, p, dim)
+  def log_sum_exp(x, dim)
+  def safe_divide(numerator, denominator, epsilon)
+
+FILE: utils\pretty.py
+  def pretty_print_tensor(tensor, name)
+  def pretty_print_dict(data, indent)
+
+FILE: utils\profiling.py
+  class TimingResult: 
+  class Profiler: __init__(), enable(), disable(), clear(), timer(name), summary()
+  def get_profiler()
+  def enable_profiling()
+  def enable_profiling(use_cuda)
+  def disable_profiling()
+  def timer(self, name)
+  def profile_function(name)
+  class _DisabledTimer: 
+  def timer(name)
+  def profile_function(name)
+
+FILE: utils\random.py
+  def set_seed(seed)
+  def create_generator(seed, device)
+  def seeded_context(seed)
+  def randn_batch(batch_size, shape, seed_offset, device, dtype)
+
+FILE: utils\shape.py
+  def check_shape(tensor, expected, name)
+  def check_batch_compatible()
+  def infer_batch_size()
+  def expand_to_batch(tensor, batch_size)
+
+FILE: utils\tensor.py
+  def zeros_like_state(state, batch_size)
+  def ones_like_state(state, batch_size)
+  def eye_like(dim, batch_size, device, dtype)
+  def batch_over(tensor, batch_size)
+  def clone_with_grad(tensor)
+  def safe_detach(tensor)
+  def ensure_tensor(obj, dtype, device)
+
+FILE: viz\backend.py
+  class PlotOptions: 
+  class VisualizationBackend(Protocol): create_figure(nrows, ncols, options), create_figure_3d(options), plot(x, y, ax), scatter(x, y, ax), quiver(X, Y, U, V, ax), streamplot(X, Y, U, V, ax), contour(X, Y, Z, ax), contourf(X, Y, Z, ax), imshow(data, ax), show(), save(path)
+
+FILE: viz\control.py
+  class ControllerVisualizer: __init__(backend), plot_tracking(times, output, reference, labels, show_error, options), plot_control_effort(times, control, limits, labels, options), plot_bode(system, omega, omega_range, n_points, options), plot_step_response(times, response, reference_value, show_metrics, options)
+
+FILE: viz\hybrid.py
+  class HybridSystemVisualizer: __init__(backend), plot_mode_graph(modes, transitions, layout, node_size, options), plot_trajectory_with_modes(trajectory, mode_sequence, mode_names, dims, mark_transitions, options), plot_mode_timeline(times, mode_sequence, mode_names, options)
+
+FILE: viz\pde_fields.py
+  class PDEFieldVisualizer: __init__(backend), plot_field_1d(x, u, options), plot_field_2d_heatmap(u, extent, options), plot_field_2d_surface(X, Y, u, options), animate_field_evolution(u_history, dt, extent, output_path, fps, title_template, options)
+
+FILE: viz\phase_space.py
+  class PhaseSpaceVisualizer: __init__(backend), plot_trajectory(trajectory, dims, labels, options), plot_phase_portrait_2d(trajectories, dims, vector_field, fixed_points, mark_initial, options), plot_phase_portrait_3d(trajectories, dims, mark_initial, options)
+
+FILE: viz\plot_functions.py
+  def plot_trajectory(trajectory, dims, labels, backend, headless)
+  def plot_phase_portrait(trajectories, dims, vector_field, fixed_points, mark_initial, backend, headless, plot_3d)
+  def plot_vector_field(dynamics, xlim, ylim, dims, resolution, state_dim, plot_type, backend, headless)
+  def plot_lyapunov(lyapunov_fn, xlim, ylim, dims, levels, roa_level, state_dim, backend, headless)
+  def plot_pde_field(u, x, X, Y, extent, plot_type, backend, headless)
+
+FILE: viz\stability.py
+  class StabilityVisualizer: __init__(backend), plot_lyapunov_contours(lyapunov_fn, xlim, ylim, dims, levels, resolution, state_dim, options), plot_roa_estimate(lyapunov_fn, roa_level, xlim, ylim, dims, resolution, state_dim, options), plot_eigenvalues(A, continuous, options)
+
+FILE: viz\utils.py
+  def get_backend(name, headless)
+
+FILE: viz\vector_fields.py
+  class VectorFieldVisualizer: __init__(backend), plot_vector_field_2d(dynamics, xlim, ylim, dims, resolution, state_dim, scale, options), plot_streamlines(dynamics, xlim, ylim, dims, resolution, density, state_dim, options)
+
+FILE: viz\backends\matplotlib_backend.py
+  class MatplotlibBackend: __init__(headless), create_figure(nrows, ncols, options), create_figure_3d(options), plot(x, y, ax), scatter(x, y, ax), quiver(X, Y, U, V, ax), streamplot(X, Y, U, V, ax), contour(X, Y, Z, ax), contourf(X, Y, Z, ax), imshow(data, ax), colorbar(mappable, ax), show(), save(path), close()

@@ -1,0 +1,19 @@
+{ FILE: admin_utils\trace_pool\vector_field.py
+  { FUNCTION: admin_utils.trace_pool.vector_field.VectorField.__post_init__ ( tuple ) sympy.sympify ( ValueError len len ( raise ) ) ( kinopulse.symbolic.geometry.core.manifold.Manifold.euclidean len ) admin_utils.trace_pool.vector_field.VectorField._detect_structure }
+  { FUNCTION: admin_utils.trace_pool.vector_field.VectorField._detect_structure admin_utils.trace_pool.vector_field.VectorField._check_polynomial }
+  { FUNCTION: admin_utils.trace_pool.vector_field.VectorField._check_polynomial [ ( ( return ) ) ] ( return ) }
+  { FUNCTION: admin_utils.trace_pool.vector_field.VectorField._check_divergence_free kinopulse.symbolic.geometry.operators.differential.divergence sympy.simplify ( return ) }
+  { FUNCTION: admin_utils.trace_pool.vector_field.VectorField.__getitem__ ( return ) }
+  { FUNCTION: admin_utils.trace_pool.vector_field.VectorField.dimension len ( return ) }
+  { FUNCTION: admin_utils.trace_pool.vector_field.VectorField.is_polynomial self.<<metadata>>.get ( return ) }
+  { FUNCTION: admin_utils.trace_pool.vector_field.VectorField.is_divergence_free ( admin_utils.trace_pool.vector_field.VectorField._check_divergence_free ) ( return ) }
+  { FUNCTION: admin_utils.trace_pool.vector_field.VectorField.__call__ ( dict zip ) <<expr>>.subs ( return ) }
+  { FUNCTION: admin_utils.trace_pool.vector_field.VectorField.__add__ ( ValueError ( raise ) ) sympy.simplify zip admin_utils.trace_pool.vector_field.VectorField ( return ) }
+  { FUNCTION: admin_utils.trace_pool.vector_field.VectorField.__mul__ sympy.simplify admin_utils.trace_pool.vector_field.VectorField ( return ) }
+  { FUNCTION: admin_utils.trace_pool.vector_field.VectorField.__rmul__ admin_utils.trace_pool.vector_field.VectorField.__mul__ ( return ) }
+  { FUNCTION: admin_utils.trace_pool.vector_field.VectorField.jacobian ( sympy.zeros [ [ sympy.diff ( sympy.simplify ) ] ] ) ( return ) }
+  { FUNCTION: admin_utils.trace_pool.vector_field.VectorField.as_matrix sympy.Matrix ( return ) }
+  { FUNCTION: admin_utils.trace_pool.vector_field.VectorField.from_function func ( list ( range ) ) cls tuple ( return ) }
+  { FUNCTION: admin_utils.trace_pool.vector_field.VectorField.__repr__ str ( return ) }
+  { FUNCTION: admin_utils.trace_pool.vector_field.vector_field ( ( ValueError ( raise ) ) range ) sympy.sympify admin_utils.trace_pool.vector_field.VectorField tuple ( return ) }
+}

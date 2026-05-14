@@ -1,0 +1,8 @@
+{ FILE: admin_utils\collect_trace_files.py
+  { FUNCTION: admin_utils.collect_trace_files.parse_cli_args argparse.ArgumentParser <argparse.ArgumentParser>.add_argument <argparse.ArgumentParser>.parse_args ( return ) }
+  { FUNCTION: admin_utils.collect_trace_files.node_id_to_trace_filename <<node_id>>.replace <<c>>.isalnum ( return ) }
+  { FUNCTION: admin_utils.collect_trace_files.find_trace_file ( print sys.exit ) ( admin_utils.collect_trace_files.node_id_to_trace_filename ( print sys.exit ) ( return ) ) list <<trace_history_dir>>.glob ( print sys.exit ) max <<p>>.stat ( return ) }
+  { FUNCTION: admin_utils.collect_trace_files.extract_paths_from_trace set <<trace_path>>.read_text [ ( <<line>>.partition <<rest>>.strip ( <set>.add ) ) ] ( return ) }
+  { FUNCTION: admin_utils.collect_trace_files.resolve_filename_collisions collections.defaultdict [ pathlib.Path ] [ ( [ pathlib.Path list [ [ ( ( continue ) ) list pathlib.Path ( ( break ) ) ] ( ( break ) ) ( ( break ) ) ] ] ) ] ( return ) }
+  { FUNCTION: admin_utils.collect_trace_files.main admin_utils.collect_trace_files.parse_cli_args pathlib.Path admin_utils.collect_trace_files.find_trace_file print admin_utils.collect_trace_files.extract_paths_from_trace ( print ( return ) ) ( print len ) admin_utils.collect_trace_files.resolve_filename_collisions ( shutil.rmtree ) <<pool_dir>>.mkdir [ shutil.copy2 print ] shutil.copy2 print }
+}

@@ -1,0 +1,39 @@
+DEHYDRATED CALL TREE
+Legend:
+  []  : block executed inside a loop
+  ()  : block executed conditionally
+  <>  : instance call on a known type
+  <<>>: variable/attr with unknown type
+
+{ FILE: src\kinopulse\export\base.py
+  { FUNCTION: kinopulse.export.base.ValidationResult.__str__ ( <list>.append ) ( <list>.append ) ( <list>.append ) ( return ) }
+}
+{ FILE: src\kinopulse\export\metadata.py
+  { FUNCTION: kinopulse.export.metadata.ExportMetadata.to_dict ( return ) }
+  { FUNCTION: kinopulse.export.metadata.ExportMetadata.from_dict <<data>>.get ( kinopulse.export.base.ExportFormat ) <<data>>.get ( tuple ) cls <<data>>.get <<data>>.get <<data>>.get <<data>>.get <<data>>.get <<data>>.get <<data>>.get <<data>>.get <<data>>.get <<data>>.get <<data>>.get <<data>>.get <<data>>.get <<data>>.get <<data>>.get <<data>>.get datetime.datetime.now <<data>>.get <<data>>.get ( return ) }
+  { FUNCTION: kinopulse.export.metadata.ExportMetadata.__str__ ( <list>.append ) ( <list>.append ) ( <list>.append ) ( <list>.append ) ( <list>.append ) ( return ) }
+}
+{ FILE: src\kinopulse\export\symbolic\__init__.py
+  { FUNCTION: kinopulse.export.symbolic.mathematica.MathematicaExporter.__init__ }
+  { FUNCTION: kinopulse.export.symbolic.mathematica.MathematicaExporter.export ImportError ( raise ) ( ValueError ( raise ) ) <<kwargs>>.get <<kwargs>>.get <<kwargs>>.get <list>.append <list>.append <list>.append range <list>.append <list>.append <list>.append ( range <list>.append <list>.append <list>.append ) ( <list>.append kinopulse.export.symbolic.mathematica.MathematicaExporter._render_parameters <list>.extend <list>.append ) <list>.append kinopulse.export.symbolic.mathematica.MathematicaExporter._render_dynamics <list>.extend <list>.append ( ( <list>.append kinopulse.export.symbolic.mathematica.MathematicaExporter._render_output <list>.extend <list>.append ) ) ( <list>.append kinopulse.export.symbolic.mathematica.MathematicaExporter._render_jacobian <list>.extend <list>.append ) ( return ) }
+  { FUNCTION: kinopulse.export.symbolic.mathematica.MathematicaExporter._render_parameters ( ( return ) ) <<system>>.parameters ( ( return ) ) [ ( kinopulse.export.symbolic.mathematica.MathematicaExporter._format_number str ) <list>.append ] ( return ) }
+  { FUNCTION: kinopulse.export.symbolic.mathematica.MathematicaExporter._render_dynamics ( ( return ) ) <<system>>.symbolic_dynamics kinopulse.export.symbolic.mathematica.MathematicaExporter._expr_to_mathematica <list>.append ( return ) }
+  { FUNCTION: kinopulse.export.symbolic.mathematica.MathematicaExporter._render_output ( ( return ) ) <<system>>.symbolic_output kinopulse.export.symbolic.mathematica.MathematicaExporter._expr_to_mathematica <list>.append ( return ) }
+  { FUNCTION: kinopulse.export.symbolic.mathematica.MathematicaExporter._render_jacobian <list>.append ( return ) }
+  { FUNCTION: kinopulse.export.symbolic.mathematica.MathematicaExporter._expr_to_mathematica ImportError ( raise ) ( kinopulse.export.symbolic.mathematica.MathematicaExporter._expr_to_mathematica ( return ) ) sympy.printing.mathematica.mathematica_code ( return ) }
+  { FUNCTION: kinopulse.export.symbolic.mathematica.MathematicaExporter._format_number ( ( return ) ( ( return ) str ( return ) ) ) }
+  { FUNCTION: kinopulse.export.symbolic.mathematica.MathematicaExporter.validate ( kinopulse.export.base.ValidationResult ( return ) ) [ <<exported>>.count <<exported>>.count ( <list>.append ) ] ( <list>.append ) ( <list>.append ) ( <list>.append ) len kinopulse.export.base.ValidationResult ( return ) }
+  { FUNCTION: kinopulse.export.symbolic.mathematica.MathematicaExporter.export ImportError ( raise ) ( ValueError ( raise ) ) <<kwargs>>.get <<kwargs>>.get <<kwargs>>.get <list>.append <list>.append <list>.append range <list>.append <list>.append <list>.append ( range <list>.append <list>.append <list>.append ) ( <list>.append self._render_parameters <list>.extend <list>.append ) <list>.append self._render_dynamics <list>.extend <list>.append ( ( <list>.append self._render_output <list>.extend <list>.append ) ) ( <list>.append self._render_jacobian <list>.extend <list>.append ) ( return ) }
+  { FUNCTION: kinopulse.export.symbolic.mathematica.MathematicaExporter.validate ( kinopulse.export.base.ValidationResult ( return ) ) [ <<exported>>.count <<exported>>.count ( <list>.append ) ] ( <list>.append ) ( <list>.append ) ( <list>.append ) len kinopulse.export.base.ValidationResult ( return ) }
+}
+{ FILE: src\kinopulse\export\symbolic\mathematica.py
+  { FUNCTION: kinopulse.export.symbolic.mathematica.MathematicaExporter._render_dynamics ( ( return ) ) <<system>>.symbolic_dynamics self._expr_to_mathematica <list>.append ( return ) }
+  { FUNCTION: kinopulse.export.symbolic.mathematica.MathematicaExporter._render_jacobian <list>.append ( return ) }
+  { FUNCTION: kinopulse.export.symbolic.mathematica.MathematicaExporter._render_output ( ( return ) ) <<system>>.symbolic_output self._expr_to_mathematica <list>.append ( return ) }
+  { FUNCTION: kinopulse.export.symbolic.mathematica.MathematicaExporter._render_parameters ( ( return ) ) <<system>>.parameters ( ( return ) ) [ ( self._format_number str ) <list>.append ] ( return ) }
+  { FUNCTION: kinopulse.export.symbolic.mathematica.MathematicaExporter._format_number ( ( return ) ( ( return ) str ( return ) ) ) }
+  { FUNCTION: kinopulse.export.symbolic.mathematica.MathematicaExporter._expr_to_mathematica ImportError ( raise ) ( self._expr_to_mathematica ( return ) ) sympy.printing.mathematica.mathematica_code ( return ) }
+}
+{ FILE: src\tests\export\symbolic\integration\test_cas_export.py
+  { FUNCTION: TestMathematicaFullExport.test_export_harmonic_oscillator pytest.skip sympy.symbols unittest.mock.Mock unittest.mock.Mock kinopulse.export.metadata.ExportMetadata kinopulse.export.symbolic.MathematicaExporter <kinopulse.export.symbolic.MathematicaExporter>.export <kinopulse.export.symbolic.MathematicaExporter>.validate }
+}

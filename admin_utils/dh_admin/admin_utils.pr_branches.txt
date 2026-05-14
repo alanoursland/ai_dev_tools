@@ -1,0 +1,3 @@
+{ FILE: admin_utils\pr_branches.py
+  { FUNCTION: admin_utils.pr_branches.list_branches requests.get ( print ( return ) ) <requests.get>.json print [ print ] }
+}
